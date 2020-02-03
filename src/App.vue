@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import Navigation from "@/components/Navigation";
+import VuetifyTest from "./components/VuetifyTest";
 export default {
   name: "app",
   components: {
-    "nav-menu": Navigation
+    "nav-menu": VuetifyTest
   }
 };
 </script>
