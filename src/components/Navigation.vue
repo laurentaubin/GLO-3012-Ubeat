@@ -1,63 +1,66 @@
 <template>
-  <div>
-    <header>
-      <div>
-        <form>
-          <input type="search" placeholder="Search...">
-        </form>
-      </div>
-    </header>
-    <nav>
-      <ul>
-        <li>
+  <v-list dense>
+    <!-- Home -->
+    <v-list-item>
+      <v-list-item-content>
+        <v-list-item-title>
           <router-link to="/">Home</router-link>
-        </li>
-        <li>
+        </v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+    <!-- album -->
+    <v-list-item>
+      <v-list-item-content>
+        <v-list-item-title>
           <router-link to="/album">Album</router-link>
-        </li>
-        <li>
+        </v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+    <!-- artist -->
+    <v-list-item>
+      <v-list-item-content>
+        <v-list-item-title>
           <router-link to="/artist">Artist</router-link>
-        </li>
-        <li>
+        </v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+    <!-- playlist -->
+    <v-list-item>
+      <v-list-item-content>
+        <v-list-item-title>
           <router-link to="/playlist">Playlist</router-link>
-        </li>
-        <li>
+        </v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+    <!-- user -->
+    <v-list-item>
+      <v-list-item-content>
+        <v-list-item-title>
           <router-link to="/user">User</router-link>
-        </li>
-        <li>
+        </v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+    <!-- settings -->
+    <v-list-item>
+      <v-list-item-content>
+        <v-list-item-title>
           <router-link to="/settings">Settings</router-link>
-        </li>
-      </ul>
-    </nav>
-  </div>
+        </v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+  </v-list>
 </template>
 
-<style>
-  input {
-    font-size: 1.05rem;
-    border: 0;
-    outline: 0;
-    box-shadow: none;
+<script>
+export default {
+  props: {
+    source: String
+  },
+  data: () => ({
+    drawer: null
+  }),
+  created() {
+    this.$vuetify.theme.dark = true;
   }
-
-  form {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    box-sizing: border-box;
-    padding: 2px 8px;
-    border: 1px solid #000000;
-    border-radius: 20px;
-    min-width: 80px;
-    background-color: white;
-  }
-
-  header {
-    background-color: rgb(142,142,147);
-    margin-inside: 0;
-  }
-
-  body {
-    margin: 0;
-  }
-</style>
+};
+</script>
