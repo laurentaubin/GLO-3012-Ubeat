@@ -27,7 +27,7 @@ export default {
     "nav-menu": Navigation
   },
   props: {
-    source: String,
+    source: String
   },
   data: () => ({
     drawer: null,

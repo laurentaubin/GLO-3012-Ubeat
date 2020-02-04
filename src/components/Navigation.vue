@@ -1,51 +1,13 @@
 <template>
-  <v-list dense>
+  <v-list dense nav>
     <!-- Home -->
-    <v-list-item>
+    <v-list-item v-for="page in pages" :key="page.text" :to="page.path">
+      <v-icon left v-text="page.icon" />
       <v-list-item-content>
-        <v-list-item-title>
-          <router-link to="/">Home</router-link>
-        </v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
-    <!-- album -->
-    <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title>
-          <router-link to="/album">Album</router-link>
-        </v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
-    <!-- artist -->
-    <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title>
-          <router-link to="/artist">Artist</router-link>
-        </v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
-    <!-- playlist -->
-    <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title>
-          <router-link to="/playlist">Playlist</router-link>
-        </v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
-    <!-- user -->
-    <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title>
-          <router-link to="/user">User</router-link>
-        </v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
-    <!-- settings -->
-    <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title>
-          <router-link to="/settings">Settings</router-link>
-        </v-list-item-title>
+        <v-list-item-title
+          class="subtitle-1 font-weight-bold"
+          v-text="page.text"
+        />
       </v-list-item-content>
     </v-list-item>
   </v-list>
@@ -57,7 +19,15 @@ export default {
     source: String
   },
   data: () => ({
-    drawer: null
+    drawer: null,
+    pages : [
+      { text: "Home", path: "/", icon: "mdi-home" },
+      { text: "Album", path: "/album", icon: "mdi-music-box" },
+      { text: "Artist", path: "/artist", icon: "mdi-music-note" },
+      { text: "Playlist", path: "/playlist", icon: "mdi-playlist-music" },
+      { text: "User", path: "/user", icon: "mdi-account" },
+      { text: "Settings", path: "/settings", icon: "mdi-settings" }
+    ]
   }),
   created() {
     this.$vuetify.theme.dark = true;
