@@ -6,6 +6,7 @@ import Artist from '@/components/Artist';
 import Playlist from "@/components/Playlist";
 import User from "@/components/User";
 import Settings from "@/components/Settings";
+import AccountSettings from "@/components/AccountSettings";
 
 
 Vue.use(Router);
@@ -36,6 +37,10 @@ export default new Router({
       path: '/settings',
       name: 'Settings',
       component: Settings
+    }, {
+      path: '/accountsettings',
+      name: 'AccountSettings',
+      component: AccountSettings
     }
   ],
 });
