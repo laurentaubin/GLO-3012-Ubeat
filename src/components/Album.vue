@@ -1,37 +1,57 @@
 <template>
   <div>
     <header class="album-header">
-      <v-img
-        class="album-image"
-        src="https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg"
-        height="300px"
-        width="300px"
-        clear="left"
-      ></v-img>
-      <div class="album-info">
-        <span class="album-year">{{ this.getAlbumYear() }}</span>
-        <h1 class="album-name">{{ this.albumInfo.collectionName }}</h1>
-      </div>
+      <v-row>
+        <v-col>
+          <!-- TODO Replace hardcoded image with image in api response -->
+          <v-img
+            class="album-image"
+            src="https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg"
+            height="300px"
+            width="300px"
+            clear="left"
+          ></v-img>
+        </v-col>
+        <v-col class="album-info">
+          <h1 class="album-name">{{ this.albumInfo.collectionName }}</h1>
+          <!-- TODO Replace /#/artist ref by ref to actual artist ID -->
+          <p>
+            By <a href="/#/artist">{{ this.albumInfo.artistName }}</a>
+          </p>
+          <p class="album-year">
+            {{ this.getAlbumYear() }} • {{ this.albumInfo.trackCount }} songs
+          </p>
+        </v-col>
+      </v-row>
     </header>
 
     <div class="song-list">
       <header class="songs-header">
-        <span>#</span>
-        <span>Title</span>
-        <span>Duration</span>
+        <v-row>
+          <v-col cols="1">
+            <span>#</span>
+          </v-col>
+          <v-col cols="10">
+            <span>Title</span>
+          </v-col>
+          <v-col cols="1" alignEnd>
+            <span>Duration</span>
+          </v-col>
+        </v-row>
       </header>
-      <v-hover v-slot:default="{ hover }">
-        <v-list>
-          <v-list-item v-bind:key="track.trackId" v-for="track in tracks">
-            <v-icon :class="{ 'show-btn': hover }" left dark color="transparent"
-              >mdi-play-circle</v-icon
-            >
-            <span>{{ track.trackNumber }}</span>
-            <span>{{ track.trackName }}</span>
-            <span>{{ millisToMinutesAndSeconds(track.trackTimeMillis) }}</span>
-          </v-list-item>
-        </v-list>
-      </v-hover>
+
+      <!-- TODO Add effect and play button on hover -->
+      <v-row v-bind:key="track.trackId" v-for="track in tracks">
+        <v-col cols="1">
+          <span>{{ track.trackNumber }}</span>
+        </v-col>
+        <v-col cols="10">
+          {{ track.trackName }}
+        </v-col>
+        <v-col cols="1" alignEnd>
+          {{ millisToMinutesAndSeconds(track.trackTimeMillis) }}
+        </v-col>
+      </v-row>
     </div>
   </div>
 </template>
@@ -734,23 +754,40 @@ export default {
     millisToMinutesAndSeconds(millis) {
       const minutes = Math.floor((millis / 1000 / 60) << 0);
       const seconds = Math.floor((millis / 1000) % 60);
+      let timeInMinutesAndSeconds = minutes + ":" + seconds;
 
-      return minutes + ":" + seconds;
+      // To avoid times like 4:0
+      if (seconds === 0) {
+        timeInMinutesAndSeconds += "0";
+      }
+
+      return timeInMinutesAndSeconds;
     }
   }
 };
 </script>
 
 <style>
-.album-image {
-  float: left;
+.album-header {
+  margin-bottom: 12px;
+}
+.album-header p {
+  color: darkgrey;
+  margin-bottom: 0 !important;
+}
+.album-header a {
+  color: white !important;
+  text-decoration: none;
+}
+.album-header a:hover {
+  text-decoration: underline;
 }
 .album-info {
-  display: inline;
+  display: inline-block;
 }
 
 .album-name {
-  display: inline;
+  display: inline-block;
 }
 .show-btn {
   color: rgba(255, 255, 255, 1) !important;
