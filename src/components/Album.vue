@@ -15,12 +15,38 @@
         <v-col class="album-info">
           <h1 class="album-name">{{ this.albumInfo.collectionName }}</h1>
           <!-- TODO Replace /#/artist ref by ref to actual artist ID -->
+
           <p>
             By <a href="/#/artist">{{ this.albumInfo.artistName }}</a>
           </p>
+
           <p class="album-year">
             {{ this.getAlbumYear() }} • {{ this.albumInfo.trackCount }} songs
           </p>
+
+          <p class="album-genre">
+            {{ this.albumInfo.primaryGenreName }}
+          </p>
+
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col>
+          <v-btn class="buy-btn" v-on:click="buyAlbumRedirect">
+            <p>$ {{ this.albumInfo.collectionPrice }} Buy </p>
+          </v-btn>
+          </v-col>
+        <v-col>
+          <v-img
+            class="buy-btn"
+            v-on:click="buyAlbumRedirect"
+            src="https://linkmaker.itunes.apple.com/embed/v1/app-icon.svg"
+            height="40px"
+            width="40px"
+            clear="left"
+          ></v-img>
+
         </v-col>
       </v-row>
     </header>
@@ -762,6 +788,10 @@ export default {
       }
 
       return timeInMinutesAndSeconds;
+    },
+    buyAlbumRedirect() {
+      let win = window.open(this.albumInfo.collectionViewUrl, '_blank');
+      win.focus();
     }
   }
 };
@@ -791,5 +821,11 @@ export default {
 }
 .show-btn {
   color: rgba(255, 255, 255, 1) !important;
+}
+.buy-btn {
+  display: inline-block;
+}
+.album-genre {
+  display: block;
 }
 </style>
