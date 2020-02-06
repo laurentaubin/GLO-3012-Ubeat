@@ -94,7 +94,9 @@ export default {
     return {
       tracks: this.getTracksInfo(),
       albumInfo: this.getAlbumInfo(),
-      transparent: "rgba(255, 255, 255, 0)"
+      transparent: "rgba(255, 255, 255, 0)",
+      audio: null,
+      currentTrack: null
     };
   },
   methods: {
@@ -798,20 +800,40 @@ export default {
       win.focus();
     },
     playAudio(track) {
-      let trackElement = document.getElementById(track.trackId);
-      let children = trackElement.childNodes[0].childNodes;
+      if (this.audio !== null && !this.audio.paused) {
+        this.togglePlayButton(this.currentTrack);
+        this.audio.pause();
+      }
+      let currentTrack = document.getElementById(track.trackId);
+      if (currentTrack !== this.currentTrack) {
+        this.currentTrack = currentTrack;
+        this.togglePlayButton(currentTrack)
+
+        let audio = new Audio(track.previewUrl);
+        audio.play();
+        audio.onended = () => {
+          this.togglePlayButton(currentTrack);
+          this.currentTrack = null;
+        };
+        this.audio = audio;
+      } else {
+        this.currentTrack = null;
+      }
+    },
+    togglePlayButton(track) {
+      let children = track.childNodes[0].childNodes;
       let trackNumber = children[0];
       let playButton = children[1];
-      playButton.classList.add("play-btn-active");
-      trackNumber.classList.add("track-nb-hidden");
-      playButton.innerText = "playing";
-      let audio = new Audio(track.previewUrl);
-      audio.play();
-      audio.onended = function() {
-        playButton.innerText = "play";
-        playButton.classList.remove('play-btn-active');
+
+      if (trackNumber.classList.contains("track-nb-hidden")) {
+        playButton.classList.remove("play-btn-active");
         trackNumber.classList.remove("track-nb-hidden");
-      };
+        playButton.innerText = "play";
+      } else {
+        trackNumber.classList.add("track-nb-hidden");
+        playButton.classList.add("play-btn-active");
+        playButton.innerText = "playing";
+      }
     }
   }
 };
