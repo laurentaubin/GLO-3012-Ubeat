@@ -1,31 +1,32 @@
 <template>
-  <div>
-    <header>
-      <v-row>
-        <v-col>
+  <v-container>
+    <v-container>
+      <v-row no-gutters>
+        <v-col cols="12" sm="12" md="4" align="center">
           <!--- TODO replace hardcoded image with some sort of api call -->
           <v-img
             class="artist-image"
             src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
             contain
-            height="300px"
-            width="300px"
-          ></v-img>
+            height="200px"
+            width="200px"
+          />
         </v-col>
-        <v-col>
-          <div class="artist-info">
-            <h1>{{ this.artist.artistName }}</h1>
-            <p>{{ this.artist.primaryGenreName }}</p>
-          </div>
+        <v-col cols="12" sm="12" md="8" class="text-center text-md-start" >
+          <v-row>
+            <v-col class="pt-md-12">
+              <h1 class="font-weight-bold display-4">{{ this.artist.artistName }}</h1>
+              <p class="font-weight-regular subtitle-1 ml-md-1">{{ this.artist.primaryGenreName }}</p>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
-      <div class="album-list">
+    </v-container>
+      <v-container>
         <h1> Albums </h1>
-
         <albumList v-bind:albums="albums" />
-      </div>
-    </header>
-  </div>
+      </v-container>
+  </v-container>
 </template>
 
 <script>
@@ -92,7 +93,5 @@ export default {
 .artist-image {
   border-radius: 50%;
 }
-.album-list {
-  margin-top: 60px;
-}
+
 </style>
