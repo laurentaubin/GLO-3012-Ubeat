@@ -154,6 +154,7 @@ export default {
 }
 .album-header {
   margin-bottom: 12px;
+  margin-top: 32px;
 }
 .album-header p {
   color: darkgrey;
