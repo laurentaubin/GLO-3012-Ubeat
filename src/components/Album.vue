@@ -63,13 +63,17 @@
           <v-col cols="1" alignEnd>
             <span>Duration</span>
           </v-col>
+          <v-col>
+            <span>Play</span>
+          </v-col>
         </v-row>
       </header>
 
       <!-- TODO Add effect and play button on hover -->
       <v-row v-bind:key="track.trackId" v-for="track in tracks">
-        <v-col cols="1">
-          <span>{{ track.trackNumber }}</span>
+        <v-col cols="1" id="track">
+          <span id="track-nb">{{ track.trackNumber }}</span>
+          <v-btn id="play-btn" v-on:click="playAudio(track)">play</v-btn>
         </v-col>
         <v-col cols="10">
           {{ track.trackName }}
@@ -790,8 +794,22 @@ export default {
       return timeInMinutesAndSeconds;
     },
     buyAlbumRedirect() {
-      let win = window.open(this.albumInfo.collectionViewUrl, '_blank');
+      let win = window.open(this.albumInfo.collectionViewUrl, "_blank");
       win.focus();
+    },
+    playAudio(track) {
+      let playButton = document.getElementById("play-btn");
+      let trackNumber = document.getElementById("track-nb");
+      playButton.classList.add("play-btn-active");
+      trackNumber.classList.add("track-nb-hidden");
+      playButton.innerText = "playing";
+      let audio = new Audio(track.previewUrl);
+      audio.play();
+      audio.onended = function() {
+        playButton.innerText = "play";
+        playButton.classList.remove('play-btn-active');
+        trackNumber.classList.remove("track-nb-hidden");
+      };
     }
   }
 };
@@ -827,5 +845,29 @@ export default {
 }
 .album-genre {
   display: block;
+}
+#track-nb {
+  display: inline-block;
+}
+#play-btn {
+  display: none;
+  height: 30px;
+  width: 30px;
+}
+
+#track:hover #track-nb {
+  display: none;
+}
+#track:hover #play-btn {
+  display: inline-block;
+}
+#play-btn:focus {
+  display: inline-block;
+}
+.play-btn-active {
+  display: inline-block !important;
+}
+.track-nb-hidden {
+  display: none !important;
 }
 </style>
