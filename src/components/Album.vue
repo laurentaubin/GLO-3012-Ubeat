@@ -70,10 +70,10 @@
       </header>
 
       <!-- TODO Add effect and play button on hover -->
-      <v-row v-bind:key="track.trackId" v-for="track in tracks">
-        <v-col cols="1" id="track">
-          <span id="track-nb">{{ track.trackNumber }}</span>
-          <v-btn id="play-btn" v-on:click="playAudio(track)">play</v-btn>
+      <v-row v-bind:id="track.trackId" v-bind:key="track.trackId" v-for="track in tracks">
+        <v-col cols="1" class="track">
+          <span class="track-nb">{{ track.trackNumber }}</span>
+          <v-btn class="play-btn" v-on:click="playAudio(track)">play</v-btn>
         </v-col>
         <v-col cols="10">
           {{ track.trackName }}
@@ -798,8 +798,10 @@ export default {
       win.focus();
     },
     playAudio(track) {
-      let playButton = document.getElementById("play-btn");
-      let trackNumber = document.getElementById("track-nb");
+      let trackElement = document.getElementById(track.trackId);
+      let children = trackElement.childNodes[0].childNodes;
+      let trackNumber = children[0];
+      let playButton = children[1];
       playButton.classList.add("play-btn-active");
       trackNumber.classList.add("track-nb-hidden");
       playButton.innerText = "playing";
@@ -846,22 +848,22 @@ export default {
 .album-genre {
   display: block;
 }
-#track-nb {
+.track-nb {
   display: inline-block;
 }
-#play-btn {
-  display: none;
+.play-btn {
+  display: none !important;
   height: 30px;
   width: 30px;
 }
 
-#track:hover #track-nb {
+.track:hover .track-nb {
   display: none;
 }
-#track:hover #play-btn {
-  display: inline-block;
+.track:hover .play-btn {
+  display: inline-block !important;
 }
-#play-btn:focus {
+.play-btn:focus {
   display: inline-block;
 }
 .play-btn-active {
