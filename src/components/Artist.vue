@@ -1,6 +1,7 @@
 <template>
   <v-container>
-    <v-container>
+    <!-- Artist header -->
+    <v-container class="pb-md-7">
       <v-row no-gutters>
         <v-col cols="12" sm="12" md="4" align="center">
           <!--- TODO replace hardcoded image with some sort of api call -->
@@ -12,20 +13,26 @@
             width="200px"
           />
         </v-col>
-        <v-col cols="12" sm="12" md="8" class="text-center text-md-start" >
+        <v-col cols="12" sm="12" md="8" class="text-center text-md-start">
           <v-row>
             <v-col class="pt-md-12">
-              <h1 class="font-weight-bold display-4">{{ this.artist.artistName }}</h1>
-              <p class="font-weight-regular subtitle-1 ml-md-1">{{ this.artist.primaryGenreName }}</p>
+              <h1 class="font-weight-bold display-4">
+                {{ this.artist.artistName }}
+              </h1>
+              <p class="font-weight-regular subtitle-1 ml-md-1">
+                {{ this.artist.primaryGenreName }}
+              </p>
             </v-col>
           </v-row>
         </v-col>
       </v-row>
     </v-container>
-      <v-container>
-        <h1> Albums </h1>
-        <albumList v-bind:albums="albums" />
-      </v-container>
+    <v-divider />
+    <!-- Artist albums -->
+    <v-container>
+      <h1 class="title font-weight-bold">Albums</h1>
+      <albumList v-bind:albums="albums" />
+    </v-container>
   </v-container>
 </template>
 
@@ -93,5 +100,4 @@ export default {
 .artist-image {
   border-radius: 50%;
 }
-
 </style>
