@@ -1,9 +1,9 @@
 <template>
-  <v-container class="mx-lg-12">
+  <v-container class="px-0">
     <!-- album header -->
     <v-container class="pb-md-7">
       <v-row no-gutters class="justify-end">
-        <v-col cols="12" xs="12" sm="5" md="4" class="align-end">
+        <v-col cols="12" xs="12" sm="5" md="4" lg="3" class="align-end">
           <v-row>
             <v-img
               contain
@@ -13,7 +13,7 @@
             />
           </v-row>
         </v-col>
-        <v-col class="text-center text-sm-start">
+        <v-col class="text-center text-sm-start pl-3">
           <p class="body-2 font-weight-thin mb-0 pl-1 mt-sm-2">
             Album
           </p>
