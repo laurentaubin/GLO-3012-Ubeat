@@ -83,132 +83,131 @@
 </template>
 
 <script>
-  import tracks from "../JSON/tracks.json";
+import tracks from "../JSON/tracks.json";
 
-  export default {
-    name: "Album",
-    props: ["album"],
-    data: function () {
+export default {
+  name: "Album",
+  props: ["album"],
+  data: function () {
+    return {
+      tracks: this.getTracksInfo(),
+      albumInfo: this.getAlbumInfo(),
+      transparent: "rgba(255, 255, 255, 0)",
+      audio: null,
+      currentTrack: null
+    };
+  },
+  methods: {
+    getAlbumInfo: function (albumId) {
+      const album = this.getAlbum(albumId);
+      return album.results[0];
+    },
+    getAlbum: function (albumId) {
+      // To avoid eslint error
+      if (albumId == 0) {
+        return 0;
+      }
+      // Will eventually be api call
       return {
-        tracks: this.getTracksInfo(),
-        albumInfo: this.getAlbumInfo(),
-        transparent: "rgba(255, 255, 255, 0)",
-        audio: null,
-        currentTrack: null
+        resultCount: 1,
+        results: [
+          {
+            wrapperType: "collection",
+            collectionType: "Album",
+            artistId: 334854763,
+            collectionId: 1484385866,
+            amgArtistId: 2035613,
+            artistName: "Kesha",
+            collectionName: "High Road",
+            collectionCensoredName: "High Road",
+            artistViewUrl:
+              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
+            collectionViewUrl:
+              "https://music.apple.com/us/album/high-road/1484385866?uo=4",
+            artworkUrl60:
+              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
+            artworkUrl100:
+              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
+            collectionPrice: 10.99,
+            collectionExplicitness: "explicit",
+            contentAdvisoryRating: "Explicit",
+            trackCount: 15,
+            copyright: "℗ 2019 Kemosabe Records",
+            country: "USA",
+            currency: "USD",
+            releaseDate: "2020-01-10T08:00:00Z",
+            primaryGenreName: "Pop"
+          }
+        ]
       };
     },
-    methods: {
-      getAlbumInfo: function (albumId) {
-        const album = this.getAlbum(albumId);
-        return album.results[0];
-      },
-      getAlbum: function (albumId) {
-        // To avoid eslint error
-        if (albumId == 0) {
-          return 0;
-        }
-        // Will eventually be api call
-        return {
-          resultCount: 1,
-          results: [
-            {
-              wrapperType: "collection",
-              collectionType: "Album",
-              artistId: 334854763,
-              collectionId: 1484385866,
-              amgArtistId: 2035613,
-              artistName: "Kesha",
-              collectionName: "High Road",
-              collectionCensoredName: "High Road",
-              artistViewUrl:
-                "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-              collectionViewUrl:
-                "https://music.apple.com/us/album/high-road/1484385866?uo=4",
-              artworkUrl60:
-                "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
-              artworkUrl100:
-                "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
-              collectionPrice: 10.99,
-              collectionExplicitness: "explicit",
-              contentAdvisoryRating: "Explicit",
-              trackCount: 15,
-              copyright: "℗ 2019 Kemosabe Records",
-              country: "USA",
-              currency: "USD",
-              releaseDate: "2020-01-10T08:00:00Z",
-              primaryGenreName: "Pop"
-            }
-          ]
-        };
-      },
-      getAlbumYear: function () {
-        const date = new Date(this.albumInfo.releaseDate);
-        return date.getFullYear();
-      },
-      getTracksInfo: function () {
-        // const albumId = this.albumInfo.collectionId;
-        const albumId = 1;
-        const tracks = this.getTracks(albumId);
-        return tracks.results;
-      },
-      getTracks: function (albumId) {
-        // To avoid eslint error
-        if (albumId == 0) {
-          return 0;
-        }
+    getAlbumYear: function () {
+      const date = new Date(this.albumInfo.releaseDate);
+      return date.getFullYear();
+    },
+    getTracksInfo: function () {
+      // const albumId = this.albumInfo.collectionId;
+      const albumId = 1;
+      const tracks = this.getTracks(albumId);
+      return tracks.results;
+    },
+    getTracks: function (albumId) {
+      // To avoid eslint error
+      if (albumId == 0) {
+        return 0;
+      }
 
-        // Will evetually be api call
-        return tracks;
-      },
-      millisToMinutesAndSeconds(millis) {
-        const minutes = Math.floor((millis / 1000 / 60) << 0);
-        const seconds = Math.floor((millis / 1000) % 60);
-        let timeInMinutesAndSeconds = minutes + ":" + seconds;
+      // Will evetually be api call
+      return tracks;
+    },
+    millisToMinutesAndSeconds(millis) {
+      const minutes = Math.floor((millis / 1000 / 60) << 0);
+      const seconds = Math.floor((millis / 1000) % 60);
+      let timeInMinutesAndSeconds = minutes + ":" + seconds;
 
-        // To avoid times like 4:0
-        if (seconds === 0) {
-          timeInMinutesAndSeconds += "0";
-        }
+      // To avoid times like 4:0
+      if (seconds === 0) {
+        timeInMinutesAndSeconds += "0";
+      }
 
-        return timeInMinutesAndSeconds;
-      },
-      buyAlbumRedirect() {
-        let win = window.open(this.albumInfo.collectionViewUrl, "_blank");
-        win.focus();
-      },
-      playAudio(track) {
-        if (this.audio !== null && !this.audio.paused) {
-          this.togglePlayButton(this.currentTrack);
-          this.audio.pause();
-        }
-        let currentTrack = document.getElementById(track.trackId);
-        if (currentTrack !== this.currentTrack) {
-          this.currentTrack = currentTrack;
-          this.togglePlayButton(currentTrack)
-          let audio = new Audio(track.previewUrl);
-          audio.play();
-          audio.onended = () => {
-            this.togglePlayButton(currentTrack);
-            this.currentTrack = null;
-          };
-          this.audio = audio;
-        } else {
+      return timeInMinutesAndSeconds;
+    },
+    buyAlbumRedirect() {
+      let win = window.open(this.albumInfo.collectionViewUrl, "_blank");
+      win.focus();
+    },
+    playAudio(track) {
+      if (this.audio !== null && !this.audio.paused) {
+        this.togglePlayButton(this.currentTrack);
+        this.audio.pause();
+      }
+      let currentTrack = document.getElementById(track.trackId);
+      if (currentTrack !== this.currentTrack) {
+        this.currentTrack = currentTrack;
+        this.togglePlayButton(currentTrack)
+        let audio = new Audio(track.previewUrl);
+        audio.play();
+        audio.onended = () => {
+          this.togglePlayButton(currentTrack);
           this.currentTrack = null;
-        }
-      },
-      togglePlayButton(track) {
-        let children = track.childNodes[0].childNodes;
-        let trackNumber = children[0];
-        let playButton = children[1];
-        if (trackNumber.classList.contains("track-nb-hidden")) {
-          playButton.classList.remove("play-btn-active");
-          trackNumber.classList.remove("track-nb-hidden");
-          playButton.innerText = "play";
-        } else {
-          trackNumber.classList.add("track-nb-hidden");
-          playButton.classList.add("play-btn-active");
-          playButton.innerText = "playing";
-          playButton.icon = "mdi-pause"
+        };
+        this.audio = audio;
+      } else {
+        this.currentTrack = null;
+      }
+    },
+    togglePlayButton(track) {
+      let children = track.childNodes[0].childNodes;
+      let trackNumber = children[0];
+      let playButton = children[1];
+      if (trackNumber.classList.contains("track-nb-hidden")) {
+        playButton.classList.remove("play-btn-active");
+        trackNumber.classList.remove("track-nb-hidden");
+        playButton.childNodes[0].innerHTML = "<i aria-hidden='true' class='v-icon notranslate mdi mdi-play theme--dark'>";
+      } else {
+        trackNumber.classList.add("track-nb-hidden");
+        playButton.classList.add("play-btn-active");
+        playButton.childNodes[0].innerHTML = "<i aria-hidden='true' class='v-icon notranslate mdi mdi-pause'>";
         }
       }
     }
@@ -216,59 +215,59 @@
 </script>
 
 <style>
-  .show-btn {
-    color: rgba(255, 255, 255, 1) !important;
-  }
+.show-btn {
+  color: rgba(255, 255, 255, 1) !important;
+}
 
-  .buy-btn {
-    display: inline-block;
-  }
+.buy-btn {
+  display: inline-block;
+}
 
-  .album-genre {
-    display: block;
-  }
+.album-genre {
+  display: block;
+}
 
-  .track-nb {
-    display: inline-block;
-  }
+.track-nb {
+  display: inline-block;
+}
 
-  .play-btn {
-    display: none !important;
-    height: 30px;
-    width: 30px;
-  }
+.play-btn {
+  display: none !important;
+  height: 30px;
+  width: 30px;
+}
 
-  .track:hover {
-    background: #212121;
-  }
-  .track:hover .track-nb {
-    display: none;
-  }
+.track:hover {
+  background: #212121;
+}
+.track:hover .track-nb {
+  display: none;
+}
 
-  .track:hover .play-btn {
-    display: inline-block !important;
-  }
+.track:hover .play-btn {
+  display: inline-block !important;
+}
 
-  .play-btn:focus {
-    display: inline-block;
-  }
+.play-btn:focus {
+  display: inline-block;
+}
 
-  .play-btn-active {
-    display: inline-block !important;
-  }
+.play-btn-active {
+  display: inline-block !important;
+}
 
-  .track-nb-hidden {
-    display: none !important;
-  }
+.track-nb-hidden {
+  display: none !important;
+}
 
-  .artist-link {
-    text-decoration: none;
-  }
+.artist-link {
+  text-decoration: none;
+}
 
-  .itunes-btn {
-    width: 35px;
-    overflow: hidden;
-    height:35px;
-    background: url("https://linkmaker.itunes.apple.com/embed/v1/app-icon.svg") no-repeat;
-  }
+.itunes-btn {
+  width: 35px;
+  overflow: hidden;
+  height:35px;
+  background: url("https://linkmaker.itunes.apple.com/embed/v1/app-icon.svg") no-repeat;
+}
 </style>
