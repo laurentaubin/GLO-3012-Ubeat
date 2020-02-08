@@ -273,6 +273,9 @@ export default {
 .artist-link {
   text-decoration: none;
 }
+.artist-link:hover {
+  text-decoration: underline;
+}
 
 .itunes-btn {
   width: 35px;
