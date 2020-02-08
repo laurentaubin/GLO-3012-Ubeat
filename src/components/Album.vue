@@ -17,26 +17,22 @@
           <!-- TODO Replace /#/artist ref by ref to actual artist ID -->
 
           <p>
-            By <a href="/#/artist">{{ this.albumInfo.artistName }}</a>
+            By
+            <a href="/#/artist">{{ this.albumInfo.artistName }}</a>
           </p>
 
-          <p class="album-year">
-            {{ this.getAlbumYear() }} • {{ this.albumInfo.trackCount }} songs
-          </p>
+          <p class="album-year">{{ this.getAlbumYear() }} • {{ this.albumInfo.trackCount }} songs</p>
 
-          <p class="album-genre">
-            {{ this.albumInfo.primaryGenreName }}
-          </p>
-
+          <p class="album-genre">{{ this.albumInfo.primaryGenreName }}</p>
         </v-col>
       </v-row>
 
       <v-row>
         <v-col>
           <v-btn class="buy-btn" v-on:click="buyAlbumRedirect">
-            <p>$ {{ this.albumInfo.collectionPrice }} Buy </p>
+            <p>$ {{ this.albumInfo.collectionPrice }} Buy</p>
           </v-btn>
-          </v-col>
+        </v-col>
         <v-col>
           <v-img
             class="buy-btn"
@@ -46,7 +42,6 @@
             width="40px"
             clear="left"
           ></v-img>
-
         </v-col>
       </v-row>
     </header>
@@ -75,12 +70,8 @@
           <span class="track-nb">{{ track.trackNumber }}</span>
           <v-btn class="play-btn" v-on:click="playAudio(track)">play</v-btn>
         </v-col>
-        <v-col cols="10">
-          {{ track.trackName }}
-        </v-col>
-        <v-col cols="1" alignEnd>
-          {{ millisToMinutesAndSeconds(track.trackTimeMillis) }}
-        </v-col>
+        <v-col cols="10">{{ track.trackName }}</v-col>
+        <v-col cols="1" alignEnd>{{ millisToMinutesAndSeconds(track.trackTimeMillis) }}</v-col>
       </v-row>
     </div>
   </div>
@@ -807,7 +798,7 @@ export default {
       let currentTrack = document.getElementById(track.trackId);
       if (currentTrack !== this.currentTrack) {
         this.currentTrack = currentTrack;
-        this.togglePlayButton(currentTrack)
+        this.togglePlayButton(currentTrack);
 
         let audio = new Audio(track.previewUrl);
         audio.play();
