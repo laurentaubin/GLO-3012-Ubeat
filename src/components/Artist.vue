@@ -3,7 +3,7 @@
     <!-- Artist header -->
     <v-container class="pb-md-7">
       <v-row no-gutters>
-        <v-col cols="12" sm="12" md="4" align="center">
+        <v-col cols="12" sm="12" md="4" class="align-center">
           <!--- TODO replace hardcoded image with some sort of api call -->
           <v-img
             class="artist-image"
