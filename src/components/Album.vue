@@ -46,13 +46,13 @@
     <v-container class="song-list" fluid>
       <header class="songs-header">
         <v-row no-gutters>
-          <v-col cols="1" class="align-center">
+          <v-col cols="1" class="d-flex justify-center pr-5">
             <span class="body-2 mb-1 grey--text lighten-2 font-weight-thin">#</span>
           </v-col>
           <v-col cols="10">
             <span class="body-2 grey--text lighten-2 font-weight-thin">TITLE</span>
           </v-col>
-          <v-col cols="1">
+          <v-col cols="1" class="d-flex justify-center align-center pr-5">
             <v-icon>mdi-timer</v-icon>
           </v-col>
         </v-row>
@@ -61,20 +61,20 @@
 
       <!-- TODO Add effect and play button on hover -->
       <v-row v-bind:id="track.trackId" v-bind:key="track.trackId" v-for="track in tracks" class="track">
-        <v-col cols="1" class="track align-center justify-center">
+        <v-col cols="1" class="track d-flex align-center justify-center">
           <span class="track-nb">{{ track.trackNumber }}</span>
           <v-btn class="play-btn" icon v-on:click="playAudio(track)">
-            <v-icon >
+            <v-icon>
               mdi-play
             </v-icon>
           </v-btn>
         </v-col>
-        <v-col cols="10" class="align-center justify-center">
+        <v-col cols="10" class="d-flex align-center">
           <span>
             {{ track.trackName }}
           </span>
         </v-col>
-        <v-col cols="1">
+        <v-col cols="1" class="d-flex align-center">
           {{ millisToMinutesAndSeconds(track.trackTimeMillis) }}
         </v-col>
       </v-row>
