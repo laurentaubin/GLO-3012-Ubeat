@@ -60,7 +60,12 @@
       <v-divider />
 
       <!-- TODO Add effect and play button on hover -->
-      <v-row v-bind:id="track.trackId" v-bind:key="track.trackId" v-for="track in tracks" class="track">
+      <v-row
+        v-bind:id="track.trackId"
+        v-bind:key="track.trackId"
+        v-for="track in tracks"
+        class="track"
+      >
         <v-col cols="1" class="track d-flex align-center justify-center">
           <span class="track-nb">{{ track.trackNumber }}</span>
           <v-btn class="play-btn" icon v-on:click="playAudio(track)">
@@ -236,7 +241,12 @@ export default {
   height: 30px;
   width: 30px;
 }
-
+.songs-header {
+  user-select: none;
+}
+.track {
+  user-select: none;
+}
 .track:hover {
   background: #212121;
 }
