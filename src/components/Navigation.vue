@@ -20,7 +20,7 @@ export default {
   },
   data: () => ({
     drawer: null,
-    pages : [
+    pages: [
       { text: "Home", path: "/", icon: "mdi-home" },
       { text: "Album", path: "/album", icon: "mdi-music-box" },
       { text: "Artist", path: "/artist", icon: "mdi-music-note" },
