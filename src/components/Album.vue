@@ -52,7 +52,7 @@
           <v-col cols="10">
             <span class="body-2 grey--text lighten-2 font-weight-thin">TITLE</span>
           </v-col>
-          <v-col cols="1">
+          <v-col cols="1" justify-center>
             <v-icon>mdi-timer</v-icon>
           </v-col>
         </v-row>
@@ -60,11 +60,16 @@
       <v-divider />
 
       <!-- TODO Add effect and play button on hover -->
-      <v-row v-bind:id="track.trackId" v-bind:key="track.trackId" v-for="track in tracks" class="track">
+      <v-row
+        v-bind:id="track.trackId"
+        v-bind:key="track.trackId"
+        v-for="track in tracks"
+        class="track"
+      >
         <v-col cols="1" class="track align-center justify-center">
           <span class="track-nb">{{ track.trackNumber }}</span>
           <v-btn class="play-btn" icon v-on:click="playAudio(track)">
-            <v-icon >
+            <v-icon>
               mdi-play
             </v-icon>
           </v-btn>
@@ -236,7 +241,12 @@ export default {
   height: 30px;
   width: 30px;
 }
-
+.songs-header {
+  user-select: none;
+}
+.track {
+  user-select: none;
+}
 .track:hover {
   background: #212121;
 }
