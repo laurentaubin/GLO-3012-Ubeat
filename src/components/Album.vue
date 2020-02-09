@@ -17,11 +17,13 @@
           <p class="body-2 font-weight-thin mb-0 pl-1 mt-sm-2">
             Album
           </p>
+          <!-- TODO Replace hardcoded link to actual album link -->
           <a class="link white--text" href="/#/album">
             <h1 class="font-weight-bold display-2 mb-3">
               {{ this.albumInfo.collectionName }}
             </h1>
           </a>
+          <!-- TODO Replace hardcoded link to actual artist link -->
           <p class="body-2 grey--text darken-1 mb-1">
             By
             <a href="/#/artist" class="link white--text">{{
@@ -71,7 +73,6 @@
       </header>
       <v-divider />
 
-      <!-- TODO Add effect and play button on hover -->
       <v-row
         v-bind:id="track.trackId"
         v-bind:key="track.trackId"
