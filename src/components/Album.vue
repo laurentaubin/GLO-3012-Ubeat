@@ -1,83 +1,96 @@
 <template>
-  <div>
-    <header class="album-header">
-      <v-row>
-        <v-col>
-          <!-- TODO Replace hardcoded image with image in api response -->
-          <v-img
-            class="album-image"
-            src="https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg"
-            height="300px"
-            width="300px"
-            clear="left"
-          ></v-img>
+  <v-container class="px-0">
+    <!-- album header -->
+    <v-container class="pb-md-7">
+      <v-row no-gutters class="justify-end">
+        <v-col cols="12" xs="12" sm="5" md="4" lg="3" class="align-end">
+          <v-row>
+            <v-img
+              contain
+              src="https://is3-ssl.mzstatic.com/image/thumb/Music113/v4/52/0a/df/520adf4c-36e7-5d7d-114d-c5682df53b98/886447918104.jpg/939x0w.jpg"
+              height="200px"
+              width="200px"
+            />
+          </v-row>
         </v-col>
-        <v-col class="album-info">
-          <h1 class="album-name">{{ this.albumInfo.collectionName }}</h1>
-          <!-- TODO Replace /#/artist ref by ref to actual artist ID -->
-
-          <p>
+        <v-col class="album-info text-center text-sm-start pl-3">
+          <p class="body-2 font-weight-thin mb-0 pl-1 mt-sm-2">Album</p>
+          <!-- TODO Replace hardcoded link to actual album link -->
+          <a class="link white--text" href="/#/album">
+            <h1 class="font-weight-bold display-2 mb-3">{{ this.albumInfo.collectionName }}</h1>
+          </a>
+          <!-- TODO Replace hardcoded link to actual artist link -->
+          <p class="body-2 grey--text darken-1 mb-1">
             By
-            <a href="/#/artist">{{ this.albumInfo.artistName }}</a>
+            <a href="/#/artist" class="link white--text">
+              {{
+              this.albumInfo.artistName
+              }}
+            </a>
           </p>
-
-          <p class="album-year">{{ this.getAlbumYear() }} • {{ this.albumInfo.trackCount }} songs</p>
-
-          <p class="album-genre">{{ this.albumInfo.primaryGenreName }}</p>
+          <p
+            class="body-2 mb-1 grey--text darken-1"
+          >{{ this.getAlbumYear() }} • {{ this.albumInfo.trackCount }} songs</p>
+          <p class="body-2 mb-1 grey--text darken-1">{{ this.albumInfo.primaryGenreName }}</p>
+          <v-row class="justify-center">
+            <v-col class="pa-0 d-flex justify-center justify-sm-start">
+              <v-btn class="buy-btn ml-3" v-on:click="buyAlbumRedirect">
+                <p class="mt-auto mb-auto">$ {{ this.albumInfo.collectionPrice }} Buy</p>
+              </v-btn>
+              <a
+                href="https://geo.music.apple.com/ca/album/high-road/1484385866?mt=1&app=music&ls=1"
+                class="d-inline-block itunes-btn ml-2"
+              />
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
+    </v-container>
 
-      <v-row>
-        <v-col>
-          <v-btn class="buy-btn" v-on:click="buyAlbumRedirect">
-            <p>$ {{ this.albumInfo.collectionPrice }} Buy</p>
-          </v-btn>
-        </v-col>
-        <v-col>
-          <v-img
-            class="buy-btn"
-            v-on:click="buyAlbumRedirect"
-            src="https://linkmaker.itunes.apple.com/embed/v1/app-icon.svg"
-            height="40px"
-            width="40px"
-            clear="left"
-          ></v-img>
-        </v-col>
-      </v-row>
-    </header>
-
-    <div class="song-list">
+    <v-container class="song-list" fluid>
       <header class="songs-header">
-        <v-row>
-          <v-col cols="1">
-            <span>#</span>
+        <v-row no-gutters>
+          <v-col cols="1" class="d-flex justify-center pr-5">
+            <span class="body-2 mb-1 grey--text lighten-2 font-weight-thin">#</span>
           </v-col>
           <v-col cols="10">
-            <span>Title</span>
+            <span class="body-2 grey--text lighten-2 font-weight-thin">TITLE</span>
           </v-col>
-          <v-col cols="1" alignEnd>
-            <span>Duration</span>
-          </v-col>
-          <v-col>
-            <span>Play</span>
+          <v-col cols="1" class="d-flex justify-center align-center pr-5">
+            <v-icon>mdi-timer</v-icon>
           </v-col>
         </v-row>
       </header>
+      <v-divider />
 
-      <!-- TODO Add effect and play button on hover -->
-      <v-row v-bind:id="track.trackId" v-bind:key="track.trackId" v-for="track in tracks">
-        <v-col cols="1" class="track">
+      <v-row
+        v-bind:id="track.trackId"
+        v-bind:key="track.trackId"
+        v-for="track in tracks"
+        class="track"
+        @click="trackClicked(track.trackId)"
+      >
+        <v-col cols="1" class="d-flex align-center justify-center">
           <span class="track-nb">{{ track.trackNumber }}</span>
-          <v-btn class="play-btn" v-on:click="playAudio(track)">play</v-btn>
+          <v-btn class="play-btn" icon v-on:click="playAudio(track)">
+            <v-icon>mdi-play</v-icon>
+          </v-btn>
         </v-col>
-        <v-col cols="10">{{ track.trackName }}</v-col>
-        <v-col cols="1" alignEnd>{{ millisToMinutesAndSeconds(track.trackTimeMillis) }}</v-col>
+        <v-col cols="10" class="d-flex align-center">
+          <span>{{ track.trackName }}</span>
+        </v-col>
+        <v-col
+          cols="1"
+          class="d-flex align-center"
+        >{{ millisToMinutesAndSeconds(track.trackTimeMillis) }}</v-col>
       </v-row>
-    </div>
-  </div>
+    </v-container>
+  </v-container>
 </template>
 
 <script>
+import tracks from "../JSON/tracks.json";
+
 export default {
   name: "Album",
   props: ["album"],
@@ -87,17 +100,18 @@ export default {
       albumInfo: this.getAlbumInfo(),
       transparent: "rgba(255, 255, 255, 0)",
       audio: null,
-      currentTrack: null
+      currentTrack: null,
+      currentSelectedTrack: null
     };
   },
   methods: {
-    getAlbumInfo: function(id) {
-      const album = this.getAlbum(id);
+    getAlbumInfo: function(albumId) {
+      const album = this.getAlbum(albumId);
       return album.results[0];
     },
-    getAlbum: function(id) {
+    getAlbum: function(albumId) {
       // To avoid eslint error
-      if (id == 0) {
+      if (albumId == 0) {
         return 0;
       }
       // Will eventually be api call
@@ -144,635 +158,14 @@ export default {
       const tracks = this.getTracks(albumId);
       return tracks.results;
     },
-    getTracks: function(id) {
+    getTracks: function(albumId) {
       // To avoid eslint error
-      if (id == 0) {
+      if (albumId == 0) {
         return 0;
       }
 
       // Will evetually be api call
-      return {
-        resultCount: 15,
-        results: [
-          {
-            wrapperType: "track",
-            kind: "song",
-            artistId: 334854763,
-            collectionId: 1484385866,
-            trackId: 1484385867,
-            artistName: "Kesha",
-            collectionName: "High Road",
-            trackName: "Tonight",
-            collectionCensoredName: "High Road",
-            trackCensoredName: "Tonight",
-            artistViewUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            collectionViewUrl:
-              "https://music.apple.com/us/album/tonight/1484385866?i=1484385867&uo=4",
-            trackViewUrl:
-              "https://music.apple.com/us/album/tonight/1484385866?i=1484385867&uo=4",
-            previewUrl:
-              "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/32/a5/c4/32a5c4ee-a31f-51cd-a963-212f02a57c54/mzaf_11840614684647455797.plus.aac.p.m4a",
-            artworkUrl30:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/30x30bb.jpg",
-            artworkUrl60:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
-            artworkUrl100:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
-            collectionPrice: 10.99,
-            trackPrice: 1.29,
-            releaseDate: "2020-01-28T08:00:00Z",
-            collectionExplicitness: "explicit",
-            trackExplicitness: "explicit",
-            discCount: 1,
-            discNumber: 1,
-            trackCount: 15,
-            trackNumber: 1,
-            trackTimeMillis: 195200,
-            country: "USA",
-            currency: "USD",
-            primaryGenreName: "Pop",
-            contentAdvisoryRating: "Explicit",
-            isStreamable: true
-          },
-          {
-            wrapperType: "track",
-            kind: "song",
-            artistId: 334854763,
-            collectionId: 1484385866,
-            trackId: 1484385868,
-            artistName: "Kesha",
-            collectionName: "High Road",
-            trackName: "My Own Dance",
-            collectionCensoredName: "High Road",
-            trackCensoredName: "My Own Dance",
-            artistViewUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            collectionViewUrl:
-              "https://music.apple.com/us/album/my-own-dance/1484385866?i=1484385868&uo=4",
-            trackViewUrl:
-              "https://music.apple.com/us/album/my-own-dance/1484385866?i=1484385868&uo=4",
-            previewUrl:
-              "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview113/v4/2d/77/40/2d77403b-637e-2218-6ee2-79f6f3254a61/mzaf_18420941688950122235.plus.aac.p.m4a",
-            artworkUrl30:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/30x30bb.jpg",
-            artworkUrl60:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
-            artworkUrl100:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
-            collectionPrice: 10.99,
-            trackPrice: 1.29,
-            releaseDate: "2019-11-21T08:00:00Z",
-            collectionExplicitness: "explicit",
-            trackExplicitness: "explicit",
-            discCount: 1,
-            discNumber: 1,
-            trackCount: 15,
-            trackNumber: 2,
-            trackTimeMillis: 161173,
-            country: "USA",
-            currency: "USD",
-            primaryGenreName: "Pop",
-            contentAdvisoryRating: "Explicit",
-            isStreamable: true
-          },
-          {
-            wrapperType: "track",
-            kind: "song",
-            artistId: 334854763,
-            collectionId: 1484385866,
-            trackId: 1484385869,
-            artistName: "Kesha",
-            collectionName: "High Road",
-            trackName: "Raising Hell (feat. Big Freedia)",
-            collectionCensoredName: "High Road",
-            trackCensoredName: "Raising Hell (feat. Big Freedia)",
-            artistViewUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            collectionViewUrl:
-              "https://music.apple.com/us/album/raising-hell-feat-big-freedia/1484385866?i=1484385869&uo=4",
-            trackViewUrl:
-              "https://music.apple.com/us/album/raising-hell-feat-big-freedia/1484385866?i=1484385869&uo=4",
-            previewUrl:
-              "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/b0/4a/3c/b04a3c05-d38d-9183-ef34-04c9b7fa8c84/mzaf_12378437392253983796.plus.aac.p.m4a",
-            artworkUrl30:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/30x30bb.jpg",
-            artworkUrl60:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
-            artworkUrl100:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
-            collectionPrice: 10.99,
-            trackPrice: 1.29,
-            releaseDate: "2019-10-24T07:00:00Z",
-            collectionExplicitness: "explicit",
-            trackExplicitness: "explicit",
-            discCount: 1,
-            discNumber: 1,
-            trackCount: 15,
-            trackNumber: 3,
-            trackTimeMillis: 169693,
-            country: "USA",
-            currency: "USD",
-            primaryGenreName: "Pop",
-            contentAdvisoryRating: "Explicit",
-            isStreamable: true
-          },
-          {
-            wrapperType: "track",
-            kind: "song",
-            artistId: 334854763,
-            collectionId: 1484385866,
-            trackId: 1484385870,
-            artistName: "Kesha",
-            collectionName: "High Road",
-            trackName: "High Road",
-            collectionCensoredName: "High Road",
-            trackCensoredName: "High Road",
-            artistViewUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            collectionViewUrl:
-              "https://music.apple.com/us/album/high-road/1484385866?i=1484385870&uo=4",
-            trackViewUrl:
-              "https://music.apple.com/us/album/high-road/1484385866?i=1484385870&uo=4",
-            previewUrl:
-              "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview113/v4/8d/19/6a/8d196a39-64fa-6f8d-cf54-4d801520c76a/mzaf_17919097302906576811.plus.aac.p.m4a",
-            artworkUrl30:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/30x30bb.jpg",
-            artworkUrl60:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
-            artworkUrl100:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
-            collectionPrice: 10.99,
-            trackPrice: 1.29,
-            releaseDate: "2020-01-31T08:00:00Z",
-            collectionExplicitness: "explicit",
-            trackExplicitness: "explicit",
-            discCount: 1,
-            discNumber: 1,
-            trackCount: 15,
-            trackNumber: 4,
-            trackTimeMillis: 199947,
-            country: "USA",
-            currency: "USD",
-            primaryGenreName: "Pop",
-            contentAdvisoryRating: "Explicit",
-            isStreamable: true
-          },
-          {
-            wrapperType: "track",
-            kind: "song",
-            artistId: 334854763,
-            collectionId: 1484385866,
-            trackId: 1484385873,
-            artistName: "Kesha",
-            collectionName: "High Road",
-            trackName: "Shadow",
-            collectionCensoredName: "High Road",
-            trackCensoredName: "Shadow",
-            artistViewUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            collectionViewUrl:
-              "https://music.apple.com/us/album/shadow/1484385866?i=1484385873&uo=4",
-            trackViewUrl:
-              "https://music.apple.com/us/album/shadow/1484385866?i=1484385873&uo=4",
-            previewUrl:
-              "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/24/ec/b2/24ecb2db-d968-1284-08bf-77fb96c658d7/mzaf_16760480973040913415.plus.aac.p.m4a",
-            artworkUrl30:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/30x30bb.jpg",
-            artworkUrl60:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
-            artworkUrl100:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
-            collectionPrice: 10.99,
-            trackPrice: 1.29,
-            releaseDate: "2020-01-31T08:00:00Z",
-            collectionExplicitness: "explicit",
-            trackExplicitness: "explicit",
-            discCount: 1,
-            discNumber: 1,
-            trackCount: 15,
-            trackNumber: 5,
-            trackTimeMillis: 213853,
-            country: "USA",
-            currency: "USD",
-            primaryGenreName: "Pop",
-            contentAdvisoryRating: "Explicit",
-            isStreamable: true
-          },
-          {
-            wrapperType: "track",
-            kind: "song",
-            artistId: 334854763,
-            collectionId: 1484385866,
-            trackId: 1484385874,
-            artistName: "Kesha",
-            collectionName: "High Road",
-            trackName: "Honey",
-            collectionCensoredName: "High Road",
-            trackCensoredName: "Honey",
-            artistViewUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            collectionViewUrl:
-              "https://music.apple.com/us/album/honey/1484385866?i=1484385874&uo=4",
-            trackViewUrl:
-              "https://music.apple.com/us/album/honey/1484385866?i=1484385874&uo=4",
-            previewUrl:
-              "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/17/ee/78/17ee7839-427d-0b60-14e7-9ee059ee426e/mzaf_2725571444469446908.plus.aac.p.m4a",
-            artworkUrl30:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/30x30bb.jpg",
-            artworkUrl60:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
-            artworkUrl100:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
-            collectionPrice: 10.99,
-            trackPrice: 1.29,
-            releaseDate: "2020-01-31T08:00:00Z",
-            collectionExplicitness: "explicit",
-            trackExplicitness: "explicit",
-            discCount: 1,
-            discNumber: 1,
-            trackCount: 15,
-            trackNumber: 6,
-            trackTimeMillis: 201333,
-            country: "USA",
-            currency: "USD",
-            primaryGenreName: "Pop",
-            contentAdvisoryRating: "Explicit",
-            isStreamable: true
-          },
-          {
-            wrapperType: "track",
-            kind: "song",
-            artistId: 334854763,
-            collectionId: 1484385866,
-            trackId: 1484385875,
-            artistName: "Kesha",
-            collectionName: "High Road",
-            trackName: "Cowboy Blues",
-            collectionCensoredName: "High Road",
-            trackCensoredName: "Cowboy Blues",
-            artistViewUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            collectionViewUrl:
-              "https://music.apple.com/us/album/cowboy-blues/1484385866?i=1484385875&uo=4",
-            trackViewUrl:
-              "https://music.apple.com/us/album/cowboy-blues/1484385866?i=1484385875&uo=4",
-            previewUrl:
-              "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/8f/7f/c9/8f7fc96e-1d8f-80d4-3f97-14c8a2e261aa/mzaf_1073792274928436942.plus.aac.p.m4a",
-            artworkUrl30:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/30x30bb.jpg",
-            artworkUrl60:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
-            artworkUrl100:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
-            collectionPrice: 10.99,
-            trackPrice: 1.29,
-            releaseDate: "2020-01-31T08:00:00Z",
-            collectionExplicitness: "explicit",
-            trackExplicitness: "explicit",
-            discCount: 1,
-            discNumber: 1,
-            trackCount: 15,
-            trackNumber: 7,
-            trackTimeMillis: 240693,
-            country: "USA",
-            currency: "USD",
-            primaryGenreName: "Pop",
-            contentAdvisoryRating: "Explicit",
-            isStreamable: true
-          },
-          {
-            wrapperType: "track",
-            kind: "song",
-            artistId: 334854763,
-            collectionId: 1484385866,
-            trackId: 1484386116,
-            artistName: "Kesha",
-            collectionName: "High Road",
-            trackName:
-              "Resentment (feat. Brian Wilson, Sturgill Simpson & Wrabel)",
-            collectionCensoredName: "High Road",
-            trackCensoredName:
-              "Resentment (feat. Brian Wilson, Sturgill Simpson & Wrabel)",
-            artistViewUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            collectionViewUrl:
-              "https://music.apple.com/us/album/resentment-feat-brian-wilson-sturgill-simpson-wrabel/1484385866?i=1484386116&uo=4",
-            trackViewUrl:
-              "https://music.apple.com/us/album/resentment-feat-brian-wilson-sturgill-simpson-wrabel/1484385866?i=1484386116&uo=4",
-            previewUrl:
-              "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview113/v4/8c/c5/d3/8cc5d33a-943f-1565-7a66-b9957f0cdd77/mzaf_13101547644715644325.plus.aac.p.m4a",
-            artworkUrl30:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/30x30bb.jpg",
-            artworkUrl60:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
-            artworkUrl100:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
-            collectionPrice: 10.99,
-            trackPrice: 1.29,
-            releaseDate: "2019-12-12T08:00:00Z",
-            collectionExplicitness: "explicit",
-            trackExplicitness: "explicit",
-            discCount: 1,
-            discNumber: 1,
-            trackCount: 15,
-            trackNumber: 8,
-            trackTimeMillis: 172227,
-            country: "USA",
-            currency: "USD",
-            primaryGenreName: "Pop",
-            contentAdvisoryRating: "Explicit",
-            isStreamable: true
-          },
-          {
-            wrapperType: "track",
-            kind: "song",
-            artistId: 334854763,
-            collectionId: 1484385866,
-            trackId: 1484386117,
-            artistName: "Kesha",
-            collectionName: "High Road",
-            trackName: "Little Bit of Love",
-            collectionCensoredName: "High Road",
-            trackCensoredName: "Little Bit of Love",
-            artistViewUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            collectionViewUrl:
-              "https://music.apple.com/us/album/little-bit-of-love/1484385866?i=1484386117&uo=4",
-            trackViewUrl:
-              "https://music.apple.com/us/album/little-bit-of-love/1484385866?i=1484386117&uo=4",
-            previewUrl:
-              "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/8b/d3/95/8bd3955c-d152-7e6b-890f-a814cc694df9/mzaf_3963277220121032774.plus.aac.p.m4a",
-            artworkUrl30:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/30x30bb.jpg",
-            artworkUrl60:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
-            artworkUrl100:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
-            collectionPrice: 10.99,
-            trackPrice: 1.29,
-            releaseDate: "2020-01-31T08:00:00Z",
-            collectionExplicitness: "explicit",
-            trackExplicitness: "explicit",
-            discCount: 1,
-            discNumber: 1,
-            trackCount: 15,
-            trackNumber: 9,
-            trackTimeMillis: 142347,
-            country: "USA",
-            currency: "USD",
-            primaryGenreName: "Pop",
-            contentAdvisoryRating: "Explicit",
-            isStreamable: true
-          },
-          {
-            wrapperType: "track",
-            kind: "song",
-            artistId: 334854763,
-            collectionId: 1484385866,
-            trackId: 1484386118,
-            artistName: "Kesha",
-            collectionName: "High Road",
-            trackName: "Birthday Suit",
-            collectionCensoredName: "High Road",
-            trackCensoredName: "Birthday Suit",
-            artistViewUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            collectionViewUrl:
-              "https://music.apple.com/us/album/birthday-suit/1484385866?i=1484386118&uo=4",
-            trackViewUrl:
-              "https://music.apple.com/us/album/birthday-suit/1484385866?i=1484386118&uo=4",
-            previewUrl:
-              "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview113/v4/a3/5b/a3/a35ba3d7-fd84-ac19-12c5-4649bf2cf0f3/mzaf_2157473435052610577.plus.aac.p.m4a",
-            artworkUrl30:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/30x30bb.jpg",
-            artworkUrl60:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
-            artworkUrl100:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
-            collectionPrice: 10.99,
-            trackPrice: 1.29,
-            releaseDate: "2020-01-31T08:00:00Z",
-            collectionExplicitness: "explicit",
-            trackExplicitness: "explicit",
-            discCount: 1,
-            discNumber: 1,
-            trackCount: 15,
-            trackNumber: 10,
-            trackTimeMillis: 176773,
-            country: "USA",
-            currency: "USD",
-            primaryGenreName: "Pop",
-            contentAdvisoryRating: "Explicit",
-            isStreamable: true
-          },
-          {
-            wrapperType: "track",
-            kind: "song",
-            artistId: 334854763,
-            collectionId: 1484385866,
-            trackId: 1484386119,
-            artistName: "Kesha",
-            collectionName: "High Road",
-            trackName: "Kinky (feat. Ke$ha)",
-            collectionCensoredName: "High Road",
-            trackCensoredName: "Kinky (feat. Ke$ha)",
-            artistViewUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            collectionViewUrl:
-              "https://music.apple.com/us/album/kinky-feat-ke%24ha/1484385866?i=1484386119&uo=4",
-            trackViewUrl:
-              "https://music.apple.com/us/album/kinky-feat-ke%24ha/1484385866?i=1484386119&uo=4",
-            previewUrl:
-              "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview113/v4/c1/b6/4d/c1b64ddf-611f-76d7-2061-0dc70a5f1528/mzaf_15361581405438850533.plus.aac.p.m4a",
-            artworkUrl30:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/30x30bb.jpg",
-            artworkUrl60:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
-            artworkUrl100:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
-            collectionPrice: 10.99,
-            trackPrice: 1.29,
-            releaseDate: "2020-01-31T08:00:00Z",
-            collectionExplicitness: "explicit",
-            trackExplicitness: "explicit",
-            discCount: 1,
-            discNumber: 1,
-            trackCount: 15,
-            trackNumber: 11,
-            trackTimeMillis: 205293,
-            country: "USA",
-            currency: "USD",
-            primaryGenreName: "Pop",
-            contentAdvisoryRating: "Explicit",
-            isStreamable: true
-          },
-          {
-            wrapperType: "track",
-            kind: "song",
-            artistId: 334854763,
-            collectionId: 1484385866,
-            trackId: 1484386120,
-            artistName: "Kesha",
-            collectionName: "High Road",
-            trackName: "The Potato Song (Cuz I Want To)",
-            collectionCensoredName: "High Road",
-            trackCensoredName: "The Potato Song (Cuz I Want To)",
-            artistViewUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            collectionViewUrl:
-              "https://music.apple.com/us/album/the-potato-song-cuz-i-want-to/1484385866?i=1484386120&uo=4",
-            trackViewUrl:
-              "https://music.apple.com/us/album/the-potato-song-cuz-i-want-to/1484385866?i=1484386120&uo=4",
-            previewUrl:
-              "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/15/59/36/155936d2-a8a5-9b79-413d-569d10798429/mzaf_17936263493253388920.plus.aac.p.m4a",
-            artworkUrl30:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/30x30bb.jpg",
-            artworkUrl60:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
-            artworkUrl100:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
-            collectionPrice: 10.99,
-            trackPrice: 1.29,
-            releaseDate: "2020-01-31T08:00:00Z",
-            collectionExplicitness: "explicit",
-            trackExplicitness: "explicit",
-            discCount: 1,
-            discNumber: 1,
-            trackCount: 15,
-            trackNumber: 12,
-            trackTimeMillis: 213867,
-            country: "USA",
-            currency: "USD",
-            primaryGenreName: "Pop",
-            contentAdvisoryRating: "Explicit",
-            isStreamable: true
-          },
-          {
-            wrapperType: "track",
-            kind: "song",
-            artistId: 334854763,
-            collectionId: 1484385866,
-            trackId: 1484386122,
-            artistName: "Kesha",
-            collectionName: "High Road",
-            trackName: "BFF (feat. Wrabel)",
-            collectionCensoredName: "High Road",
-            trackCensoredName: "BFF (feat. Wrabel)",
-            artistViewUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            collectionViewUrl:
-              "https://music.apple.com/us/album/bff-feat-wrabel/1484385866?i=1484386122&uo=4",
-            trackViewUrl:
-              "https://music.apple.com/us/album/bff-feat-wrabel/1484385866?i=1484386122&uo=4",
-            previewUrl:
-              "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/7b/52/80/7b528056-df33-97c2-76f0-4b462438fbef/mzaf_15752048661430049128.plus.aac.p.m4a",
-            artworkUrl30:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/30x30bb.jpg",
-            artworkUrl60:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
-            artworkUrl100:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
-            collectionPrice: 10.99,
-            trackPrice: 1.29,
-            releaseDate: "2020-01-31T08:00:00Z",
-            collectionExplicitness: "explicit",
-            trackExplicitness: "explicit",
-            discCount: 1,
-            discNumber: 1,
-            trackCount: 15,
-            trackNumber: 13,
-            trackTimeMillis: 251813,
-            country: "USA",
-            currency: "USD",
-            primaryGenreName: "Pop",
-            contentAdvisoryRating: "Explicit",
-            isStreamable: true
-          },
-          {
-            wrapperType: "track",
-            kind: "song",
-            artistId: 334854763,
-            collectionId: 1484385866,
-            trackId: 1484386123,
-            artistName: "Kesha",
-            collectionName: "High Road",
-            trackName: "Father Daughter Dance",
-            collectionCensoredName: "High Road",
-            trackCensoredName: "Father Daughter Dance",
-            artistViewUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            collectionViewUrl:
-              "https://music.apple.com/us/album/father-daughter-dance/1484385866?i=1484386123&uo=4",
-            trackViewUrl:
-              "https://music.apple.com/us/album/father-daughter-dance/1484385866?i=1484386123&uo=4",
-            previewUrl:
-              "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview113/v4/dc/0c/61/dc0c61b7-5c44-3adf-818d-9e4c68ad2bba/mzaf_5301763213679816594.plus.aac.p.m4a",
-            artworkUrl30:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/30x30bb.jpg",
-            artworkUrl60:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
-            artworkUrl100:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
-            collectionPrice: 10.99,
-            trackPrice: 1.29,
-            releaseDate: "2020-01-31T08:00:00Z",
-            collectionExplicitness: "explicit",
-            trackExplicitness: "explicit",
-            discCount: 1,
-            discNumber: 1,
-            trackCount: 15,
-            trackNumber: 14,
-            trackTimeMillis: 157253,
-            country: "USA",
-            currency: "USD",
-            primaryGenreName: "Pop",
-            contentAdvisoryRating: "Explicit",
-            isStreamable: true
-          },
-          {
-            wrapperType: "track",
-            kind: "song",
-            artistId: 334854763,
-            collectionId: 1484385866,
-            trackId: 1484386124,
-            artistName: "Kesha",
-            collectionName: "High Road",
-            trackName: "Chasing Thunder",
-            collectionCensoredName: "High Road",
-            trackCensoredName: "Chasing Thunder",
-            artistViewUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            collectionViewUrl:
-              "https://music.apple.com/us/album/chasing-thunder/1484385866?i=1484386124&uo=4",
-            trackViewUrl:
-              "https://music.apple.com/us/album/chasing-thunder/1484385866?i=1484386124&uo=4",
-            previewUrl:
-              "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/17/cb/87/17cb879c-2401-8fa3-e8f0-3d8460d7d3a9/mzaf_604827042135135891.plus.aac.p.m4a",
-            artworkUrl30:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/30x30bb.jpg",
-            artworkUrl60:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
-            artworkUrl100:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
-            collectionPrice: 10.99,
-            trackPrice: 1.29,
-            releaseDate: "2020-01-31T08:00:00Z",
-            collectionExplicitness: "explicit",
-            trackExplicitness: "explicit",
-            discCount: 1,
-            discNumber: 1,
-            trackCount: 15,
-            trackNumber: 15,
-            trackTimeMillis: 221347,
-            country: "USA",
-            currency: "USD",
-            primaryGenreName: "Pop",
-            contentAdvisoryRating: "Explicit",
-            isStreamable: true
-          }
-        ]
-      };
+      return tracks;
     },
     millisToMinutesAndSeconds(millis) {
       const minutes = Math.floor((millis / 1000 / 60) << 0);
@@ -799,7 +192,6 @@ export default {
       if (currentTrack !== this.currentTrack) {
         this.currentTrack = currentTrack;
         this.togglePlayButton(currentTrack);
-
         let audio = new Audio(track.previewUrl);
         audio.play();
         audio.onended = () => {
@@ -815,74 +207,96 @@ export default {
       let children = track.childNodes[0].childNodes;
       let trackNumber = children[0];
       let playButton = children[1];
-
       if (trackNumber.classList.contains("track-nb-hidden")) {
         playButton.classList.remove("play-btn-active");
         trackNumber.classList.remove("track-nb-hidden");
-        playButton.innerText = "play";
+        playButton.childNodes[0].innerHTML =
+          "<i aria-hidden='true' class='v-icon notranslate mdi mdi-play theme--dark'>";
       } else {
         trackNumber.classList.add("track-nb-hidden");
         playButton.classList.add("play-btn-active");
-        playButton.innerText = "playing";
+        playButton.childNodes[0].innerHTML =
+          "<i aria-hidden='true' class='v-icon notranslate mdi mdi-pause'>";
       }
+    },
+    trackClicked(trackId) {
+      const lastSelectedTrack = document.getElementById(this.selectedTrack);
+      if (lastSelectedTrack != null) {
+        this.removeSelectedTrackBackground(lastSelectedTrack);
+        this.selectedTrack = null;
+      }
+      const currentSelectedTrack = document.getElementById(trackId);
+      if (currentSelectedTrack != lastSelectedTrack) {
+        this.addSelectedTrackBackground(currentSelectedTrack);
+        this.selectedTrack = trackId;
+      }
+    },
+    removeSelectedTrackBackground(trackElement) {
+      trackElement.classList.remove("selected-track");
+    },
+    addSelectedTrackBackground(trackElement) {
+      trackElement.classList.add("selected-track");
     }
   }
 };
 </script>
 
 <style>
-.album-header {
-  margin-bottom: 12px;
-}
-.album-header p {
-  color: darkgrey;
-  margin-bottom: 0 !important;
-}
-.album-header a {
-  color: white !important;
-  text-decoration: none;
-}
-.album-header a:hover {
-  text-decoration: underline;
-}
-.album-info {
-  display: inline-block;
-}
-
-.album-name {
-  display: inline-block;
-}
 .show-btn {
   color: rgba(255, 255, 255, 1) !important;
 }
+
 .buy-btn {
   display: inline-block;
 }
+
 .album-genre {
   display: block;
 }
 .track-nb {
   display: inline-block;
 }
+
 .play-btn {
   display: none !important;
   height: 30px;
   width: 30px;
 }
-
+.track:hover {
+  background: #212121;
+}
 .track:hover .track-nb {
   display: none;
 }
+
 .track:hover .play-btn {
   display: inline-block !important;
+}
+.selected-track {
+  background: #313131 !important;
 }
 .play-btn:focus {
   display: inline-block;
 }
+
 .play-btn-active {
   display: inline-block !important;
 }
 .track-nb-hidden {
   display: none !important;
+}
+
+.link {
+  text-decoration: none;
+}
+.link:hover {
+  text-decoration: underline;
+}
+.itunes-btn {
+  width: 35px;
+  overflow: hidden;
+  height: 35px;
+  background: url("https://linkmaker.itunes.apple.com/embed/v1/app-icon.svg")
+    no-repeat;
 }
 </style>

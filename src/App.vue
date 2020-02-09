@@ -7,14 +7,9 @@
 
       <v-app-bar app clipped-left>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-        <v-toolbar-title class="title ml-3 mr-5" >Ubeat</v-toolbar-title>
+        <v-toolbar-title class="title ml-3 mr-5">Ubeat</v-toolbar-title>
         <v-spacer />
-        <v-text-field
-          solo-inverted
-          flat
-          hide-details
-          label="Search"
-        >
+        <v-text-field solo-inverted flat hide-details label="Search">
           <v-icon slot="prepend-inner" color="#fff">
             mdi-magnify
           </v-icon>
@@ -27,10 +22,10 @@
             </v-btn>
           </template>
           <avatar-menu />
-          </v-menu>
+        </v-menu>
       </v-app-bar>
 
-      <v-content>
+      <v-content class="align-content-center">
         <v-container class="fill-height" fluid>
           <router-view />
         </v-container>
@@ -52,11 +47,16 @@ export default {
     source: String
   },
   data: () => ({
-    drawer: null,
+    drawer: null
   }),
-  created () {
-    this.$vuetify.theme.dark = true
-  },
+  created() {
+    this.$vuetify.theme.dark = true;
+  }
 };
 </script>
 
+<style>
+* {
+  user-select: none;
+}
+</style>
