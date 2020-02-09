@@ -7,7 +7,6 @@
           <!--- TODO replace hardcoded image with some sort of api call -->
             <v-img
               contain
-              class="artist-image"
               src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
               height="300px"
               width="300px"
@@ -97,6 +96,4 @@ export default {
 </script>
 
 <style>
-.artist-image {
-}
 </style>
