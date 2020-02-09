@@ -13,7 +13,7 @@
             />
           </v-row>
         </v-col>
-        <v-col class="text-center text-sm-start pl-3">
+        <v-col class="album-info text-center text-sm-start pl-3">
           <p class="body-2 font-weight-thin mb-0 pl-1 mt-sm-2">
             Album
           </p>
@@ -21,7 +21,10 @@
             {{ this.albumInfo.collectionName }}
           </h1>
           <p class="body-2 grey--text darken-1 mb-1">
-            By <a href="/#/artist" class="artist-link white--text">{{ this.albumInfo.artistName }}</a>
+            By
+            <a href="/#/artist" class="artist-link white--text">{{
+              this.albumInfo.artistName
+            }}</a>
           </p>
           <p class="body-2 mb-1 grey--text darken-1">
             {{ this.getAlbumYear() }} • {{ this.albumInfo.trackCount }} songs
@@ -32,10 +35,13 @@
           <v-row class="justify-center">
             <v-col class="pa-0 d-flex justify-center justify-sm-start">
               <v-btn class="buy-btn ml-3" v-on:click="buyAlbumRedirect">
-                <p class="mt-auto mb-auto">$ {{ this.albumInfo.collectionPrice }} Buy </p>
+                <p class="mt-auto mb-auto">
+                  $ {{ this.albumInfo.collectionPrice }} Buy
+                </p>
               </v-btn>
-              <a href="https://geo.music.apple.com/ca/album/high-road/1484385866?mt=1&app=music&ls=1"
-                 class="d-inline-block itunes-btn ml-2"
+              <a
+                href="https://geo.music.apple.com/ca/album/high-road/1484385866?mt=1&app=music&ls=1"
+                class="d-inline-block itunes-btn ml-2"
               />
             </v-col>
           </v-row>
@@ -47,10 +53,14 @@
       <header class="songs-header">
         <v-row no-gutters>
           <v-col cols="1" class="d-flex justify-center pr-5">
-            <span class="body-2 mb-1 grey--text lighten-2 font-weight-thin">#</span>
+            <span class="body-2 mb-1 grey--text lighten-2 font-weight-thin"
+              >#</span
+            >
           </v-col>
           <v-col cols="10">
-            <span class="body-2 grey--text lighten-2 font-weight-thin">TITLE</span>
+            <span class="body-2 grey--text lighten-2 font-weight-thin"
+              >TITLE</span
+            >
           </v-col>
           <v-col cols="1" class="d-flex justify-center align-center pr-5">
             <v-icon>mdi-timer</v-icon>
@@ -65,8 +75,9 @@
         v-bind:key="track.trackId"
         v-for="track in tracks"
         class="track"
+        @click="trackClicked(track.trackId)"
       >
-        <v-col cols="1" class="track d-flex align-center justify-center">
+        <v-col cols="1" class="d-flex align-center justify-center">
           <span class="track-nb">{{ track.trackNumber }}</span>
           <v-btn class="play-btn" icon v-on:click="playAudio(track)">
             <v-icon>
@@ -93,21 +104,22 @@ import tracks from "../JSON/tracks.json";
 export default {
   name: "Album",
   props: ["album"],
-  data: function () {
+  data: function() {
     return {
       tracks: this.getTracksInfo(),
       albumInfo: this.getAlbumInfo(),
       transparent: "rgba(255, 255, 255, 0)",
       audio: null,
-      currentTrack: null
+      currentTrack: null,
+      currentSelectedTrack: null
     };
   },
   methods: {
-    getAlbumInfo: function (albumId) {
+    getAlbumInfo: function(albumId) {
       const album = this.getAlbum(albumId);
       return album.results[0];
     },
-    getAlbum: function (albumId) {
+    getAlbum: function(albumId) {
       // To avoid eslint error
       if (albumId == 0) {
         return 0;
@@ -146,17 +158,17 @@ export default {
         ]
       };
     },
-    getAlbumYear: function () {
+    getAlbumYear: function() {
       const date = new Date(this.albumInfo.releaseDate);
       return date.getFullYear();
     },
-    getTracksInfo: function () {
+    getTracksInfo: function() {
       // const albumId = this.albumInfo.collectionId;
       const albumId = 1;
       const tracks = this.getTracks(albumId);
       return tracks.results;
     },
-    getTracks: function (albumId) {
+    getTracks: function(albumId) {
       // To avoid eslint error
       if (albumId == 0) {
         return 0;
@@ -189,7 +201,7 @@ export default {
       let currentTrack = document.getElementById(track.trackId);
       if (currentTrack !== this.currentTrack) {
         this.currentTrack = currentTrack;
-        this.togglePlayButton(currentTrack)
+        this.togglePlayButton(currentTrack);
         let audio = new Audio(track.previewUrl);
         audio.play();
         audio.onended = () => {
@@ -208,15 +220,35 @@ export default {
       if (trackNumber.classList.contains("track-nb-hidden")) {
         playButton.classList.remove("play-btn-active");
         trackNumber.classList.remove("track-nb-hidden");
-        playButton.childNodes[0].innerHTML = "<i aria-hidden='true' class='v-icon notranslate mdi mdi-play theme--dark'>";
+        playButton.childNodes[0].innerHTML =
+          "<i aria-hidden='true' class='v-icon notranslate mdi mdi-play theme--dark'>";
       } else {
         trackNumber.classList.add("track-nb-hidden");
         playButton.classList.add("play-btn-active");
-        playButton.childNodes[0].innerHTML = "<i aria-hidden='true' class='v-icon notranslate mdi mdi-pause'>";
-        }
+        playButton.childNodes[0].innerHTML =
+          "<i aria-hidden='true' class='v-icon notranslate mdi mdi-pause'>";
       }
+    },
+    trackClicked(trackId) {
+      const lastSelectedTrack = document.getElementById(this.selectedTrack);
+      if (lastSelectedTrack != null) {
+        this.removeSelectedTrackBackground(lastSelectedTrack);
+        this.selectedTrack = null;
+      }
+      const currentSelectedTrack = document.getElementById(trackId);
+      if (currentSelectedTrack != lastSelectedTrack) {
+        this.addSelectedTrackBackground(currentSelectedTrack);
+        this.selectedTrack = trackId;
+      }
+    },
+    removeSelectedTrackBackground(trackElement) {
+      trackElement.classList.remove("selected-track");
+    },
+    addSelectedTrackBackground(trackElement) {
+      trackElement.classList.add("selected-track");
     }
-  };
+  }
+};
 </script>
 
 <style>
@@ -241,12 +273,6 @@ export default {
   height: 30px;
   width: 30px;
 }
-.songs-header {
-  user-select: none;
-}
-.track {
-  user-select: none;
-}
 .track:hover {
   background: #212121;
 }
@@ -257,7 +283,9 @@ export default {
 .track:hover .play-btn {
   display: inline-block !important;
 }
-
+.selected-track {
+  background: #313131 !important;
+}
 .play-btn:focus {
   display: inline-block;
 }
@@ -265,7 +293,6 @@ export default {
 .play-btn-active {
   display: inline-block !important;
 }
-
 .track-nb-hidden {
   display: none !important;
 }
@@ -276,11 +303,11 @@ export default {
 .artist-link:hover {
   text-decoration: underline;
 }
-
 .itunes-btn {
   width: 35px;
   overflow: hidden;
-  height:35px;
-  background: url("https://linkmaker.itunes.apple.com/embed/v1/app-icon.svg") no-repeat;
+  height: 35px;
+  background: url("https://linkmaker.itunes.apple.com/embed/v1/app-icon.svg")
+    no-repeat;
 }
 </style>
