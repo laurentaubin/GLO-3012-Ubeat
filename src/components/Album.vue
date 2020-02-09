@@ -80,7 +80,7 @@
         class="track"
         @click="trackClicked(track.trackId)"
       >
-        <v-col cols="1" class="track align-center justify-center">
+        <v-col cols="1" class="d-flex align-center justify-center">
           <span class="track-nb">{{ track.trackNumber }}</span>
           <v-btn class="play-btn" icon v-on:click="playAudio(track)">
             <v-icon>
