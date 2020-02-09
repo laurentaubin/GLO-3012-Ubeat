@@ -17,12 +17,14 @@
           <p class="body-2 font-weight-thin mb-0 pl-1 mt-sm-2">
             Album
           </p>
-          <h1 class="font-weight-bold display-2 mb-3">
-            {{ this.albumInfo.collectionName }}
-          </h1>
+          <a class="link white--text" href="/#/album">
+            <h1 class="font-weight-bold display-2 mb-3">
+              {{ this.albumInfo.collectionName }}
+            </h1>
+          </a>
           <p class="body-2 grey--text darken-1 mb-1">
             By
-            <a href="/#/artist" class="artist-link white--text">{{
+            <a href="/#/artist" class="link white--text">{{
               this.albumInfo.artistName
             }}</a>
           </p>
@@ -263,7 +265,6 @@ export default {
 .album-genre {
   display: block;
 }
-
 .track-nb {
   display: inline-block;
 }
@@ -297,10 +298,10 @@ export default {
   display: none !important;
 }
 
-.artist-link {
+.link {
   text-decoration: none;
 }
-.artist-link:hover {
+.link:hover {
   text-decoration: underline;
 }
 .itunes-btn {
