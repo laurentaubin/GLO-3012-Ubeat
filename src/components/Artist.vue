@@ -1,37 +1,36 @@
 <template>
   <v-container>
     <!-- Artist header -->
-    <v-container class="pb-md-7">
-      <v-row no-gutters>
-        <v-col cols="12" sm="12" md="4" align="center">
+    <v-container>
+      <v-row class="pl-12">
+        <v-col cols="12" xs="12" sm=4 md="4" lg="3" class="d-flex align-center">
           <!--- TODO replace hardcoded image with some sort of api call -->
-          <v-img
-            class="artist-image"
-            src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-            contain
-            height="200px"
-            width="200px"
-          />
+            <v-img
+              contain
+              src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
+              height="300px"
+              width="300px"
+            />
         </v-col>
-        <v-col cols="12" sm="12" md="8" class="text-center text-md-start">
-          <v-row>
-            <v-col class="pt-md-12">
-              <h1 class="font-weight-bold display-4">
-                {{ this.artist.artistName }}
-              </h1>
+        <v-col xm="12" sm="8" md="6" class="d-flex align-center">
+          <v-row class="align-center">
+            <v-col class="pt-md-12 text-center text-sm-start">
               <p class="font-weight-regular subtitle-1 ml-md-1">
                 {{ this.artist.primaryGenreName }}
               </p>
+              <h1 class="font-weight-bold display-4">
+                {{ this.artist.artistName }}
+              </h1>
             </v-col>
           </v-row>
         </v-col>
       </v-row>
     </v-container>
-    <v-divider />
     <!-- Artist albums -->
-    <v-container>
+    <v-container class="px-12">
+      <v-divider />
       <h1 class="title font-weight-bold">Albums</h1>
-      <albumList v-bind:albums="albums" />
+      <albumList v-bind:albums="albums" class="px-0"/>
     </v-container>
   </v-container>
 </template>
@@ -97,7 +96,4 @@ export default {
 </script>
 
 <style>
-.artist-image {
-  border-radius: 50%;
-}
 </style>

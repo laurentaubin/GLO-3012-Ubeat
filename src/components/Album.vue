@@ -1,81 +1,104 @@
 <template>
-  <div class="full-width">
-    <header class="album-header">
-      <v-row>
-        <v-col>
-          <!-- TODO Replace hardcoded image with image in api response -->
-          <v-img
-            class="album-image"
-            src="https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg"
-            height="300px"
-            width="300px"
-            clear="left"
-          ></v-img>
+  <v-container class="px-0">
+    <!-- album header -->
+    <v-container class="pb-md-7">
+      <v-row no-gutters class="justify-end">
+        <v-col cols="12" xs="12" sm="5" md="4" lg="3" class="align-end">
+          <v-row>
+            <v-img
+              contain
+              src="https://is3-ssl.mzstatic.com/image/thumb/Music113/v4/52/0a/df/520adf4c-36e7-5d7d-114d-c5682df53b98/886447918104.jpg/939x0w.jpg"
+              height="200px"
+              width="200px"
+            />
+          </v-row>
         </v-col>
-        <v-col class="album-info">
-          <h1 class="album-name">{{ this.albumInfo.collectionName }}</h1>
-          <!-- TODO Replace /#/artist ref by ref to actual artist ID -->
-          <p>
-            By <a href="/#/artist">{{ this.albumInfo.artistName }}</a>
+        <v-col class="album-info text-center text-sm-start pl-3">
+          <p class="body-2 font-weight-thin mb-0 pl-1 mt-sm-2">
+            Album
           </p>
-          <p class="album-year">
+          <!-- TODO Replace hardcoded link to actual album link -->
+          <a class="link white--text" href="/#/album">
+            <h1 class="font-weight-bold display-2 mb-3">
+              {{ this.albumInfo.collectionName }}
+            </h1>
+          </a>
+          <!-- TODO Replace hardcoded link to actual artist link -->
+          <p class="body-2 grey--text darken-1 mb-1">
+            By
+            <a href="/#/artist" class="link white--text">{{
+              this.albumInfo.artistName
+            }}</a>
+          </p>
+          <p class="body-2 mb-1 grey--text darken-1">
             {{ this.getAlbumYear() }} • {{ this.albumInfo.trackCount }} songs
           </p>
-          <p class="album-genre">
+          <p class="body-2 mb-1 grey--text darken-1">
             {{ this.albumInfo.primaryGenreName }}
           </p>
+          <v-row class="justify-center">
+            <v-col class="pa-0 d-flex justify-center justify-sm-start">
+              <v-btn class="buy-btn ml-3" v-on:click="buyAlbumRedirect">
+                <p class="mt-auto mb-auto">
+                  $ {{ this.albumInfo.collectionPrice }} Buy
+                </p>
+              </v-btn>
+              <a
+                href="https://geo.music.apple.com/ca/album/high-road/1484385866?mt=1&app=music&ls=1"
+                class="d-inline-block itunes-btn ml-2"
+              />
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
-      <v-row>
-        <v-col>
-          <v-btn class="buy-btn" v-on:click="buyAlbumRedirect">
-            <p>$ {{ this.albumInfo.collectionPrice }} Buy </p>
-          </v-btn>
-        </v-col>
-        <v-col>
-          <v-img
-            class="buy-btn"
-            v-on:click="buyAlbumRedirect"
-            src="https://linkmaker.itunes.apple.com/embed/v1/app-icon.svg"
-            height="40px"
-            width="40px"
-            clear="left"
-          ></v-img>
+    </v-container>
 
-        </v-col>
-      </v-row>
-    </header>
-
-    <div class="song-list">
+    <v-container class="song-list" fluid>
       <header class="songs-header">
-        <v-row>
-          <v-col cols="1">
-            <span>#</span>
+        <v-row no-gutters>
+          <v-col cols="1" class="d-flex justify-center pr-5">
+            <span class="body-2 mb-1 grey--text lighten-2 font-weight-thin"
+              >#</span
+            >
           </v-col>
           <v-col cols="10">
-            <span>Title</span>
+            <span class="body-2 grey--text lighten-2 font-weight-thin"
+              >TITLE</span
+            >
           </v-col>
-          <v-col cols="1" alignEnd>
-            <span>Duration</span>
+          <v-col cols="1" class="d-flex justify-center align-center pr-5">
+            <v-icon>mdi-timer</v-icon>
           </v-col>
         </v-row>
       </header>
+      <v-divider />
 
-      <!-- TODO Add effect and play button on hover -->
-      <v-row v-bind:id="track.trackId" v-bind:key="track.trackId" v-for="track in tracks">
-        <v-col cols="1" class="track">
+      <v-row
+        v-bind:id="track.trackId"
+        v-bind:key="track.trackId"
+        v-for="track in tracks"
+        class="track"
+        @click="trackClicked(track.trackId)"
+      >
+        <v-col cols="1" class="d-flex align-center justify-center">
           <span class="track-nb">{{ track.trackNumber }}</span>
-          <v-btn class="play-btn" v-on:click="playAudio(track)">play</v-btn>
+          <v-btn class="play-btn" icon v-on:click="playAudio(track)">
+            <v-icon>
+              mdi-play
+            </v-icon>
+          </v-btn>
         </v-col>
-        <v-col cols="10">
-          {{ track.trackName }}
+        <v-col cols="10" class="d-flex align-center">
+          <span>
+            {{ track.trackName }}
+          </span>
         </v-col>
-        <v-col cols="1" alignEnd>
+        <v-col cols="1" class="d-flex align-center">
           {{ millisToMinutesAndSeconds(track.trackTimeMillis) }}
         </v-col>
       </v-row>
-    </div>
-  </div>
+    </v-container>
+  </v-container>
 </template>
 
 <script>
@@ -90,7 +113,8 @@ export default {
       albumInfo: this.getAlbumInfo(),
       transparent: "rgba(255, 255, 255, 0)",
       audio: null,
-      currentTrack: null
+      currentTrack: null,
+      currentSelectedTrack: null
     };
   },
   methods: {
@@ -180,7 +204,7 @@ export default {
       let currentTrack = document.getElementById(track.trackId);
       if (currentTrack !== this.currentTrack) {
         this.currentTrack = currentTrack;
-        this.togglePlayButton(currentTrack)
+        this.togglePlayButton(currentTrack);
         let audio = new Audio(track.previewUrl);
         audio.play();
         audio.onended = () => {
@@ -199,72 +223,93 @@ export default {
       if (trackNumber.classList.contains("track-nb-hidden")) {
         playButton.classList.remove("play-btn-active");
         trackNumber.classList.remove("track-nb-hidden");
-        playButton.innerText = "play";
+        playButton.childNodes[0].innerHTML =
+          "<i aria-hidden='true' class='v-icon notranslate mdi mdi-play theme--dark'>";
       } else {
         trackNumber.classList.add("track-nb-hidden");
         playButton.classList.add("play-btn-active");
-        playButton.innerText = "playing";
+        playButton.childNodes[0].innerHTML =
+          "<i aria-hidden='true' class='v-icon notranslate mdi mdi-pause'>";
       }
+    },
+    trackClicked(trackId) {
+      const lastSelectedTrack = document.getElementById(this.selectedTrack);
+      if (lastSelectedTrack != null) {
+        this.removeSelectedTrackBackground(lastSelectedTrack);
+        this.selectedTrack = null;
+      }
+      const currentSelectedTrack = document.getElementById(trackId);
+      if (currentSelectedTrack != lastSelectedTrack) {
+        this.addSelectedTrackBackground(currentSelectedTrack);
+        this.selectedTrack = trackId;
+      }
+    },
+    removeSelectedTrackBackground(trackElement) {
+      trackElement.classList.remove("selected-track");
+    },
+    addSelectedTrackBackground(trackElement) {
+      trackElement.classList.add("selected-track");
     }
   }
 };
 </script>
 
 <style>
-.full-width {
-  width: 100%;
-}
-.album-header {
-  margin-bottom: 12px;
-  margin-top: 32px;
-}
-.album-header p {
-  color: darkgrey;
-  margin-bottom: 0 !important;
-}
-.album-header a {
-  color: white !important;
-  text-decoration: none;
-}
-.album-header a:hover {
-  text-decoration: underline;
-}
-.album-info {
-  text-align: left;
-}
-.album-name {
-  display: inline-block;
-}
 .show-btn {
   color: rgba(255, 255, 255, 1) !important;
 }
+
 .buy-btn {
   display: inline-block;
 }
+
 .album-genre {
   display: block;
 }
 .track-nb {
   display: inline-block;
 }
+
 .play-btn {
   display: none !important;
   height: 30px;
   width: 30px;
 }
+.track:hover {
+  background: #212121;
+}
 .track:hover .track-nb {
   display: none;
 }
+
 .track:hover .play-btn {
   display: inline-block !important;
+}
+.selected-track {
+  background: #313131 !important;
 }
 .play-btn:focus {
   display: inline-block;
 }
+
 .play-btn-active {
   display: inline-block !important;
 }
 .track-nb-hidden {
   display: none !important;
+}
+
+.link {
+  text-decoration: none;
+}
+.link:hover {
+  text-decoration: underline;
+}
+.itunes-btn {
+  width: 35px;
+  overflow: hidden;
+  height: 35px;
+  background: url("https://linkmaker.itunes.apple.com/embed/v1/app-icon.svg")
+    no-repeat;
 }
 </style>

@@ -25,7 +25,7 @@
         </v-menu>
       </v-app-bar>
 
-      <v-content>
+      <v-content class="align-content-center">
         <v-container class="fill-height" fluid>
           <router-view />
         </v-container>
