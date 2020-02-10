@@ -147,8 +147,7 @@
 
 <script>
 export default {
-  name: "Home",
-  components: ["HomeMusicCardList"]
+  name: "Home"
 };
 </script>
 
