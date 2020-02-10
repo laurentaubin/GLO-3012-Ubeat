@@ -14,34 +14,28 @@
           </v-row>
         </v-col>
         <v-col class="album-info text-center text-sm-start pl-3">
-          <p class="body-2 font-weight-thin mb-0 pl-1 mt-sm-2">
-            Album
-          </p>
+          <p class="body-2 font-weight-thin mb-0 pl-1 mt-sm-2">Album</p>
           <!-- TODO Replace hardcoded link to actual album link -->
           <a class="link white--text" href="/#/album">
-            <h1 class="font-weight-bold display-2 mb-3">
-              {{ this.albumInfo.collectionName }}
-            </h1>
+            <h1 class="font-weight-bold display-2 mb-3">{{ this.albumInfo.collectionName }}</h1>
           </a>
           <!-- TODO Replace hardcoded link to actual artist link -->
           <p class="body-2 grey--text darken-1 mb-1">
             By
-            <a href="/#/artist" class="link white--text">{{
+            <a href="/#/artist" class="link white--text">
+              {{
               this.albumInfo.artistName
-            }}</a>
+              }}
+            </a>
           </p>
-          <p class="body-2 mb-1 grey--text darken-1">
-            {{ this.getAlbumYear() }} • {{ this.albumInfo.trackCount }} songs
-          </p>
-          <p class="body-2 mb-1 grey--text darken-1">
-            {{ this.albumInfo.primaryGenreName }}
-          </p>
+          <p
+            class="body-2 mb-1 grey--text darken-1"
+          >{{ this.getAlbumYear() }} • {{ this.albumInfo.trackCount }} songs</p>
+          <p class="body-2 mb-1 grey--text darken-1">{{ this.albumInfo.primaryGenreName }}</p>
           <v-row class="justify-center">
             <v-col class="pa-0 d-flex justify-center justify-sm-start">
               <v-btn class="buy-btn ml-3" v-on:click="buyAlbumRedirect">
-                <p class="mt-auto mb-auto">
-                  $ {{ this.albumInfo.collectionPrice }} Buy
-                </p>
+                <p class="mt-auto mb-auto">$ {{ this.albumInfo.collectionPrice }} Buy</p>
               </v-btn>
               <a
                 href="https://geo.music.apple.com/ca/album/high-road/1484385866?mt=1&app=music&ls=1"
@@ -57,14 +51,10 @@
       <header class="songs-header">
         <v-row no-gutters>
           <v-col cols="1" class="d-flex justify-center pr-5">
-            <span class="body-2 mb-1 grey--text lighten-2 font-weight-thin"
-              >#</span
-            >
+            <span class="body-2 mb-1 grey--text lighten-2 font-weight-thin">#</span>
           </v-col>
           <v-col cols="10">
-            <span class="body-2 grey--text lighten-2 font-weight-thin"
-              >TITLE</span
-            >
+            <span class="body-2 grey--text lighten-2 font-weight-thin">TITLE</span>
           </v-col>
           <v-col cols="1" class="d-flex justify-center align-center pr-5">
             <v-icon>mdi-timer</v-icon>
@@ -83,19 +73,16 @@
         <v-col cols="1" class="d-flex align-center justify-center">
           <span class="track-nb">{{ track.trackNumber }}</span>
           <v-btn class="play-btn" icon v-on:click="playAudio(track)">
-            <v-icon>
-              mdi-play
-            </v-icon>
+            <v-icon>mdi-play</v-icon>
           </v-btn>
         </v-col>
         <v-col cols="10" class="d-flex align-center">
-          <span>
-            {{ track.trackName }}
-          </span>
+          <span>{{ track.trackName }}</span>
         </v-col>
-        <v-col cols="1" class="d-flex align-center">
-          {{ millisToMinutesAndSeconds(track.trackTimeMillis) }}
-        </v-col>
+        <v-col
+          cols="1"
+          class="d-flex align-center"
+        >{{ millisToMinutesAndSeconds(track.trackTimeMillis) }}</v-col>
       </v-row>
     </v-container>
   </v-container>
