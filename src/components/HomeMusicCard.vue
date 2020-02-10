@@ -1,4 +1,4 @@
- <template>
+<template>
   <div>
     <v-card class="mx-auto" max-width="400">
       <v-img
@@ -33,5 +33,4 @@ export default {
 };
 </script>
 
-<style >
-</style>
+<style></style>

@@ -54,7 +54,7 @@
       <v-row no-gutters>
         <h1 class="title font-weight-bold">Artists</h1>
       </v-row>
-      <v-divider class="pb-3"/>
+      <v-divider class="pb-3" />
       <v-row no-gutters class="d-flex align-center">
         <v-card class="mr-3 mb-3">
           <v-row>
@@ -81,7 +81,7 @@
       <v-row no-gutters>
         <h1 class="title font-weight-bold">Albums</h1>
       </v-row>
-      <v-divider class="pb-3"/>
+      <v-divider class="pb-3" />
       <v-row no-gutters class="d-flex align-center">
         <v-card class="mr-3 mb-3">
           <v-row>
