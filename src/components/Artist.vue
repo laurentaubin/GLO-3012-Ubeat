@@ -2,15 +2,27 @@
   <v-container>
     <!-- Artist header -->
     <v-container>
-      <v-row class="pl-12">
-        <v-col cols="12" xs="12" sm=4 md="4" lg="3" class="d-flex align-center">
+      <v-row
+        :class="{
+          'pl-0': $vuetify.breakpoint.xs,
+          'pl-12': $vuetify.breakpoint.smAndUp
+        }"
+      >
+        <v-col
+          cols="12"
+          xs="12"
+          sm="4"
+          md="4"
+          lg="3"
+          class="d-flex align-center"
+        >
           <!--- TODO replace hardcoded image with some sort of api call -->
-            <v-img
-              contain
-              src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-              height="300px"
-              width="300px"
-            />
+          <v-img
+            contain
+            src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
+            height="300px"
+            width="300px"
+          />
         </v-col>
         <v-col xm="12" sm="8" md="6" class="d-flex align-center">
           <v-row class="align-center">
@@ -27,10 +39,15 @@
       </v-row>
     </v-container>
     <!-- Artist albums -->
-    <v-container class="px-12">
+    <v-container
+      :class="{
+        'pl-0': $vuetify.breakpoint.xs,
+        'px-12': $vuetify.breakpoint.smAndUp
+      }"
+    >
       <v-divider />
       <h1 class="title font-weight-bold">Albums</h1>
-      <albumList v-bind:albums="albums" class="px-0"/>
+      <albumList v-bind:albums="albums" class="px-0" />
     </v-container>
   </v-container>
 </template>
@@ -95,5 +112,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
