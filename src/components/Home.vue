@@ -1,154 +1,106 @@
 <template>
-  <div class="all-in">
-    <div class="premierDiv">
-      <p class="display-3">Home</p>
-    </div>
-    <div class="recentlyPlayed">
-      <p>Recently played</p>
-    </div>
-    <hr class="homeSeparator" />
+  <v-container>
+    <v-container>
+      <h1 class="font-weight-bold display-2 mb-3 pb-10">Home</h1>
+    </v-container>
 
-    <div class="scrollmenu">
-      <span class="innerspan">
-        <img
-          class="imageShakira"
-          style="max-width: 300px; border-radius:50%"
-          src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-        />
-        <btn class="boutonshakira" style="border-radius:60%">
-          <v-icon>mdi-play</v-icon>
-        </btn>
-
-        <p>Shakiraaaa</p>
-      </span>
-      <span class="innerspan">
-        <img
-          style="border-radius:50%; max-width: 300px"
-          src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-        />
-        <p>Shakira</p>
-      </span>
-      <span class="innerspan">
-        <img
-          style="max-width: 300px"
-          src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-        />
-        <p>Shakira</p>
-      </span>
-      <span class="innerspan">
-        <img
-          style="max-width: 300px"
-          src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-        />
-        <p>Shakira</p>
-      </span>
-      <span class="innerspan">
-        <img
-          style="max-width: 300px"
-          src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-        />
-        <p>Shakira</p>
-      </span>
-      <span class="innerspan">
-        <img
-          style="max-width: 300px"
-          src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-        />
-        <p>Shakira</p>
-      </span>
-      <span class="innerspan">
-        <img
-          style="max-width: 300px"
-          src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-        />
-        <p>Shakira</p>
-      </span>
-    </div>
-    <!-- deuxieme liste horizontale -->
-    <div class="Artists">
-      <p>Artists</p>
-    </div>
-    <hr class="ArtistsSeparator" />
-
-    <div class="scrollmenu2">
-      <span class="innerspan">
-        <img
-          class="imageShakira"
-          style="max-width: 300px; border-radius:50%"
-          src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-        />
-        <btn class="boutonshakira" style="border-radius:60%">
-          <v-icon>mdi-play</v-icon>
-        </btn>
-
-        <p>Shakiraaaaa</p>
-      </span>
-      <span class="innerspan">
-        <img
-          style="border-radius:50%; max-width: 300px"
-          src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-        />
-        <p>Shakira</p>
-      </span>
-      <span class="innerspan">
-        <img
-          style="max-width: 300px"
-          src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-        />
-        <p>Shakira</p>
-      </span>
-      <span class="innerspan">
-        <img
-          style="max-width: 300px"
-          src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-        />
-        <p>Shakira</p>
-      </span>
-      <span class="innerspan">
-        <img
-          style="max-width: 300px"
-          src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-        />
-        <p>Shakira</p>
-      </span>
-      <span class="innerspan">
-        <img
-          style="max-width: 300px"
-          src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-        />
-        <p>Shakira</p>
-      </span>
-      <span class="innerspan">
-        <img
-          style="max-width: 300px"
-          src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-        />
-        <p>Shakira</p>
-      </span>
-    </div>
-    <!-- <div class="scrollmenu3">
-      <img
-        style="max-width: 300px"
-        src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-      />
-      <img
-        style="max-width: 300px"
-        src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-      />
-      <img
-        style="max-width: 300px"
-        src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-      />
-      <img
-        style="max-width: 300px"
-        src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-      />
-      <img
-        style="max-width: 300px"
-        src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-      />
-    </div>-->
-  </div>
+    <v-container>
+      <v-row no-gutters>
+        <h1 class="title font-weight-bold">Recently played</h1>
+      </v-row>
+      <v-divider class="pb-3"/>
+      <v-row no-gutters>
+        <v-col class="mx-3 my-1">
+          <v-img
+            contain
+            src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
+            height="200px"
+            width="200px"
+          />
+        </v-col>
+        <v-col class="mx-3 my-1">
+          <v-img
+            contain
+            src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
+            height="200px"
+            width="200px"
+          />
+        </v-col>
+        <v-col class="mx-3 my-1">
+          <v-img
+            contain
+            src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
+            height="200px"
+            width="200px"
+          />
+        </v-col>
+        <v-col class="mx-3 my-1">
+          <v-img
+            contain
+            src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
+            height="200px"
+            width="200px"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-container>
+      <v-row no-gutters>
+        <h1 class="title font-weight-bold">Artists</h1>
+      </v-row>
+      <v-divider class="pb-3"/>
+      <v-row no-gutters class="d-flex">
+        <v-col class="mx-3 my-1">
+          <v-img
+            contain
+            src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
+            height="200px"
+            width="200px"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-container>
+      <v-row no-gutters>
+        <h1 class="title font-weight-bold">Albums</h1>
+      </v-row>
+      <v-divider class="pb-3"/>
+      <v-row no-gutters class="d-flex">
+        <v-col class="mx-3 my-1">
+          <v-img
+            contain
+            src="https://is3-ssl.mzstatic.com/image/thumb/Music113/v4/52/0a/df/520adf4c-36e7-5d7d-114d-c5682df53b98/886447918104.jpg/939x0w.jpg"
+            height="200px"
+            width="200px"
+          />
+        </v-col>
+        <v-col class="mx-3 my-1">
+          <v-img
+            contain
+            src="https://is3-ssl.mzstatic.com/image/thumb/Music113/v4/52/0a/df/520adf4c-36e7-5d7d-114d-c5682df53b98/886447918104.jpg/939x0w.jpg"
+            height="200px"
+            width="200px"
+          />
+        </v-col>
+        <v-col class="mx-3 my-1">
+          <v-img
+            contain
+            src="https://is3-ssl.mzstatic.com/image/thumb/Music113/v4/52/0a/df/520adf4c-36e7-5d7d-114d-c5682df53b98/886447918104.jpg/939x0w.jpg"
+            height="200px"
+            width="200px"
+          />
+        </v-col>
+        <v-col class="mx-3 my-1">
+          <v-img
+            contain
+            src="https://is3-ssl.mzstatic.com/image/thumb/Music113/v4/52/0a/df/520adf4c-36e7-5d7d-114d-c5682df53b98/886447918104.jpg/939x0w.jpg"
+            height="200px"
+            width="200px"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-container>
 </template>
 
 <script>
@@ -179,18 +131,22 @@ export default {
   left: 1%;
   opacity: 80%;
 }
+
 .Artists {
   position: relative;
   top: 140px;
   left: 2%;
 }
+
 .Artists p {
   font-size: 25px;
   opacity: 80%;
 }
+
 .all-in {
   height: 1000px;
 }
+
 .imageShakira {
   width: 100%;
   height: auto;
@@ -227,6 +183,7 @@ export default {
   max-width: 1650px;
   max-height: 400px;
 }
+
 .scrollmenu span {
   position: relative;
   left: -50px;
@@ -292,36 +249,44 @@ export default {
   padding: 2px;
   text-decoration: none;
 }
+
 .scrollmenu3 img:hover {
   background-color: #ffffff;
 }
+
 .premierDiv {
   position: absolute;
   top: 60px;
 }
+
 .premierDiv p {
   font-family: "Courier New", Courier, monospace;
   padding-left: 20%;
 }
+
 .recentlyPlayed {
   position: relative;
   top: 140px;
   left: 2%;
   opacity: 80%;
 }
+
 .recentlyPlayed p {
   /* font-family: "Courier New", Courier, monospace; */
   font-size: 25px;
   opacity: 80%;
 }
+
 .deuxiemeDiv {
   position: absolute;
   top: 180px;
   left: 3.2%;
 }
+
 .deuxiemeDiv v-card-title {
   color: orange;
 }
+
 .listeBandit {
   position: relative;
   top: -200px;
@@ -330,6 +295,7 @@ export default {
   min-height: 300px;
   min-width: 1000;
 }
+
 .homeSeparator {
   position: relative;
   top: 130px;
