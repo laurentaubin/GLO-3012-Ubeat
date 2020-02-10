@@ -19,7 +19,7 @@
           <v-icon>mdi-play</v-icon>
         </btn>
 
-        <p>Shakiraaaaa</p>
+        <p>Shakiraaaa</p>
       </span>
       <span class="innerspan">
         <img
@@ -65,6 +65,11 @@
       </span>
     </div>
     <!-- deuxieme liste horizontale -->
+    <div class="Artists">
+      <p>Artists</p>
+    </div>
+    <hr class="ArtistsSeparator" />
+
     <div class="scrollmenu2">
       <span class="innerspan">
         <img
@@ -166,6 +171,23 @@ export default {
 </script>
 
 <style>
+.ArtistsSeparator {
+  position: relative;
+  top: 130px;
+  width: 80%;
+  align-content: center;
+  left: 1%;
+  opacity: 80%;
+}
+.Artists {
+  position: relative;
+  top: 140px;
+  left: 2%;
+}
+.Artists p {
+  font-size: 25px;
+  opacity: 80%;
+}
 .all-in {
   height: 1000px;
 }
@@ -198,7 +220,7 @@ export default {
 .scrollmenu {
   /* background-color: #333; */
   position: relative;
-  top: 90px;
+  top: 100px;
   overflow: scroll;
   overflow-y: hidden;
   white-space: nowrap;
@@ -229,7 +251,7 @@ export default {
 .scrollmenu2 {
   /* background-color: #333; */
   position: relative;
-  top: 70px;
+  top: 100px;
   overflow: scroll;
   overflow-y: hidden;
   white-space: nowrap;
@@ -275,7 +297,7 @@ export default {
 }
 .premierDiv {
   position: absolute;
-  top: 80px;
+  top: 60px;
 }
 .premierDiv p {
   font-family: "Courier New", Courier, monospace;
@@ -285,6 +307,7 @@ export default {
   position: relative;
   top: 140px;
   left: 2%;
+  opacity: 80%;
 }
 .recentlyPlayed p {
   /* font-family: "Courier New", Courier, monospace; */
@@ -313,5 +336,6 @@ export default {
   width: 80%;
   align-content: center;
   left: 1%;
+  opacity: 80%;
 }
 </style>
