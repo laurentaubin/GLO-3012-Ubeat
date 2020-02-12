@@ -77,7 +77,7 @@
         v-for="track in tracks"
         :class="{
           'track mx-0 px-0': $vuetify.breakpoint.xs,
-          track: $vuetify.breakpoint.smAndUP
+          track: $vuetify.breakpoint.smAndUp
         }"
         @click="trackClicked(track.trackId)"
       >
