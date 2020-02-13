@@ -1,12 +1,12 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "@/components/Home";
-import Album from "@/components/Album";
-import Artist from "@/components/Artist";
-import Playlist from "@/components/Playlist";
-import User from "@/components/User";
-import Settings from "@/components/Settings";
-import AccountSettings from "@/components/AccountSettings";
+import Home from "@/views/Home";
+import Album from "@/views/Album";
+import Artist from "@/views/Artist";
+import Playlist from "@/views/Playlist";
+import User from "@/views/User";
+import Settings from "@/views/Settings";
+import AccountSettings from "@/views/AccountSettings";
 
 Vue.use(Router);
 
@@ -18,22 +18,22 @@ export default new Router({
       component: Home
     },
     {
-      path: "/artist",
+      path: "/artist/:id",
       name: "Artist",
       component: Artist
     },
     {
-      path: "/album",
+      path: "/album/:id",
       name: "Album",
       component: Album
     },
     {
-      path: "/playlist",
+      path: "/playlist/:id",
       name: "Playlist",
       component: Playlist
     },
     {
-      path: "/user",
+      path: "/user/:id",
       name: "User",
       component: User
     },

@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import AlbumList from "./AlbumList.vue";
+import AlbumList from "../components/AlbumList.vue";
 import albums from "../JSON/albums.json";
 
 export default {
