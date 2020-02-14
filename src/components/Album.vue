@@ -99,7 +99,7 @@
 </template>
 
 <script>
-const API_URL = "http://ubeat.herokuapp.com/unsecure";
+import { getTracks } from "../api/api.js";
 
 export default {
   name: "Album",
@@ -178,20 +178,8 @@ export default {
     },
     getTracksInfo: async function() {
       const albumId = this.album.collectionId;
-      const tracks = await this.getTracks(albumId);
+      const tracks = await getTracks(albumId);
       return tracks.results;
-    },
-    getTracks: async function(albumId) {
-      const path = `${API_URL}/albums/${albumId}/tracks`;
-      console.log(path);
-      try {
-        const response = await fetch(path);
-        const data = await response.json();
-        return data;
-      } catch (err) {
-        console.log(err);
-        return err;
-      }
     },
     millisToMinutesAndSeconds(millis) {
       const minutes = Math.floor((millis / 1000 / 60) << 0);

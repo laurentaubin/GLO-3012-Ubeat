@@ -54,8 +54,7 @@
 
 <script>
 import AlbumList from "../components/AlbumList.vue";
-
-const API_URL = "http://ubeat.herokuapp.com/unsecure";
+import { getArtist, getAlbums } from "../api/api.js";
 
 export default {
   name: "Artist",
@@ -106,35 +105,13 @@ export default {
     this.albums = await this.getAlbumsInfo();
   },
   methods: {
-    getArtist: async function() {
-      const path = `${API_URL}/artists/${this.$route.params.id}`;
-      try {
-        const response = await fetch(path);
-        const data = await response.json();
-        return data;
-      } catch (err) {
-        console.log(err);
-        return err;
-      }
-    },
     getArtistInfo: async function() {
-      const artist = await this.getArtist();
+      const artist = await getArtist(this.$route.params.id);
       this.artist = artist.results[0];
       return this.artist;
     },
-    getAlbums: async function() {
-      const path = `${API_URL}/artists/${this.$route.params.id}/albums`;
-      try {
-        const response = await fetch(path);
-        const data = await response.json();
-        return data;
-      } catch (err) {
-        console.log(err);
-        return err;
-      }
-    },
     getAlbumsInfo: async function() {
-      const albums = await this.getAlbums();
+      const albums = await getAlbums(this.$route.params.id);
       return albums.results;
     }
   }
