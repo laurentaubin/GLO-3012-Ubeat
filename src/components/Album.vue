@@ -179,15 +179,14 @@ export default {
     },
     millisToMinutesAndSeconds(millis) {
       const minutes = Math.floor((millis / 1000 / 60) << 0);
-      const seconds = Math.floor((millis / 1000) % 60);
-      let timeInMinutesAndSeconds = minutes + ":" + seconds;
+      let seconds = Math.floor((millis / 1000) % 60);
 
-      // To avoid times like 4:0
-      if (seconds === 0) {
-        timeInMinutesAndSeconds += "0";
+      // To avoid times like 4:0 and 3:2
+      if (seconds < 10) {
+        seconds = "0" + seconds;
       }
 
-      return timeInMinutesAndSeconds;
+      return minutes + ":" + seconds;
     },
     buyAlbumRedirect() {
       let win = window.open(this.albumInfo.collectionViewUrl, "_blank");
