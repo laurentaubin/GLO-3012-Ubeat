@@ -106,15 +106,54 @@ export default {
   props: ["album"],
   data: function() {
     return {
-      tracks: [],
+      tracks: [
+        {
+          "wrapperType": "track",
+          "kind": "song",
+          "artistId": 0,
+          "collectionId": 0,
+          "trackId": 0,
+          "artistName": "",
+          "collectionName": "",
+          "trackName": "",
+          "collectionCensoredName": "",
+          "trackCensoredName": "",
+          "artistViewUrl": "",
+          "collectionViewUrl": "",
+          "trackViewUrl": "",
+          "previewUrl": "",
+          "artworkUrl30": "",
+          "artworkUrl60": "",
+          "artworkUrl100": "",
+          "collectionPrice": 0,
+          "trackPrice": 0,
+          "releaseDate": "",
+          "collectionExplicitness": "",
+          "trackExplicitness": "",
+          "discCount": 0,
+          "discNumber": 0,
+          "trackCount": 0,
+          "trackNumber": 0,
+          "trackTimeMillis": 0,
+          "country": "",
+          "currency": "",
+          "primaryGenreName": "",
+          "contentAdvisoryRating": "",
+          "isStreamable": true
+        }
+      ],
       transparent: "rgba(255, 255, 255, 0)",
       audio: null,
       currentTrack: null,
-      currentSelectedTrack: null
+      currentSelectedTrack: null,
+      updated: 0
     };
   },
-  async created() {
-    this.tracks = await this.getTracksInfo();
+  async updated() {
+    if (this.album.collectionId !== 0 && !this.updated) {
+      this.tracks = await this.getTracksInfo();
+      this.updated = 1;
+    }
   },
   methods: {
     getAlbumYear: function() {
@@ -128,6 +167,7 @@ export default {
     },
     getTracks: async function(albumId) {
       const path = `${API_URL}/albums/${albumId}/tracks`;
+      console.log(path);
       try {
         const response = await fetch(path);
         const data = await response.json();

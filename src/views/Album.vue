@@ -1,5 +1,5 @@
 <template>
-  <Album v-bind:album="this.album"/>
+  <Album v-bind:album="album"/>
 </template>
 
 <script>
@@ -13,7 +13,29 @@ export default {
   },
   data() {
     return {
-      album: this.getAlbumInfo()
+      album: {
+        "wrapperType": "",
+        "collectionType": "",
+        "artistId": 0,
+        "collectionId": 0,
+        "amgArtistId": 0,
+        "artistName": "",
+        "collectionName": "",
+        "collectionCensoredName": "",
+        "artistViewUrl": "",
+        "collectionViewUrl": "",
+        "artworkUrl60": "",
+        "artworkUrl100": "",
+        "collectionPrice": 0,
+        "collectionExplicitness": "",
+        "contentAdvisoryRating": "",
+        "trackCount": 0,
+        "copyright": "",
+        "country": "",
+        "currency": "",
+        "releaseDate": "",
+        "primaryGenreName": ""
+      }
     };
   },
   async created() {
@@ -33,7 +55,6 @@ export default {
     },
     getAlbumInfo: async function() {
       let album = await this.getAlbum();
-      console.log(album.results[0])
       return album.results[0];
     }
   }

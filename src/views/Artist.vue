@@ -28,10 +28,10 @@
           <v-row class="align-center">
             <v-col class="pt-md-12 text-center text-sm-start">
               <p class="font-weight-regular subtitle-1 ml-md-1">
-                {{ this.artist.primaryGenreName }}
+                {{ artist.primaryGenreName }}
               </p>
               <h1 class="font-weight-bold display-4">
-                {{ this.artist.artistName }}
+                {{ artist.artistName }}
               </h1>
             </v-col>
           </v-row>
@@ -64,11 +64,44 @@ export default {
   },
   data: function() {
     return {
-      artist: [],
-      albums: []
+      artist: {
+        "wrapperType": "",
+        "artistType": "",
+        "artistName": "",
+        "artistLinkUrl": "",
+        "artistId": 0,
+        "amgArtistId": 0,
+        "primaryGenreName": "",
+        "primaryGenreId": 0
+      },
+      albums: [
+        {
+          "wrapperType": "",
+          "collectionType": "",
+          "artistId": 0,
+          "collectionId": 0,
+          "amgArtistId": 0,
+          "artistName": "",
+          "collectionName": "",
+          "collectionCensoredName": "",
+          "artistViewUrl": "",
+          "collectionViewUrl": "",
+          "artworkUrl60": "",
+          "artworkUrl100": "",
+          "collectionPrice": 0,
+          "collectionExplicitness": "",
+          "contentAdvisoryRating": "",
+          "trackCount": 0,
+          "copyright": "",
+          "country": "",
+          "currency": "",
+          "releaseDate": "",
+          "primaryGenreName": ""
+        }
+      ],
     };
   },
-  created: async function () {
+  created: async function() {
     this.artist = await this.getArtistInfo();
     this.albums = await this.getAlbumsInfo();
   },
