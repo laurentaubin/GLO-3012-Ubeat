@@ -2,7 +2,7 @@
   <v-row>
     <v-col>
       <album
-        v-bind:albumInfo="album"
+        v-bind:album="album"
         v-bind:key="album.collectionId"
         v-for="album in shownAlbums"
       >
@@ -28,12 +28,15 @@ export default {
   props: ["albums"],
   data: function() {
     return {
-      shownAlbums: this.albums.slice(0, 5),
+      shownAlbums: [],
       albumsToShow: 5
     };
   },
   components: {
     album: Album
+  },
+  created() {
+    this.shownAlbums = this.albums.slice(0,5);
   },
   methods: {
     showMoreAlbums: function() {

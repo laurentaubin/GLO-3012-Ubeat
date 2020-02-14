@@ -54,7 +54,8 @@
 
 <script>
 import AlbumList from "../components/AlbumList.vue";
-import albums from "../JSON/albums.json";
+
+const API_URL = "http://ubeat.herokuapp.com/unsecure";
 
 export default {
   name: "Artist",
@@ -63,49 +64,44 @@ export default {
   },
   data: function() {
     return {
-      artist: this.getArtistInfo(1),
-      albums: this.getAlbumsInfo(1)
+      artist: [],
+      albums: []
     };
   },
+  created: async function () {
+    this.artist = await this.getArtistInfo();
+    this.albums = await this.getAlbumsInfo();
+  },
   methods: {
-    getArtist: function(artistId) {
-      // To avoid eslint error
-      if (artistId === 0) {
-        return 0;
+    getArtist: async function() {
+      const path = `${API_URL}/artists/${this.$route.params.id}`;
+      try {
+        const response = await fetch(path);
+        const data = await response.json();
+        return data;
+      } catch (err) {
+        console.log(err);
+        return err;
       }
-
-      // Hardcoded artist, will eventually be api call
-      return {
-        resultCount: 1,
-        results: [
-          {
-            wrapperType: "artist",
-            artistType: "Artist",
-            artistName: "Kesha",
-            artistLinkUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            artistId: 334854763,
-            amgArtistId: 2035613,
-            primaryGenreName: "Pop",
-            primaryGenreId: 14
-          }
-        ]
-      };
     },
-    getArtistInfo: function(artistId) {
-      const artist = this.getArtist(artistId);
+    getArtistInfo: async function() {
+      const artist = await this.getArtist();
       this.artist = artist.results[0];
-      return artist.results[0];
+      return this.artist;
     },
-    getAlbums: function(artistId) {
-      // TO avoid eslint error
-      if (artistId === 0) {
-        return 0;
+    getAlbums: async function() {
+      const path = `${API_URL}/artists/${this.$route.params.id}/albums`;
+      try {
+        const response = await fetch(path);
+        const data = await response.json();
+        return data;
+      } catch (err) {
+        console.log(err);
+        return err;
       }
-      return albums;
     },
-    getAlbumsInfo: function(artistId) {
-      const albums = this.getAlbums(artistId);
+    getAlbumsInfo: async function() {
+      const albums = await this.getAlbums();
       return albums.results;
     }
   }
