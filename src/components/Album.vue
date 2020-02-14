@@ -165,7 +165,7 @@ export default {
         this.album.artworkUrl60.substring(
           0,
           this.album.artworkUrl60.lastIndexOf("/") + 1
-        ) + "300x300-999.jpg";
+        ) + "300x300bb.jpg";
       return updatedResArtworkUrl;
     },
     getAlbumYear: function() {
