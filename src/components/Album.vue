@@ -7,7 +7,7 @@
           <v-row>
             <v-img
               contain
-              src="https://is3-ssl.mzstatic.com/image/thumb/Music113/v4/52/0a/df/520adf4c-36e7-5d7d-114d-c5682df53b98/886447918104.jpg/939x0w.jpg"
+              v-bind:src="this.artworkUrl300"
               height="200px"
               width="200px"
             />
@@ -129,6 +129,7 @@ export default {
           isStreamable: true
         }
       ],
+      artworkUrl300: this.getArtorkUrl300(),
       transparent: "rgba(255, 255, 255, 0)",
       updated: 0
     };
@@ -159,6 +160,14 @@ export default {
     }
   },
   methods: {
+    getArtorkUrl300: function() {
+      const updatedResArtworkUrl =
+        this.album.artworkUrl60.substring(
+          0,
+          this.album.artworkUrl60.lastIndexOf("/") + 1
+        ) + "300x300-999.jpg";
+      return updatedResArtworkUrl;
+    },
     getAlbumYear: function() {
       const date = new Date(this.album.releaseDate);
       return date.getFullYear();
