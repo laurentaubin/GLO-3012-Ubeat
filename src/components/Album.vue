@@ -155,19 +155,15 @@ export default {
       && this.album.collectionId !== undefined
       && !this.updated) {
       this.tracks = await this.getTracksInfo();
-      console.log(this.tracks);
       this.updated = 1;
     }
   },
   //For the album view
   async updated() {
-    console.log(this.tracks);
-    console.log(this.album.collectionId);
     if (this.album.collectionId !== 0
       && this.album.collectionId !== undefined
       && !this.updated) {
       this.tracks = await this.getTracksInfo();
-      console.log(this.tracks);
       this.updated = 1;
     }
   },
