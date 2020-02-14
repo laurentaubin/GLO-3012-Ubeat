@@ -61,7 +61,8 @@ export default {
     album: Album
   },
   async updated() {
-    if (this.albums[0].artistId !== 0 && !this.updated) {
+    if (this.albums[0].artistId !== 0
+      && !this.updated) {
       this.shownAlbums = this.albums.slice(0, 5);
       this.updated = 1;
     }
