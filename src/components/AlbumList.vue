@@ -2,7 +2,7 @@
   <v-row>
     <v-col>
       <album
-        v-bind:albumInfo="album"
+        v-bind:album="album"
         v-bind:key="album.collectionId"
         v-for="album in shownAlbums"
       >
@@ -28,12 +28,44 @@ export default {
   props: ["albums"],
   data: function() {
     return {
-      shownAlbums: this.albums.slice(0, 5),
-      albumsToShow: 5
+      shownAlbums: [
+        {
+          "wrapperType": "",
+          "collectionType": "",
+          "artistId": 0,
+          "collectionId": 0,
+          "amgArtistId": 0,
+          "artistName": "",
+          "collectionName": "",
+          "collectionCensoredName": "",
+          "artistViewUrl": "",
+          "collectionViewUrl": "",
+          "artworkUrl60": "",
+          "artworkUrl100": "",
+          "collectionPrice": 0,
+          "collectionExplicitness": "",
+          "contentAdvisoryRating": "",
+          "trackCount": 0,
+          "copyright": "",
+          "country": "",
+          "currency": "",
+          "releaseDate": "",
+          "primaryGenreName": ""
+        }
+      ],
+      albumsToShow: 5,
+      updated: 0
     };
   },
   components: {
     album: Album
+  },
+  async updated() {
+    if (this.albums[0].artistId !== 0
+      && !this.updated) {
+      this.shownAlbums = this.albums.slice(0, 5);
+      this.updated = 1;
+    }
   },
   methods: {
     showMoreAlbums: function() {

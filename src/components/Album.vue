@@ -18,27 +18,27 @@
           <!-- TODO Replace hardcoded link to actual album link -->
           <a class="link white--text" href="/#/album">
             <h1 class="font-weight-bold display-2 mb-3">
-              {{ this.albumInfo.collectionName }}
+              {{ album.collectionName }}
             </h1>
           </a>
           <!-- TODO Replace hardcoded link to actual artist link -->
           <p class="body-2 grey--text darken-1 mb-1">
             By
             <a href="/#/artist" class="link white--text">
-              {{ this.albumInfo.artistName }}
+              {{ album.artistName }}
             </a>
           </p>
           <p class="body-2 mb-1 grey--text darken-1">
-            {{ this.getAlbumYear() }} • {{ this.albumInfo.trackCount }} songs
+            {{ this.getAlbumYear() }} • {{ album.trackCount }} songs
           </p>
           <p class="body-2 mb-1 grey--text darken-1">
-            {{ this.albumInfo.primaryGenreName }}
+            {{ album.primaryGenreName }}
           </p>
           <v-row class="justify-center">
             <v-col class="pa-0 d-flex justify-center justify-sm-start">
               <v-btn class="buy-btn ml-3" v-on:click="buyAlbumRedirect">
                 <p class="mt-auto mb-auto">
-                  $ {{ this.albumInfo.collectionPrice }} Buy
+                  $ {{ album.collectionPrice }} Buy
                 </p>
               </v-btn>
               <a
@@ -99,83 +99,83 @@
 </template>
 
 <script>
-import tracks from "../JSON/tracks.json";
+import { getTracks } from "../api/api.js";
 
 export default {
   name: "Album",
   props: ["album"],
   data: function() {
     return {
-      tracks: this.getTracksInfo(),
-      albumInfo: this.getAlbumInfo(),
+      tracks: [
+        {
+          "wrapperType": "track",
+          "kind": "song",
+          "artistId": 0,
+          "collectionId": 0,
+          "trackId": 0,
+          "artistName": "",
+          "collectionName": "",
+          "trackName": "",
+          "collectionCensoredName": "",
+          "trackCensoredName": "",
+          "artistViewUrl": "",
+          "collectionViewUrl": "",
+          "trackViewUrl": "",
+          "previewUrl": "",
+          "artworkUrl30": "",
+          "artworkUrl60": "",
+          "artworkUrl100": "",
+          "collectionPrice": 0,
+          "trackPrice": 0,
+          "releaseDate": "",
+          "collectionExplicitness": "",
+          "trackExplicitness": "",
+          "discCount": 0,
+          "discNumber": 0,
+          "trackCount": 0,
+          "trackNumber": 0,
+          "trackTimeMillis": 0,
+          "country": "",
+          "currency": "",
+          "primaryGenreName": "",
+          "contentAdvisoryRating": "",
+          "isStreamable": true
+        }
+      ],
       transparent: "rgba(255, 255, 255, 0)",
       audio: null,
       currentTrack: null,
-      currentSelectedTrack: null
+      currentSelectedTrack: null,
+      updated: 0
     };
   },
+  //For the album component in AlbumList
+  async created() {
+    if (this.album.collectionId !== 0
+      && this.album.collectionId !== undefined
+      && !this.updated) {
+      this.tracks = await this.getTracksInfo();
+      this.updated = 1;
+    }
+  },
+  //For the album view
+  async updated() {
+    if (this.album.collectionId !== 0
+      && this.album.collectionId !== undefined
+      && !this.updated) {
+      this.tracks = await this.getTracksInfo();
+      this.updated = 1;
+    }
+  },
   methods: {
-    getAlbumInfo: function(albumId) {
-      const album = this.getAlbum(albumId);
-      return album.results[0];
-    },
-    getAlbum: function(albumId) {
-      // To avoid eslint error
-      if (albumId == 0) {
-        return 0;
-      }
-      // Will eventually be api call
-      return {
-        resultCount: 1,
-        results: [
-          {
-            wrapperType: "collection",
-            collectionType: "Album",
-            artistId: 334854763,
-            collectionId: 1484385866,
-            amgArtistId: 2035613,
-            artistName: "Kesha",
-            collectionName: "High Road",
-            collectionCensoredName: "High Road",
-            artistViewUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            collectionViewUrl:
-              "https://music.apple.com/us/album/high-road/1484385866?uo=4",
-            artworkUrl60:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/60x60bb.jpg",
-            artworkUrl100:
-              "https://is3-ssl.mzstatic.com/image/thumb/Music123/v4/64/69/a9/6469a996-9a78-819d-3967-2c00a2a5c33a/source/100x100bb.jpg",
-            collectionPrice: 10.99,
-            collectionExplicitness: "explicit",
-            contentAdvisoryRating: "Explicit",
-            trackCount: 15,
-            copyright: "℗ 2019 Kemosabe Records",
-            country: "USA",
-            currency: "USD",
-            releaseDate: "2020-01-10T08:00:00Z",
-            primaryGenreName: "Pop"
-          }
-        ]
-      };
-    },
     getAlbumYear: function() {
-      const date = new Date(this.albumInfo.releaseDate);
+      const date = new Date(this.album.releaseDate);
       return date.getFullYear();
     },
-    getTracksInfo: function() {
-      // const albumId = this.albumInfo.collectionId;
-      const albumId = 1;
-      const tracks = this.getTracks(albumId);
+    getTracksInfo: async function() {
+      const albumId = this.album.collectionId;
+      const tracks = await getTracks(albumId);
       return tracks.results;
-    },
-    getTracks: function(albumId) {
-      // To avoid eslint error
-      if (albumId == 0) {
-        return 0;
-      }
-
-      // Will evetually be api call
-      return tracks;
     },
     millisToMinutesAndSeconds(millis) {
       const minutes = Math.floor((millis / 1000 / 60) << 0);
@@ -189,7 +189,7 @@ export default {
       return minutes + ":" + seconds;
     },
     buyAlbumRedirect() {
-      let win = window.open(this.albumInfo.collectionViewUrl, "_blank");
+      let win = window.open(this.album.collectionViewUrl, "_blank");
       win.focus();
     },
     playAudio(track) {

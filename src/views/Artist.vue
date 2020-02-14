@@ -28,10 +28,10 @@
           <v-row class="align-center">
             <v-col class="pt-md-12 text-center text-sm-start">
               <p class="font-weight-regular subtitle-1 ml-md-1">
-                {{ this.artist.primaryGenreName }}
+                {{ artist.primaryGenreName }}
               </p>
               <h1 class="font-weight-bold display-4">
-                {{ this.artist.artistName }}
+                {{ artist.artistName }}
               </h1>
             </v-col>
           </v-row>
@@ -54,7 +54,7 @@
 
 <script>
 import AlbumList from "../components/AlbumList.vue";
-import albums from "../JSON/albums.json";
+import { getArtist, getAlbums } from "../api/api.js";
 
 export default {
   name: "Artist",
@@ -63,49 +63,55 @@ export default {
   },
   data: function() {
     return {
-      artist: this.getArtistInfo(1),
-      albums: this.getAlbumsInfo(1)
+      artist: {
+        "wrapperType": "",
+        "artistType": "",
+        "artistName": "",
+        "artistLinkUrl": "",
+        "artistId": 0,
+        "amgArtistId": 0,
+        "primaryGenreName": "",
+        "primaryGenreId": 0
+      },
+      albums: [
+        {
+          "wrapperType": "",
+          "collectionType": "",
+          "artistId": 0,
+          "collectionId": 0,
+          "amgArtistId": 0,
+          "artistName": "",
+          "collectionName": "",
+          "collectionCensoredName": "",
+          "artistViewUrl": "",
+          "collectionViewUrl": "",
+          "artworkUrl60": "",
+          "artworkUrl100": "",
+          "collectionPrice": 0,
+          "collectionExplicitness": "",
+          "contentAdvisoryRating": "",
+          "trackCount": 0,
+          "copyright": "",
+          "country": "",
+          "currency": "",
+          "releaseDate": "",
+          "primaryGenreName": ""
+        }
+      ],
     };
   },
+  created: async function() {
+    this.artist = await this.getArtistInfo();
+    this.albums = await this.getAlbumsInfo();
+  },
   methods: {
-    getArtist: function(artistId) {
-      // To avoid eslint error
-      if (artistId === 0) {
-        return 0;
-      }
-
-      // Hardcoded artist, will eventually be api call
-      return {
-        resultCount: 1,
-        results: [
-          {
-            wrapperType: "artist",
-            artistType: "Artist",
-            artistName: "Kesha",
-            artistLinkUrl:
-              "https://music.apple.com/us/artist/kesha/334854763?uo=4",
-            artistId: 334854763,
-            amgArtistId: 2035613,
-            primaryGenreName: "Pop",
-            primaryGenreId: 14
-          }
-        ]
-      };
-    },
-    getArtistInfo: function(artistId) {
-      const artist = this.getArtist(artistId);
+    getArtistInfo: async function() {
+      const artist = await getArtist(this.$route.params.id);
       this.artist = artist.results[0];
-      return artist.results[0];
+      return this.artist;
     },
-    getAlbums: function(artistId) {
-      // TO avoid eslint error
-      if (artistId === 0) {
-        return 0;
-      }
-      return albums;
-    },
-    getAlbumsInfo: function(artistId) {
-      const albums = this.getAlbums(artistId);
+    getAlbumsInfo: async function() {
+      const albums = await getAlbums(this.$route.params.id);
       return albums.results;
     }
   }
