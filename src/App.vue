@@ -42,7 +42,8 @@
 
       <v-content class="align-content-center">
         <v-container class="fill-height" fluid>
-          <router-view />
+          <router-view v-on:select-track="trackClicked"
+                       v-on:play-track="playTrack"/>
         </v-container>
       </v-content>
     </v-app>
@@ -63,10 +64,70 @@ export default {
     source: String
   },
   data: () => ({
-    drawer: null
+    drawer: null,
+    selectedTrack: null,
+    audio: null,
+    currentTrack: null,
+    currentSelectedTrack: null
   }),
   created() {
     this.$vuetify.theme.dark = true;
+  },
+  methods: {
+    trackClicked(trackId) {
+      const lastSelectedTrack = document.getElementById(this.selectedTrack);
+      if (lastSelectedTrack != null) {
+        this.removeSelectedTrackBackground(lastSelectedTrack);
+        this.selectedTrack = null;
+      }
+      const currentSelectedTrack = document.getElementById(trackId);
+      if (currentSelectedTrack != lastSelectedTrack) {
+        this.addSelectedTrackBackground(currentSelectedTrack);
+        this.selectedTrack = trackId;
+      }
+    },
+    removeSelectedTrackBackground(trackElement) {
+      trackElement.classList.remove("selected-track");
+    },
+    addSelectedTrackBackground(trackElement) {
+      trackElement.classList.add("selected-track");
+    },
+    playTrack(track) {
+      if (this.audio !== null && !this.audio.paused) {
+        this.togglePlayButton(this.currentTrack);
+        this.audio.pause();
+      }
+      let currentTrack = document.getElementById(track.trackId);
+      if (currentTrack !== this.currentTrack) {
+        this.currentTrack = currentTrack;
+        this.togglePlayButton(currentTrack);
+        let audio = new Audio(track.previewUrl);
+        audio.play();
+        audio.onended = () => {
+          this.togglePlayButton(currentTrack);
+          this.currentTrack = null;
+        };
+        this.audio = audio;
+      } else {
+        this.currentTrack = null;
+      }
+    },
+    togglePlayButton(track) {
+      let children = track.childNodes[0].childNodes;
+      let trackNumber = children[0];
+      let playButton = children[1];
+      if (trackNumber.classList.contains("track-nb-hidden")) {
+        playButton.classList.remove("play-btn-active");
+        trackNumber.classList.remove("track-nb-hidden");
+        playButton.childNodes[0].innerHTML =
+          "<i aria-hidden='true' class='v-icon notranslate mdi mdi-play theme--dark'>";
+      } else {
+        trackNumber.classList.add("track-nb-hidden");
+        playButton.classList.add("play-btn-active");
+        playButton.childNodes[0].innerHTML =
+          "<i aria-hidden='true' class='v-icon notranslate mdi mdi-pause'>";
+      }
+    }
   }
 };
 </script>

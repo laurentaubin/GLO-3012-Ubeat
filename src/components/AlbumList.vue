@@ -5,6 +5,8 @@
         v-bind:album="album"
         v-bind:key="album.collectionId"
         v-for="album in shownAlbums"
+        v-on:select-track="emitTrackIdUp"
+        v-on:play-track="emitTrackUp"
       >
       </album>
       <v-btn
@@ -22,6 +24,7 @@
 
 <script>
 import Album from "./Album.vue";
+import { emitTrackIdUp, emitTrackUp } from "../utils/emitUtils";
 
 export default {
   name: "AlbumList",
@@ -71,6 +74,12 @@ export default {
     showMoreAlbums: function() {
       this.albumsToShow += 5;
       this.shownAlbums = this.albums.slice(0, this.albumsToShow);
+    },
+    emitTrackUp(track) {
+      emitTrackUp(this, track);
+    },
+    emitTrackIdUp(trackId) {
+      emitTrackIdUp(this, trackId);
     }
   }
 };

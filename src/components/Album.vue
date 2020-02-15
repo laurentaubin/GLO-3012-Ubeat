@@ -70,36 +70,19 @@
         </v-row>
       </header>
       <v-divider />
-
-      <v-row
-        v-bind:id="track.trackId"
-        v-bind:key="track.trackId"
-        v-for="track in tracks"
-        :class="{
-          'track mx-0 px-0': $vuetify.breakpoint.xs,
-          track: $vuetify.breakpoint.smAndUp
-        }"
-        @click="trackClicked(track.trackId)"
-      >
-        <v-col cols="1" class="d-flex align-center justify-center">
-          <span class="track-nb">{{ track.trackNumber }}</span>
-          <v-btn class="play-btn" icon v-on:click="playAudio(track)">
-            <v-icon>mdi-play</v-icon>
-          </v-btn>
-        </v-col>
-        <v-col cols="10" class="d-flex align-center">
-          <span>{{ track.trackName }}</span>
-        </v-col>
-        <v-col cols="1" class="d-flex align-center">{{
-          millisToMinutesAndSeconds(track.trackTimeMillis)
-        }}</v-col>
-      </v-row>
+      <Track v-bind:key="track.trackId"
+            v-bind:track="track"
+            v-for="track in tracks"
+            v-on:select-track="emitTrackIdUp"
+            v-on:play-track="emitTrackUp"/>
     </v-container>
   </v-container>
 </template>
 
 <script>
 import { getTracks } from "../api/api.js";
+import Track from "./Track.vue";
+import {emitTrackUp, emitTrackIdUp} from "../utils/emitUtils";
 
 export default {
   name: "Album",
@@ -143,11 +126,11 @@ export default {
         }
       ],
       transparent: "rgba(255, 255, 255, 0)",
-      audio: null,
-      currentTrack: null,
-      currentSelectedTrack: null,
-      updated: 0
+      updated: 0,
     };
+  },
+  components: {
+    Track: Track
   },
   //For the album component in AlbumList
   async created() {
@@ -177,74 +160,15 @@ export default {
       const tracks = await getTracks(albumId);
       return tracks.results;
     },
-    millisToMinutesAndSeconds(millis) {
-      const minutes = Math.floor((millis / 1000 / 60) << 0);
-      let seconds = Math.floor((millis / 1000) % 60);
-
-      // To avoid times like 4:0 and 3:2
-      if (seconds < 10) {
-        seconds = "0" + seconds;
-      }
-
-      return minutes + ":" + seconds;
-    },
     buyAlbumRedirect() {
       let win = window.open(this.album.collectionViewUrl, "_blank");
       win.focus();
     },
-    playAudio(track) {
-      if (this.audio !== null && !this.audio.paused) {
-        this.togglePlayButton(this.currentTrack);
-        this.audio.pause();
-      }
-      let currentTrack = document.getElementById(track.trackId);
-      if (currentTrack !== this.currentTrack) {
-        this.currentTrack = currentTrack;
-        this.togglePlayButton(currentTrack);
-        let audio = new Audio(track.previewUrl);
-        audio.play();
-        audio.onended = () => {
-          this.togglePlayButton(currentTrack);
-          this.currentTrack = null;
-        };
-        this.audio = audio;
-      } else {
-        this.currentTrack = null;
-      }
+    emitTrackUp(track) {
+      emitTrackUp(this, track);
     },
-    togglePlayButton(track) {
-      let children = track.childNodes[0].childNodes;
-      let trackNumber = children[0];
-      let playButton = children[1];
-      if (trackNumber.classList.contains("track-nb-hidden")) {
-        playButton.classList.remove("play-btn-active");
-        trackNumber.classList.remove("track-nb-hidden");
-        playButton.childNodes[0].innerHTML =
-          "<i aria-hidden='true' class='v-icon notranslate mdi mdi-play theme--dark'>";
-      } else {
-        trackNumber.classList.add("track-nb-hidden");
-        playButton.classList.add("play-btn-active");
-        playButton.childNodes[0].innerHTML =
-          "<i aria-hidden='true' class='v-icon notranslate mdi mdi-pause'>";
-      }
-    },
-    trackClicked(trackId) {
-      const lastSelectedTrack = document.getElementById(this.selectedTrack);
-      if (lastSelectedTrack != null) {
-        this.removeSelectedTrackBackground(lastSelectedTrack);
-        this.selectedTrack = null;
-      }
-      const currentSelectedTrack = document.getElementById(trackId);
-      if (currentSelectedTrack != lastSelectedTrack) {
-        this.addSelectedTrackBackground(currentSelectedTrack);
-        this.selectedTrack = trackId;
-      }
-    },
-    removeSelectedTrackBackground(trackElement) {
-      trackElement.classList.remove("selected-track");
-    },
-    addSelectedTrackBackground(trackElement) {
-      trackElement.classList.add("selected-track");
+    emitTrackIdUp(trackId) {
+      emitTrackIdUp(this, trackId);
     }
   }
 };

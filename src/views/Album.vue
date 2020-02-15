@@ -1,10 +1,14 @@
 <template>
-  <Album v-bind:album="album"/>
+  <Album v-bind:album="album"
+         v-on:select-track="emitTrackIdUp"
+         v-on:play-track="emitTrackUp"
+  />
 </template>
 
 <script>
 import Album from "../components/Album";
 import { getAlbum } from "../api/api.js";
+import {emitTrackUp, emitTrackIdUp} from "../utils/emitUtils";
 
 export default {
   name: "Album.vue",
@@ -45,6 +49,12 @@ export default {
     getAlbumInfo: async function() {
       let album = await getAlbum(this.$route.params.id);
       return album.results[0];
+    },
+    emitTrackUp(track) {
+      emitTrackUp(this, track);
+    },
+    emitTrackIdUp(trackId) {
+      emitTrackIdUp(this, trackId);
     }
   }
 };
