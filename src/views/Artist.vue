@@ -47,7 +47,10 @@
     >
       <v-divider />
       <h1 class="title font-weight-bold">Albums</h1>
-      <albumList v-bind:albums="albums" class="px-0" />
+      <albumList v-bind:albums="albums" class="px-0"
+                 v-on:select-track="emitTrackIdUp"
+                 v-on:play-track="emitTrackUp"
+      />
     </v-container>
   </v-container>
 </template>
@@ -97,7 +100,7 @@ export default {
           "releaseDate": "",
           "primaryGenreName": ""
         }
-      ],
+      ]
     };
   },
   created: async function() {
@@ -113,6 +116,12 @@ export default {
     getAlbumsInfo: async function() {
       const albums = await getAlbums(this.$route.params.id);
       return albums.results;
+    },
+    emitTrackUp(track) {
+      this.$emit('play-track', track);
+    },
+    emitTrackIdUp(trackId) {
+      this.$emit('select-track', trackId);
     }
   }
 };

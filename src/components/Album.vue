@@ -70,11 +70,11 @@
         </v-row>
       </header>
       <v-divider />
-      <Track v-bind:id="track.Id"
-            v-bind:key="track.Id"
+      <Track v-bind:key="track.trackId"
             v-bind:track="track"
             v-for="track in tracks"
-            />
+            v-on:select-track="emitTrackIdUp"
+            v-on:play-track="emitTrackUp"/>
     </v-container>
   </v-container>
 </template>
@@ -125,7 +125,7 @@ export default {
         }
       ],
       transparent: "rgba(255, 255, 255, 0)",
-      updated: 0
+      updated: 0,
     };
   },
   components: {
@@ -163,6 +163,12 @@ export default {
       let win = window.open(this.album.collectionViewUrl, "_blank");
       win.focus();
     },
+    emitTrackUp(track) {
+      this.$emit('play-track', track);
+    },
+    emitTrackIdUp(trackId) {
+      this.$emit('select-track', trackId);
+    }
   }
 };
 </script>
