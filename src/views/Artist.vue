@@ -19,7 +19,7 @@
           <!--- TODO replace hardcoded image with some sort of api call -->
           <v-img
             contain
-            src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
+            v-bind:src="this.artistArtworkUrl"
             height="300px"
             width="300px"
           />
@@ -61,6 +61,8 @@
 import AlbumList from "../components/AlbumList.vue";
 import { getArtist, getAlbums } from "../api/api.js";
 import { emitTrackIdUp, emitTrackUp } from "../utils/emitUtils";
+import { getArtistArtworkUrl } from "../utils/scraperUtils.js";
+import { getHighResArtwork } from "../utils/imageUtils.js";
 
 export default {
   name: "Artist",
@@ -103,12 +105,14 @@ export default {
           releaseDate: "",
           primaryGenreName: ""
         }
-      ]
+      ],
+      artistArtworkUrl: ""
     };
   },
   created: async function() {
     this.artist = await this.getArtistInfo();
     this.albums = await this.getAlbumsInfo();
+    this.artistArtworkUrl = await this.getArtistArtworkUrl();
   },
   methods: {
     getArtistInfo: async function() {
@@ -119,6 +123,10 @@ export default {
     getAlbumsInfo: async function() {
       const albums = await getAlbums(this.$route.params.id);
       return albums.results;
+    },
+    getArtistArtworkUrl: async function() {
+      const lowResArtwork = await getArtistArtworkUrl(this.artist.artistId);
+      return getHighResArtwork(lowResArtwork, [300, 300]);
     },
     emitTrackUp(track) {
       emitTrackUp(this, track);
