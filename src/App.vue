@@ -136,36 +136,4 @@ export default {
 * {
   user-select: none;
 }
-.track-nb {
-  display: inline-block;
-}
-
-.play-btn {
-  display: none !important;
-  height: 30px;
-  width: 30px;
-}
-.track:hover {
-  background: #212121;
-}
-.track:hover .track-nb {
-  display: none;
-}
-
-.track:hover .play-btn {
-  display: inline-block !important;
-}
-.selected-track {
-  background: #313131 !important;
-}
-.play-btn:focus {
-  display: inline-block;
-}
-
-.play-btn-active {
-  display: inline-block !important;
-}
-.track-nb-hidden {
-  display: none !important;
-}
 </style>
