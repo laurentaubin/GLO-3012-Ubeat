@@ -70,7 +70,7 @@
         </v-row>
       </header>
       <v-divider />
-      <Song v-bind:id="track.Id"
+      <Track v-bind:id="track.Id"
             v-bind:key="track.Id"
             v-bind:track="track"
             v-for="track in tracks"
@@ -81,7 +81,7 @@
 
 <script>
 import { getTracks } from "../api/api.js";
-import Song from "./Song.vue";
+import Track from "./Track.vue";
 
 export default {
   name: "Album",
@@ -129,7 +129,7 @@ export default {
     };
   },
   components: {
-    Song: Song
+    Track: Track
   },
   //For the album component in AlbumList
   async created() {

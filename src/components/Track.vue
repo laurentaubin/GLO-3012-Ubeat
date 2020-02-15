@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: "Song",
+  name: "Track",
   props: ["track"],
   data: function() {
     return {
