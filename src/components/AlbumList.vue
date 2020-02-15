@@ -33,27 +33,27 @@ export default {
     return {
       shownAlbums: [
         {
-          "wrapperType": "",
-          "collectionType": "",
-          "artistId": 0,
-          "collectionId": 0,
-          "amgArtistId": 0,
-          "artistName": "",
-          "collectionName": "",
-          "collectionCensoredName": "",
-          "artistViewUrl": "",
-          "collectionViewUrl": "",
-          "artworkUrl60": "",
-          "artworkUrl100": "",
-          "collectionPrice": 0,
-          "collectionExplicitness": "",
-          "contentAdvisoryRating": "",
-          "trackCount": 0,
-          "copyright": "",
-          "country": "",
-          "currency": "",
-          "releaseDate": "",
-          "primaryGenreName": ""
+          wrapperType: "",
+          collectionType: "",
+          artistId: 0,
+          collectionId: 0,
+          amgArtistId: 0,
+          artistName: "",
+          collectionName: "",
+          collectionCensoredName: "",
+          artistViewUrl: "",
+          collectionViewUrl: "",
+          artworkUrl60: "",
+          artworkUrl100: "",
+          collectionPrice: 0,
+          collectionExplicitness: "",
+          contentAdvisoryRating: "",
+          trackCount: 0,
+          copyright: "",
+          country: "",
+          currency: "",
+          releaseDate: "",
+          primaryGenreName: ""
         }
       ],
       albumsToShow: 5,
@@ -64,8 +64,7 @@ export default {
     album: Album
   },
   async updated() {
-    if (this.albums[0].artistId !== 0
-      && !this.updated) {
+    if (this.albums[0].artistId !== 0 && !this.updated) {
       this.shownAlbums = this.albums.slice(0, 5);
       this.updated = 1;
     }

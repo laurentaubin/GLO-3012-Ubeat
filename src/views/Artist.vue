@@ -47,9 +47,11 @@
     >
       <v-divider />
       <h1 class="title font-weight-bold">Albums</h1>
-      <albumList v-bind:albums="albums" class="px-0"
-                 v-on:select-track="emitTrackIdUp"
-                 v-on:play-track="emitTrackUp"
+      <albumList
+        v-bind:albums="albums"
+        class="px-0"
+        v-on:select-track="emitTrackIdUp"
+        v-on:play-track="emitTrackUp"
       />
     </v-container>
   </v-container>
@@ -58,7 +60,7 @@
 <script>
 import AlbumList from "../components/AlbumList.vue";
 import { getArtist, getAlbums } from "../api/api.js";
-import {emitTrackIdUp, emitTrackUp} from "../utils/emitUtils";
+import { emitTrackIdUp, emitTrackUp } from "../utils/emitUtils";
 
 export default {
   name: "Artist",
@@ -68,38 +70,38 @@ export default {
   data: function() {
     return {
       artist: {
-        "wrapperType": "",
-        "artistType": "",
-        "artistName": "",
-        "artistLinkUrl": "",
-        "artistId": 0,
-        "amgArtistId": 0,
-        "primaryGenreName": "",
-        "primaryGenreId": 0
+        wrapperType: "",
+        artistType: "",
+        artistName: "",
+        artistLinkUrl: "",
+        artistId: 0,
+        amgArtistId: 0,
+        primaryGenreName: "",
+        primaryGenreId: 0
       },
       albums: [
         {
-          "wrapperType": "",
-          "collectionType": "",
-          "artistId": 0,
-          "collectionId": 0,
-          "amgArtistId": 0,
-          "artistName": "",
-          "collectionName": "",
-          "collectionCensoredName": "",
-          "artistViewUrl": "",
-          "collectionViewUrl": "",
-          "artworkUrl60": "",
-          "artworkUrl100": "",
-          "collectionPrice": 0,
-          "collectionExplicitness": "",
-          "contentAdvisoryRating": "",
-          "trackCount": 0,
-          "copyright": "",
-          "country": "",
-          "currency": "",
-          "releaseDate": "",
-          "primaryGenreName": ""
+          wrapperType: "",
+          collectionType: "",
+          artistId: 0,
+          collectionId: 0,
+          amgArtistId: 0,
+          artistName: "",
+          collectionName: "",
+          collectionCensoredName: "",
+          artistViewUrl: "",
+          collectionViewUrl: "",
+          artworkUrl60: "",
+          artworkUrl100: "",
+          collectionPrice: 0,
+          collectionExplicitness: "",
+          contentAdvisoryRating: "",
+          trackCount: 0,
+          copyright: "",
+          country: "",
+          currency: "",
+          releaseDate: "",
+          primaryGenreName: ""
         }
       ]
     };
