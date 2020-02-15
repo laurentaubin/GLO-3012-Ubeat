@@ -15,16 +15,20 @@
         </v-col>
         <v-col class="album-info text-center text-sm-start pl-3">
           <p class="body-2 font-weight-thin mb-0 pl-1 mt-sm-2">Album</p>
-          <!-- TODO Replace hardcoded link to actual album link -->
-          <a class="link white--text" href="/#/album">
+          <a
+            class="link white--text"
+            v-bind:href="'/#/album/' + this.album.collectionId"
+          >
             <h1 class="font-weight-bold display-2 mb-3">
               {{ album.collectionName }}
             </h1>
           </a>
-          <!-- TODO Replace hardcoded link to actual artist link -->
           <p class="body-2 grey--text darken-1 mb-1">
             By
-            <a href="/#/artist" class="link white--text">
+            <a
+              v-bind:href="'/#/artist/' + this.album.artistId"
+              class="link white--text"
+            >
               {{ album.artistName }}
             </a>
           </p>
