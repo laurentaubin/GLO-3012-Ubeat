@@ -1,17 +1,15 @@
 <template>
-    <Playlist />
+  <Playlist />
 </template>
 
 <script>
-  import Playlist from "../components/Playlist"
-    export default {
-        name: "Playlist",
-      components: {
-          playlist: Playlist
-      }
-    }
+import Playlist from "../components/Playlist";
+export default {
+  name: "Playlist",
+  components: {
+    playlist: Playlist
+  }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

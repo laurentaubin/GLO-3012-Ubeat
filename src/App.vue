@@ -42,8 +42,10 @@
 
       <v-content class="align-content-center">
         <v-container class="fill-height" fluid>
-          <router-view v-on:select-track="trackClicked"
-                       v-on:play-track="playTrack"/>
+          <router-view
+            v-on:select-track="trackClicked"
+            v-on:play-track="playTrack"
+          />
         </v-container>
       </v-content>
     </v-app>

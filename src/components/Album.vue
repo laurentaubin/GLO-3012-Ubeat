@@ -41,9 +41,7 @@
           <v-row class="justify-center">
             <v-col class="pa-0 d-flex justify-center justify-sm-start">
               <v-btn class="buy-btn ml-3" v-on:click="buyAlbumRedirect">
-                <p class="mt-auto mb-auto">
-                  $ {{ album.collectionPrice }} Buy
-                </p>
+                <p class="mt-auto mb-auto">$ {{ album.collectionPrice }} Buy</p>
               </v-btn>
               <a
                 href="https://geo.music.apple.com/ca/album/high-road/1484385866?mt=1&app=music&ls=1"
@@ -74,11 +72,13 @@
         </v-row>
       </header>
       <v-divider />
-      <Track v-bind:key="track.trackId"
-            v-bind:track="track"
-            v-for="track in tracks"
-            v-on:select-track="emitTrackIdUp"
-            v-on:play-track="emitTrackUp"/>
+      <Track
+        v-bind:key="track.trackId"
+        v-bind:track="track"
+        v-for="track in tracks"
+        v-on:select-track="emitTrackIdUp"
+        v-on:play-track="emitTrackUp"
+      />
     </v-container>
   </v-container>
 </template>
@@ -86,7 +86,7 @@
 <script>
 import { getTracks } from "../api/api.js";
 import Track from "./Track.vue";
-import {emitTrackUp, emitTrackIdUp} from "../utils/emitUtils";
+import { emitTrackUp, emitTrackIdUp } from "../utils/emitUtils";
 
 export default {
   name: "Album",
@@ -95,42 +95,42 @@ export default {
     return {
       tracks: [
         {
-          "wrapperType": "track",
-          "kind": "song",
-          "artistId": 0,
-          "collectionId": 0,
-          "trackId": 0,
-          "artistName": "",
-          "collectionName": "",
-          "trackName": "",
-          "collectionCensoredName": "",
-          "trackCensoredName": "",
-          "artistViewUrl": "",
-          "collectionViewUrl": "",
-          "trackViewUrl": "",
-          "previewUrl": "",
-          "artworkUrl30": "",
-          "artworkUrl60": "",
-          "artworkUrl100": "",
-          "collectionPrice": 0,
-          "trackPrice": 0,
-          "releaseDate": "",
-          "collectionExplicitness": "",
-          "trackExplicitness": "",
-          "discCount": 0,
-          "discNumber": 0,
-          "trackCount": 0,
-          "trackNumber": 0,
-          "trackTimeMillis": 0,
-          "country": "",
-          "currency": "",
-          "primaryGenreName": "",
-          "contentAdvisoryRating": "",
-          "isStreamable": true
+          wrapperType: "track",
+          kind: "song",
+          artistId: 0,
+          collectionId: 0,
+          trackId: 0,
+          artistName: "",
+          collectionName: "",
+          trackName: "",
+          collectionCensoredName: "",
+          trackCensoredName: "",
+          artistViewUrl: "",
+          collectionViewUrl: "",
+          trackViewUrl: "",
+          previewUrl: "",
+          artworkUrl30: "",
+          artworkUrl60: "",
+          artworkUrl100: "",
+          collectionPrice: 0,
+          trackPrice: 0,
+          releaseDate: "",
+          collectionExplicitness: "",
+          trackExplicitness: "",
+          discCount: 0,
+          discNumber: 0,
+          trackCount: 0,
+          trackNumber: 0,
+          trackTimeMillis: 0,
+          country: "",
+          currency: "",
+          primaryGenreName: "",
+          contentAdvisoryRating: "",
+          isStreamable: true
         }
       ],
       transparent: "rgba(255, 255, 255, 0)",
-      updated: 0,
+      updated: 0
     };
   },
   components: {
@@ -138,18 +138,22 @@ export default {
   },
   //For the album component in AlbumList
   async created() {
-    if (this.album.collectionId !== 0
-      && this.album.collectionId !== undefined
-      && !this.updated) {
+    if (
+      this.album.collectionId !== 0 &&
+      this.album.collectionId !== undefined &&
+      !this.updated
+    ) {
       this.tracks = await this.getTracksInfo();
       this.updated = 1;
     }
   },
   //For the album view
   async updated() {
-    if (this.album.collectionId !== 0
-      && this.album.collectionId !== undefined
-      && !this.updated) {
+    if (
+      this.album.collectionId !== 0 &&
+      this.album.collectionId !== undefined &&
+      !this.updated
+    ) {
       this.tracks = await this.getTracksInfo();
       this.updated = 1;
     }

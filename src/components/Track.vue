@@ -1,10 +1,12 @@
 <template>
-  <v-row v-bind:id="track.trackId"
-         :class="{
-          'track mx-0 px-0': $vuetify.breakpoint.xs,
-          track: $vuetify.breakpoint.smAndUp
-        }"
-        v-on:click="$emit('select-track', track.trackId)">
+  <v-row
+    v-bind:id="track.trackId"
+    :class="{
+      'track mx-0 px-0': $vuetify.breakpoint.xs,
+      track: $vuetify.breakpoint.smAndUp
+    }"
+    v-on:click="$emit('select-track', track.trackId)"
+  >
     <v-col cols="1" class="d-flex align-center justify-center">
       <span class="track-nb">{{ track.trackNumber }}</span>
       <v-btn class="play-btn" icon v-on:click="$emit('play-track', track)">
@@ -16,7 +18,7 @@
     </v-col>
     <v-col cols="1" class="d-flex align-center">{{
       millisToMinutesAndSeconds(track.trackTimeMillis)
-      }}</v-col>
+    }}</v-col>
   </v-row>
 </template>
 
@@ -25,8 +27,7 @@ export default {
   name: "Track",
   props: ["track"],
   data: function() {
-    return {
-    };
+    return {};
   },
   methods: {
     millisToMinutesAndSeconds(millis) {
