@@ -24,6 +24,7 @@
 
 <script>
 import Album from "./Album.vue";
+import { emitTrackIdUp, emitTrackUp } from "../utils/emitUtils";
 
 export default {
   name: "AlbumList",
@@ -75,10 +76,10 @@ export default {
       this.shownAlbums = this.albums.slice(0, this.albumsToShow);
     },
     emitTrackUp(track) {
-      this.$emit('play-track', track);
+      emitTrackUp(this, track);
     },
     emitTrackIdUp(trackId) {
-      this.$emit('select-track', trackId);
+      emitTrackIdUp(this, trackId);
     }
   }
 };

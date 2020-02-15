@@ -8,6 +8,7 @@
 <script>
 import Album from "../components/Album";
 import { getAlbum } from "../api/api.js";
+import {emitTrackUp, emitTrackIdUp} from "../utils/emitUtils";
 
 export default {
   name: "Album.vue",
@@ -50,10 +51,10 @@ export default {
       return album.results[0];
     },
     emitTrackUp(track) {
-      this.$emit('play-track', track);
+      emitTrackUp(this, track);
     },
     emitTrackIdUp(trackId) {
-      this.$emit('select-track', trackId);
+      emitTrackIdUp(this, trackId);
     }
   }
 };

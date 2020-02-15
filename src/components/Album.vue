@@ -82,6 +82,7 @@
 <script>
 import { getTracks } from "../api/api.js";
 import Track from "./Track.vue";
+import {emitTrackUp, emitTrackIdUp} from "../utils/emitUtils";
 
 export default {
   name: "Album",
@@ -164,10 +165,10 @@ export default {
       win.focus();
     },
     emitTrackUp(track) {
-      this.$emit('play-track', track);
+      emitTrackUp(this, track);
     },
     emitTrackIdUp(trackId) {
-      this.$emit('select-track', trackId);
+      emitTrackIdUp(this, trackId);
     }
   }
 };
