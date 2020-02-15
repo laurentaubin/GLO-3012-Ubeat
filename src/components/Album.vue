@@ -44,7 +44,7 @@
                 <p class="mt-auto mb-auto">$ {{ album.collectionPrice }} Buy</p>
               </v-btn>
               <a
-                href="https://geo.music.apple.com/ca/album/high-road/1484385866?mt=1&app=music&ls=1"
+                v-bind:href="this.album.collectionViewUrl"
                 class="d-inline-block itunes-btn ml-2"
               />
             </v-col>
