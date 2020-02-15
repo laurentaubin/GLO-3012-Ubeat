@@ -7,7 +7,7 @@
           <v-row>
             <v-img
               contain
-              v-bind:src="this.artworkUrl300"
+              v-bind:src="this.getArtworkUrl300()"
               height="200px"
               width="200px"
             />
@@ -129,7 +129,6 @@ export default {
           isStreamable: true
         }
       ],
-      artworkUrl300: this.getArtorkUrl300(),
       transparent: "rgba(255, 255, 255, 0)",
       updated: 0
     };
