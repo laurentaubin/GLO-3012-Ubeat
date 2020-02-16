@@ -43,3 +43,43 @@ export const getAlbum = async albumId => {
     return err;
   }
 };
+
+export const getPlaylists = async () => {
+  const path = `${API_URL}/playlists`;
+  try {
+    const response = await fetch(path);
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const createPlaylist = async (name, owner) => {
+  const path = `${API_URL}/playlists`;
+  const body = {
+    name: name,
+    owner: owner
+  };
+  try {
+    const response = await fetch(path, {
+      method: "POST",
+      body: JSON.stringify(body)
+    });
+    const data = response.json();
+    return data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const getPlaylist = async playlistId => {
+  const path = `${API_URL}/playlists/${playlistId}`;
+  try {
+    const response = await fetch(path);
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    return err;
+  }
+};
