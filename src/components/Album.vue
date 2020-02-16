@@ -75,6 +75,7 @@
       <Track
         v-bind:key="track.trackId"
         v-bind:track="track"
+        v-bind:trackNumber="tracks.indexOf(track) + 1"
         v-for="track in tracks"
         v-on:select-track="emitTrackIdUp"
         v-on:play-track="emitTrackUp"
