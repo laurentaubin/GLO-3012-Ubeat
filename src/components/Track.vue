@@ -8,7 +8,7 @@
     v-on:click="$emit('select-track', track.trackId)"
   >
     <v-col cols="1" class="d-flex align-center justify-center">
-      <span class="track-nb">{{ track.trackNumber }}</span>
+      <span class="track-nb">{{ trackNumber }}</span>
       <v-btn class="play-btn" icon v-on:click="$emit('play-track', track)">
         <v-icon>mdi-play</v-icon>
       </v-btn>
@@ -25,7 +25,7 @@
 <script>
 export default {
   name: "Track",
-  props: ["track"],
+  props: ["track", "trackNumber"],
   data: function() {
     return {};
   },
