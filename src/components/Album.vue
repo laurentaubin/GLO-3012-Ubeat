@@ -7,7 +7,7 @@
           <v-row>
             <v-img
               contain
-              src="https://is3-ssl.mzstatic.com/image/thumb/Music113/v4/52/0a/df/520adf4c-36e7-5d7d-114d-c5682df53b98/886447918104.jpg/939x0w.jpg"
+              v-bind:src="this.artworkUrl300"
               height="200px"
               width="200px"
             />
@@ -87,6 +87,7 @@
 import { getTracks } from "../api/api.js";
 import Track from "./Track.vue";
 import { emitTrackUp, emitTrackIdUp } from "../utils/emitUtils";
+import { getHighResArtwork } from "../utils/imageUtils.js";
 
 export default {
   name: "Album",
@@ -130,7 +131,8 @@ export default {
         }
       ],
       transparent: "rgba(255, 255, 255, 0)",
-      updated: 0
+      updated: 0,
+      artworkUrl300: ""
     };
   },
   components: {
@@ -144,6 +146,7 @@ export default {
       !this.updated
     ) {
       this.tracks = await this.getTracksInfo();
+      this.artworkUrl300 = this.getArtworkUrl300();
       this.updated = 1;
     }
   },
@@ -155,10 +158,14 @@ export default {
       !this.updated
     ) {
       this.tracks = await this.getTracksInfo();
+      this.artworkUrl300 = this.getArtworkUrl300();
       this.updated = 1;
     }
   },
   methods: {
+    getArtworkUrl300: function() {
+      return getHighResArtwork(this.album.artworkUrl60, [300, 300]);
+    },
     getAlbumYear: function() {
       const date = new Date(this.album.releaseDate);
       return date.getFullYear();
