@@ -10,13 +10,22 @@
         />
       </v-list-item-content>
     </v-list-item>
+    <v-divider></v-divider>
+    <v-list-item>
+      <PlaylistBar></PlaylistBar>
+    </v-list-item>
   </v-list>
 </template>
 
 <script>
+import PlaylistBar from "./PlaylistBar.vue";
+
 export default {
   props: {
     source: String
+  },
+  components: {
+    PlaylistBar: PlaylistBar
   },
   data: () => ({
     drawer: null,
