@@ -1,13 +1,14 @@
 <template>
   <v-container class="px-0 mx-0">
     <v-subheader class="subtitle-1 font-weigth">Playlists</v-subheader>
-    <v-list dense class="px-0 mx-0">
+    <!-- TODO Find a way to have dynamic max-height -->
+    <v-list dense style="max-height: 300px" class="px-0 mx-0 overflow-y-auto">
       <v-list-item-group>
         <v-list-item
           class=""
           v-for="playlist in playlists"
           :key="playlist.id"
-          :to="`/playlists/${playlist.id}`"
+          :to="`/playlist/${playlist.id}`"
         >
           <v-list-item-content class="py-0 my-0">
             <v-list-item-title
@@ -37,8 +38,7 @@ export default {
   methods: {
     getPlaylists: async function() {
       const playlists = await getPlaylists();
-      console.log(playlists.slice(0, 5));
-      this.playlists = playlists.slice(0, 10);
+      this.playlists = playlists;
     }
   }
 };
