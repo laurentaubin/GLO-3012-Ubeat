@@ -83,3 +83,24 @@ export const getPlaylist = async playlistId => {
     return err;
   }
 };
+
+
+export const editPlaylistName = async (playlistId, playlist, newName) => {
+  const path = `${API_URL}/playlists/${playlistId}`;
+  const body = {...playlist};
+  body.name = newName;
+  console.log(body);
+  try {
+    const response = await fetch(path, {
+      method: "PUT",
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    const data = response.json();
+    return data;
+  } catch (err) {
+    return err;
+  }
+};

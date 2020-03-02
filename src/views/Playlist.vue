@@ -1,25 +1,38 @@
 <template>
   <v-container>
+    <v-btn v-on:click="dialog = !dialog">Edit playlist</v-btn>
+    <v-dialog
+      v-model="dialog"
+      max-width="290"
+    >
+    <v-text-field
+          v-model="newPlaylistName"
+          label="Enter new playlist name"
+        ></v-text-field>
+      <v-btn v-on:click="changePlaylistName">OK</v-btn>
+    </v-dialog>
     <playlist
       v-bind:playlist="playlist"
       v-on:select-track="emitTrackIdUp"
       v-on:play-track="emitTrackUp"
     />
   </v-container>
-</template>
+</template> 
 
 <script>
 import Playlist from "../components/Playlist";
-import { getPlaylist } from "../api/api.js";
+import { getPlaylist, editPlaylistName } from "../api/api.js";
 import { emitTrackIdUp, emitTrackUp } from "../utils/emitUtils";
 
 export default {
   name: "Playlist",
+  newPlaylistName: "",
   components: {
     playlist: Playlist
   },
   data: function() {
     return {
+      dialog: false,
       playlist: {
         owner: {
           email: "",
@@ -44,7 +57,11 @@ export default {
     },
     emitTrackIdUp: function(trackId) {
       emitTrackIdUp(this, trackId);
-    }
+    },
+    changePlaylistName: async function(){
+      this.playlist = await editPlaylistName(this.playlist.id, this.playlist, this.newPlaylistName);
+      this.dialog = false
+    },
   }
 };
 </script>
