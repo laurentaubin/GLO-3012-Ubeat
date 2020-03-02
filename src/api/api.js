@@ -84,6 +84,19 @@ export const getPlaylist = async playlistId => {
   }
 };
 
+export const deletePlaylist = async playlistId => {
+  const path = `${API_URL}/playlists/${playlistId}`;
+  try {
+    const response = await fetch(path, {
+      method: "DELETE"
+    });
+    const data = response.json();
+    return data;
+  } catch (err) {
+    return err;
+  }
+}
+
 
 export const editPlaylistName = async (playlistId, playlist, newName) => {
   const path = `${API_URL}/playlists/${playlistId}`;
