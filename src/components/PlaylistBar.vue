@@ -45,13 +45,15 @@ export default {
   data: function() {
     return {
       playlists: [],
-      initialLoading: true,
+      initialLoading: false,
       scrollbarSettings: {
-        maxScrollbarLength: 60
+        minScrollbarLength: 40,
+        maxScrollbarLength: 80
       }
     };
   },
   created() {
+    this.initialLoading = true;
     this.getPlaylists();
   },
   methods: {
