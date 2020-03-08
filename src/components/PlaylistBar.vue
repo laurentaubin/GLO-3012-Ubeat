@@ -1,8 +1,17 @@
 <template>
   <v-container class="px-0 mx-0">
     <v-subheader class="subtitle-1 font-weigth">Playlists</v-subheader>
+    <v-container style="width: 225px;">
+      <v-progress-circular
+        v-if="initialLoading"
+        class="mt-6"
+        style="left: 38%;"
+        size="50"
+        indeterminate="true"
+      ></v-progress-circular>
+    </v-container>
     <!-- TODO Find a way to have dynamic max-height -->
-    <vue-custom-scrollbar class="scroll-area" :settings="settings">
+    <vue-custom-scrollbar class="scroll-area" :settings="scrollbarSettings">
       <v-list dense class="px-0 mx-0 overflow-y-auto">
         <v-list-item-group>
           <v-list-item
@@ -36,7 +45,8 @@ export default {
   data: function() {
     return {
       playlists: [],
-      settings: {
+      initialLoading: true,
+      scrollbarSettings: {
         maxScrollbarLength: 60
       }
     };
@@ -48,6 +58,7 @@ export default {
     getPlaylists: async function() {
       const playlists = await getPlaylists();
       this.playlists = playlists;
+      this.initialLoading = false;
     }
   }
 };
