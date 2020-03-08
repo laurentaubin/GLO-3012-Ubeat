@@ -6,7 +6,7 @@
         'track mx-0 px-0': $vuetify.breakpoint.xs,
         track: $vuetify.breakpoint.smAndUp
       }"
-      v-on:click="trackSelected()"
+      v-on:click="$emit('select-track', this.track.trackId)"
     >
       <v-col cols="1" class="d-flex align-center justify-center py-0">
         <span class="track-nb">{{ trackNumber }}</span>
@@ -50,13 +50,21 @@
 </template>
 
 <script>
+import router from "../router/index.js";
+
 export default {
   name: "Track",
   props: ["track", "trackNumber"],
   data: () => ({}),
   methods: {
-    trackSelected() {
-      this.$emit("select-track", this.track.trackId);
+    goToArtist() {
+      router.push(`/artist/${this.track.artistId}`);
+    },
+    goToAlbum() {
+      router.push(`/album/${this.track.collectionId}`);
+    },
+    addToPlaylist() {
+      // todo lmao
     },
     millisToMinutesAndSeconds(millis) {
       const minutes = Math.floor((millis / 1000 / 60) << 0);
