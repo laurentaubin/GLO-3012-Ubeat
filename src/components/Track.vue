@@ -7,7 +7,7 @@
     }"
     v-on:click="$emit('select-track', track.trackId)"
   >
-    <v-col cols="1" class="d-flex align-center justify-center">
+    <v-col cols="1" class="d-flex align-center justify-center py-0">
       <span class="track-nb">{{ trackNumber }}</span>
       <v-btn class="play-btn" icon v-on:click="$emit('play-track', track)">
         <v-icon>mdi-play</v-icon>
