@@ -6,7 +6,7 @@
         'track mx-0 px-0': $vuetify.breakpoint.xs,
         track: $vuetify.breakpoint.smAndUp
       }"
-      v-on:click="$emit('select-track', this.track.trackId)"
+      v-on:click="$emit('select-track', track.trackId)"
     >
       <v-col cols="1" class="d-flex align-center justify-center py-0">
         <span class="track-nb">{{ trackNumber }}</span>
@@ -18,29 +18,11 @@
         <span>{{ track.trackName }}</span>
       </v-col>
       <v-col cols="1">
-        <div class="text-center">
-          <v-menu offset-y>
-            <template v-slot:activator="{ on }">
-              <a class="white--text" v-on="on">
-                <p v-if="hover" class="py-0 my-0">
-                  •••
-                </p>
-              </a>
-            </template>
-
-            <v-list width="175">
-              <v-list-item v-on:click="goToArtist()">
-                <v-list-item-title>Go to artist</v-list-item-title>
-              </v-list-item>
-              <v-list-item v-on:click="goToAlbum()">
-                <v-list-item-title>Go to album</v-list-item-title>
-              </v-list-item>
-              <v-list-item v-on:click="addToPlaylist()">
-                <v-list-item-title>Add to playlist </v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </div>
+        <track-menu
+          :hover="hover"
+          :artistId="track.artistId"
+          :collectionId="track.collectionId"
+        />
       </v-col>
       <v-col cols="1" class="d-flex align-center">{{
         millisToMinutesAndSeconds(track.trackTimeMillis)
@@ -50,22 +32,16 @@
 </template>
 
 <script>
-import router from "../router/index.js";
+import TrackMenu from "./TrackMenu.vue";
 
 export default {
   name: "Track",
   props: ["track", "trackNumber"],
+  components: {
+    "track-menu": TrackMenu
+  },
   data: () => ({}),
   methods: {
-    goToArtist() {
-      router.push(`/artist/${this.track.artistId}`);
-    },
-    goToAlbum() {
-      router.push(`/album/${this.track.collectionId}`);
-    },
-    addToPlaylist() {
-      // todo lmao
-    },
     millisToMinutesAndSeconds(millis) {
       const minutes = Math.floor((millis / 1000 / 60) << 0);
       let seconds = Math.floor((millis / 1000) % 60);
