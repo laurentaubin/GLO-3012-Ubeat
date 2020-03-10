@@ -27,7 +27,7 @@
             placeholder="My playlist"
           ></v-text-field>
         </v-card-text>
-        <v-card-actions>
+        <v-card-actions class="justify-center">
           <v-btn
             @click="
               createPlaylist(playlistName, 'test@francis.com');
