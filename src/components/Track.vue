@@ -1,34 +1,46 @@
 <template>
-  <v-row
-    v-bind:id="track.trackId"
-    :class="{
-      'track mx-0 px-0': $vuetify.breakpoint.xs,
-      track: $vuetify.breakpoint.smAndUp
-    }"
-    v-on:click="$emit('select-track', track.trackId)"
-  >
-    <v-col cols="1" class="d-flex align-center justify-center py-0">
-      <span class="track-nb">{{ trackNumber }}</span>
-      <v-btn class="play-btn" icon v-on:click="$emit('play-track', track)">
-        <v-icon>mdi-play</v-icon>
-      </v-btn>
-    </v-col>
-    <v-col cols="10" class="d-flex align-center">
-      <span>{{ track.trackName }}</span>
-    </v-col>
-    <v-col cols="1" class="d-flex align-center">{{
-      millisToMinutesAndSeconds(track.trackTimeMillis)
-    }}</v-col>
-  </v-row>
+  <v-hover v-slot:default="{ hover }">
+    <v-row
+      v-bind:id="track.trackId"
+      :class="{
+        'track mx-0 px-0': $vuetify.breakpoint.xs,
+        track: $vuetify.breakpoint.smAndUp
+      }"
+      v-on:click="$emit('select-track', track.trackId)"
+    >
+      <v-col cols="1" class="d-flex align-center justify-center py-0">
+        <span class="track-nb">{{ trackNumber }}</span>
+        <v-btn class="play-btn" icon v-on:click="$emit('play-track', track)">
+          <v-icon>mdi-play</v-icon>
+        </v-btn>
+      </v-col>
+      <v-col cols="9" class="d-flex align-center">
+        <span>{{ track.trackName }}</span>
+      </v-col>
+      <v-col cols="1">
+        <track-menu
+          :hover="hover"
+          :artistId="track.artistId"
+          :collectionId="track.collectionId"
+        />
+      </v-col>
+      <v-col cols="1" class="d-flex align-center">{{
+        millisToMinutesAndSeconds(track.trackTimeMillis)
+      }}</v-col>
+    </v-row>
+  </v-hover>
 </template>
 
 <script>
+import TrackMenu from "./TrackMenu.vue";
+
 export default {
   name: "Track",
   props: ["track", "trackNumber"],
-  data: function() {
-    return {};
+  components: {
+    "track-menu": TrackMenu
   },
+  data: () => ({}),
   methods: {
     millisToMinutesAndSeconds(millis) {
       const minutes = Math.floor((millis / 1000 / 60) << 0);
@@ -49,7 +61,6 @@ export default {
 .track-nb {
   display: inline-block;
 }
-
 .play-btn {
   display: none !important;
   height: 30px;
