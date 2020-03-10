@@ -68,7 +68,9 @@ export default {
   methods: {
     getPlaylists: async function() {
       const playlists = await getPlaylists();
-      this.playlists = playlists;
+      this.playlists = playlists.filter(
+        playlist => playlist.owner.email === "test@francis.com"
+      );
       this.initialLoading = false;
     }
   }
