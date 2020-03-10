@@ -48,6 +48,8 @@
           />
         </v-container>
       </v-content>
+
+      <playlist-drawer right showDrawer="playlistDrawer" />
     </v-app>
   </div>
 </template>
@@ -55,18 +57,21 @@
 <script>
 import Navigation from "./components/Navigation";
 import AvatarMenu from "./components/AvatarMenu";
+import PlaylistDrawer from "./components/PlaylistDrawer";
 
 export default {
   name: "app",
   components: {
     "nav-menu": Navigation,
-    "avatar-menu": AvatarMenu
+    "avatar-menu": AvatarMenu,
+    "playlist-drawer": PlaylistDrawer
   },
   props: {
     source: String
   },
   data: () => ({
     drawer: null,
+    playlistDrawer: null,
     selectedTrack: null,
     audio: null,
     currentTrack: null,
@@ -129,6 +134,9 @@ export default {
         playButton.childNodes[0].innerHTML =
           "<i aria-hidden='true' class='v-icon notranslate mdi mdi-pause'>";
       }
+    },
+    showPlaylistDrawer() {
+      this.playlistDrawer = true;
     }
   }
 };

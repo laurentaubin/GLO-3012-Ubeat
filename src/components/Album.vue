@@ -38,15 +38,24 @@
           <p class="body-2 mb-1 grey--text darken-1">
             {{ album.primaryGenreName }}
           </p>
-          <v-row class="justify-center">
-            <v-col class="pa-0 d-flex justify-center justify-sm-start">
+          <v-row justify="start">
+            <v-col class="pl-0">
               <v-btn class="buy-btn ml-3" v-on:click="buyAlbumRedirect">
                 <p class="mt-auto mb-auto">$ {{ album.collectionPrice }} Buy</p>
               </v-btn>
-              <a
-                v-bind:href="this.album.collectionViewUrl"
-                class="d-inline-block itunes-btn ml-2"
-              />
+            </v-col>
+            <v-col cols="1" class="px-1">
+              <v-btn text icon>
+                <a
+                  v-bind:href="this.album.collectionViewUrl"
+                  class="d-inline-block itunes-btn ml-2"
+                />
+              </v-btn>
+            </v-col>
+            <v-col cols="1" class="px-1">
+              <v-btn text icon>
+                <v-icon large>mdi-dots-horizontal-circle-outline</v-icon>
+              </v-btn>
             </v-col>
           </v-row>
         </v-col>
