@@ -64,7 +64,10 @@ export const createPlaylist = async (name, owner) => {
   try {
     const response = await fetch(path, {
       method: "POST",
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json"
+      }
     });
     const data = response.json();
     return data;
