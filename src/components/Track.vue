@@ -22,6 +22,8 @@
           :hover="hover"
           :artistId="track.artistId"
           :collectionId="track.collectionId"
+          v-bind:track="track"
+          v-bind:tracks="tracks"
         />
       </v-col>
       <v-col cols="1" class="d-flex align-center">{{
@@ -36,7 +38,7 @@ import TrackMenu from "./TrackMenu.vue";
 
 export default {
   name: "Track",
-  props: ["track", "trackNumber"],
+  props: ["track", "trackNumber", "tracks"],
   components: {
     "track-menu": TrackMenu
   },

@@ -16,7 +16,7 @@
         <v-list-item v-on:click="goToAlbum()">
           <v-list-item-title>Go to album</v-list-item-title>
         </v-list-item>
-        <v-list-item v-on:click="addToPlaylist()">
+        <v-list-item v-on:click="showDrawer()">
           <v-list-item-title>Add to playlist </v-list-item-title>
         </v-list-item>
       </v-list>
@@ -29,16 +29,20 @@ import router from "../router/index.js";
 
 export default {
   name: "TrackMenu",
-  props: ["hover", "artistId", "collectionId"],
+  props: ["hover", "artistId", "collectionId", "track", "tracks"],
   methods: {
+    showDrawer() {
+      if (this.tracks === undefined) {
+        this.$root.$children[0].showPlaylistDrawer(this.track);
+      } else {
+        this.$root.$children[0].showPlaylistDrawer(this.tracks);
+      }
+    },
     goToArtist() {
       router.push(`/artist/${this.artistId}`);
     },
     goToAlbum() {
       router.push(`/album/${this.collectionId}`);
-    },
-    addToPlaylist() {
-      // todo lmao
     }
   }
 };

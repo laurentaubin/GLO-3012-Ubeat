@@ -2,7 +2,11 @@
   <div id="app">
     <v-app id="inspire">
       <v-navigation-drawer v-model="drawer" app clipped>
-        <nav-menu />
+        <nav-menu v-on:playlists-ready="updatePlaylists" />
+      </v-navigation-drawer>
+
+      <v-navigation-drawer v-model="playlistDrawer" :right="true" app clipped>
+        <playlist-drawer v-bind:playlists="playlists" v-bind:tracks="trackMenuTracks"/>
       </v-navigation-drawer>
 
       <v-app-bar app clipped-left elevate-on-scroll>
@@ -55,22 +59,27 @@
 <script>
 import Navigation from "./components/Navigation";
 import AvatarMenu from "./components/AvatarMenu";
+import PlaylistDrawer from "./components/PlaylistDrawer";
 
 export default {
   name: "app",
   components: {
     "nav-menu": Navigation,
-    "avatar-menu": AvatarMenu
+    "avatar-menu": AvatarMenu,
+    "playlist-drawer": PlaylistDrawer
   },
   props: {
     source: String
   },
   data: () => ({
     drawer: null,
+    playlistDrawer: false,
     selectedTrack: null,
     audio: null,
     currentTrack: null,
-    currentSelectedTrack: null
+    currentSelectedTrack: null,
+    playlists: [],
+    trackMenuTracks: []
   }),
   created() {
     this.$vuetify.theme.dark = true;
@@ -129,6 +138,17 @@ export default {
         playButton.childNodes[0].innerHTML =
           "<i aria-hidden='true' class='v-icon notranslate mdi mdi-pause'>";
       }
+    },
+    showPlaylistDrawer(track) {
+      this.playlistDrawer = !this.playlistDrawer;
+      if (Array.isArray(track)) {
+        this.trackMenuTracks = track;
+      } else {
+        this.trackMenuTracks = [track];
+      }
+    },
+    updatePlaylists(playlists) {
+      this.playlists = playlists;
     }
   }
 };

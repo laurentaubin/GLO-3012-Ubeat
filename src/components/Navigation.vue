@@ -12,7 +12,7 @@
     </v-list-item>
     <v-divider></v-divider>
     <v-list-item>
-      <PlaylistBar></PlaylistBar>
+      <PlaylistBar v-on:playlists-ready="emitPlaylists"></PlaylistBar>
     </v-list-item>
   </v-list>
 </template>
@@ -40,6 +40,11 @@ export default {
   }),
   created() {
     this.$vuetify.theme.dark = true;
+  },
+  methods: {
+    emitPlaylists: function(playlists) {
+      this.$emit("playlists-ready", playlists);
+    }
   }
 };
 </script>

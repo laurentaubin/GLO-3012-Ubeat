@@ -72,6 +72,7 @@ export default {
         playlist => playlist.owner.email === "test@francis.com"
       );
       this.initialLoading = false;
+      this.$emit("playlists-ready", this.playlists);
     }
   }
 };

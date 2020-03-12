@@ -38,14 +38,26 @@
           <p class="body-2 mb-1 grey--text darken-1">
             {{ album.primaryGenreName }}
           </p>
-          <v-row class="justify-center">
-            <v-col class="pa-0 d-flex justify-center justify-sm-start">
+          <v-row justify="start">
+            <v-col class="pl-0">
               <v-btn class="buy-btn ml-3" v-on:click="buyAlbumRedirect">
                 <p class="mt-auto mb-auto">$ {{ album.collectionPrice }} Buy</p>
               </v-btn>
-              <a
-                v-bind:href="this.album.collectionViewUrl"
-                class="d-inline-block itunes-btn ml-2"
+            </v-col>
+            <v-col cols="1" class="px-1">
+              <v-btn text icon>
+                <a
+                  v-bind:href="this.album.collectionViewUrl"
+                  class="d-inline-block itunes-btn ml-2"
+                />
+              </v-btn>
+            </v-col>
+            <v-col cols="1" class="px-1">
+              <TrackMenu
+                :hover="true"
+                :artistId="album.artistId"
+                :collectionId="album.collectionId"
+                :tracks="tracks"
               />
             </v-col>
           </v-row>
@@ -89,6 +101,7 @@ import { getTracks } from "../api/api.js";
 import Track from "./Track.vue";
 import { emitTrackUp, emitTrackIdUp } from "../utils/emitUtils";
 import { getHighResArtwork } from "../utils/imageUtils.js";
+import TrackMenu from "./TrackMenu.vue";
 
 export default {
   name: "Album",
@@ -137,7 +150,8 @@ export default {
     };
   },
   components: {
-    Track: Track
+    Track: Track,
+    TrackMenu: TrackMenu
   },
   //For the album component in AlbumList
   async created() {
