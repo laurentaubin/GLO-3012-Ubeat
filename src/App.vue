@@ -2,7 +2,11 @@
   <div id="app">
     <v-app id="inspire">
       <v-navigation-drawer v-model="drawer" app clipped>
-        <nav-menu />
+        <nav-menu v-on:playlists-ready="updatePlaylists" />
+      </v-navigation-drawer>
+
+      <v-navigation-drawer v-model="playlistDrawer" :right="true" app clipped>
+        <playlist-drawer v-bind:playlists="playlists"/>
       </v-navigation-drawer>
 
       <v-app-bar app clipped-left elevate-on-scroll>
@@ -48,8 +52,6 @@
           />
         </v-container>
       </v-content>
-
-      <playlist-drawer right showDrawer="playlistDrawer" />
     </v-app>
   </div>
 </template>
@@ -71,11 +73,12 @@ export default {
   },
   data: () => ({
     drawer: null,
-    playlistDrawer: null,
+    playlistDrawer: false,
     selectedTrack: null,
     audio: null,
     currentTrack: null,
-    currentSelectedTrack: null
+    currentSelectedTrack: null,
+    playlists: []
   }),
   created() {
     this.$vuetify.theme.dark = true;
@@ -136,7 +139,10 @@ export default {
       }
     },
     showPlaylistDrawer() {
-      this.playlistDrawer = true;
+      this.playlistDrawer = !this.playlistDrawer;
+    },
+    updatePlaylists(playlists) {
+      this.playlists = playlists;
     }
   }
 };

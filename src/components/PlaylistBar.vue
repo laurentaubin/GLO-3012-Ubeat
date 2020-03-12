@@ -61,6 +61,7 @@ export default {
       const playlists = await getPlaylists();
       this.playlists = playlists;
       this.initialLoading = false;
+      this.$emit("playlists-ready", this.playlists);
     }
   }
 };
