@@ -6,7 +6,7 @@
       </v-navigation-drawer>
 
       <v-navigation-drawer v-model="playlistDrawer" :right="true" app clipped>
-        <playlist-drawer v-bind:playlists="playlists"/>
+        <playlist-drawer v-bind:playlists="playlists" v-bind:tracks="trackMenuTracks"/>
       </v-navigation-drawer>
 
       <v-app-bar app clipped-left elevate-on-scroll>
@@ -78,7 +78,8 @@ export default {
     audio: null,
     currentTrack: null,
     currentSelectedTrack: null,
-    playlists: []
+    playlists: [],
+    trackMenuTracks: []
   }),
   created() {
     this.$vuetify.theme.dark = true;
@@ -138,8 +139,13 @@ export default {
           "<i aria-hidden='true' class='v-icon notranslate mdi mdi-pause'>";
       }
     },
-    showPlaylistDrawer() {
+    showPlaylistDrawer(track) {
       this.playlistDrawer = !this.playlistDrawer;
+      if (Array.isArray(track)) {
+        this.trackMenuTracks = track;
+      } else {
+        this.trackMenuTracks = [track];
+      }
     },
     updatePlaylists(playlists) {
       this.playlists = playlists;

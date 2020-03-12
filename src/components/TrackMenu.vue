@@ -26,23 +26,23 @@
 
 <script>
 import router from "../router/index.js";
-import { addTrackToPlaylist } from "../api/api.js";
 
 export default {
   name: "TrackMenu",
-  props: ["hover", "artistId", "collectionId"],
+  props: ["hover", "artistId", "collectionId", "track", "tracks"],
   methods: {
     showDrawer() {
-      this.$root.$children[0].showPlaylistDrawer();
+      if (this.tracks === undefined) {
+        this.$root.$children[0].showPlaylistDrawer(this.track);
+      } else {
+        this.$root.$children[0].showPlaylistDrawer(this.tracks);
+      }
     },
     goToArtist() {
       router.push(`/artist/${this.artistId}`);
     },
     goToAlbum() {
       router.push(`/album/${this.collectionId}`);
-    },
-    addToPlaylist(track, playlistId) {
-      addTrackToPlaylist(track, playlistId);
     }
   }
 };

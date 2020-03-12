@@ -1,7 +1,7 @@
 <template>
   <v-list dense nav>
     <!-- Home -->
-    <v-list-item v-for="playlist in playlists" :key="playlist.id" :to="addSongPlusRedirect(playlist.id)">
+    <v-list-item v-for="playlist in playlists" :key="playlist.id" v-on:click="addSongToPlaylist(playlist.id)" :to="`/playlist/${playlist.id}`">
       <v-icon left></v-icon>
       <v-list-item-content>
         <v-list-item-title
@@ -14,13 +14,16 @@
 </template>
 
 <script>
+import { addTrackToPlaylist } from "../api/api.js";
+
 export default {
   name: "PlaylistDrawer",
-  props: ["playlists"],
+  props: ["playlists", "tracks"],
   methods: {
-    addSongPlusRedirect: function(playlistID) {
-      //addSongToPlaylist //find a way to get song from TrackMenu
-      return `/playlist/${playlistID}`;
+    addSongToPlaylist: function(playlistID) {
+      for (let i = 0; i < this.tracks.length; i++) {
+        addTrackToPlaylist(this.tracks[i], playlistID);
+      }
     }
   }
 };

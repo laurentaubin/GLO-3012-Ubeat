@@ -53,9 +53,12 @@
               </v-btn>
             </v-col>
             <v-col cols="1" class="px-1">
-              <v-btn text icon>
-                <v-icon large>mdi-dots-horizontal-circle-outline</v-icon>
-              </v-btn>
+              <TrackMenu
+                :hover="true"
+                :artistId="album.artistId"
+                :collectionId="album.collectionId"
+                :tracks="tracks"
+              />
             </v-col>
           </v-row>
         </v-col>
@@ -98,6 +101,7 @@ import { getTracks } from "../api/api.js";
 import Track from "./Track.vue";
 import { emitTrackUp, emitTrackIdUp } from "../utils/emitUtils";
 import { getHighResArtwork } from "../utils/imageUtils.js";
+import TrackMenu from "./TrackMenu.vue";
 
 export default {
   name: "Album",
@@ -146,7 +150,8 @@ export default {
     };
   },
   components: {
-    Track: Track
+    Track: Track,
+    TrackMenu: TrackMenu
   },
   //For the album component in AlbumList
   async created() {
