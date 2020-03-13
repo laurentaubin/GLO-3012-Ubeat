@@ -10,13 +10,22 @@
         />
       </v-list-item-content>
     </v-list-item>
+    <v-divider></v-divider>
+    <v-list-item>
+      <PlaylistBar v-on:playlists-ready="emitPlaylists"></PlaylistBar>
+    </v-list-item>
   </v-list>
 </template>
 
 <script>
+import PlaylistBar from "./PlaylistBar.vue";
+
 export default {
   props: {
     source: String
+  },
+  components: {
+    PlaylistBar: PlaylistBar
   },
   data: () => ({
     drawer: null,
@@ -31,6 +40,11 @@ export default {
   }),
   created() {
     this.$vuetify.theme.dark = true;
+  },
+  methods: {
+    emitPlaylists: function(playlists) {
+      this.$emit("playlists-ready", playlists);
+    }
   }
 };
 </script>

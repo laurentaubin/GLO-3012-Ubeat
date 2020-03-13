@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1>{{this.playlist.name}}</h1>
+    <h1>{{ playlist.name }}</h1>
     <Track
       v-bind:key="track.trackId"
       v-bind:track="track"

@@ -64,7 +64,10 @@ export const createPlaylist = async (name, owner) => {
   try {
     const response = await fetch(path, {
       method: "POST",
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json"
+      }
     });
     const data = response.json();
     return data;
@@ -110,6 +113,24 @@ export const editPlaylistName = async (playlistId, playlist, newName) => {
       headers: {
         'Content-Type': 'application/json'
       },
+    });
+    const data = response.json();
+    return data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const addTrackToPlaylist = async (track, playlistId) => {
+  const path = `${API_URL}/playlists/${playlistId}/tracks`;
+  const body = track;
+  try {
+    const response = await fetch(path, {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json"
+      }
     });
     const data = response.json();
     return data;
