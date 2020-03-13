@@ -138,3 +138,19 @@ export const addTrackToPlaylist = async (track, playlistId) => {
     return err;
   }
 };
+
+export const deleteTrackFromPlaylist = async (track, playlistId) => {
+  const path = `${API_URL}/playlists/${playlistId}/tracks/${track.trackId}`;
+  try {
+    const response = await fetch(path, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    const data = response.json();
+    return data;
+  } catch (err) {
+    return err;
+  }
+};

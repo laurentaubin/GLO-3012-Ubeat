@@ -14,7 +14,7 @@
       max-width="290"
     >
     <v-text-field
-          v-model="newPlaylistName"
+          v-model="this.newPlaylistName"
           label="Enter new playlist name"
         ></v-text-field>
       <v-btn v-on:click="changePlaylistName">OK</v-btn>
@@ -25,7 +25,7 @@
       v-on:play-track="emitTrackUp"
     />
   </v-container>
-</template> 
+</template>
 
 <script>
 import Playlist from "../components/Playlist";
@@ -34,12 +34,13 @@ import { emitTrackIdUp, emitTrackUp } from "../utils/emitUtils";
 
 export default {
   name: "Playlist",
-  newPlaylistName: "",
+  
   components: {
     playlist: Playlist
   },
   data: function() {
     return {
+      newPlaylistName: "",
       deletePlaylistTrigger: false,
       dialog: false,
       playlist: {

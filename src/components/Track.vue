@@ -1,5 +1,5 @@
 <template>
-  <v-hover v-slot:default="{ hover }">
+  <v-hover v-if="!isDeleted" v-slot:default="{ hover }">
     <v-row
       v-bind:id="track.trackId"
       :class="{
@@ -24,6 +24,7 @@
           :collectionId="track.collectionId"
           v-bind:track="track"
           v-bind:tracks="tracks"
+          :btnClickHandler="handleTrackDeleted"
         />
       </v-col>
       <v-col cols="1" class="d-flex align-center">{{
@@ -35,14 +36,19 @@
 
 <script>
 import TrackMenu from "./TrackMenu.vue";
+import {deleteTrackFromPlaylist} from "../api/api";
 
 export default {
   name: "Track",
-  props: ["track", "trackNumber", "tracks"],
+  props: ["track", "trackNumber", "tracks", "playlistID"],
   components: {
     "track-menu": TrackMenu
   },
-  data: () => ({}),
+  data: () => {
+    return {
+      isDeleted: false
+    };
+  },
   methods: {
     millisToMinutesAndSeconds(millis) {
       const minutes = Math.floor((millis / 1000 / 60) << 0);
@@ -54,6 +60,10 @@ export default {
       }
 
       return minutes + ":" + seconds;
+    },
+    handleTrackDeleted() {
+      deleteTrackFromPlaylist(this.track, this.playlistID);
+      this.isDeleted=true;
     }
   }
 };
