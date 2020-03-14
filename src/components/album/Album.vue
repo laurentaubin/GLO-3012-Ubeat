@@ -1,69 +1,10 @@
 <template>
   <v-container class="px-0">
-    <!-- album header -->
-    <v-container class="pb-md-7">
-      <v-row no-gutters class="justify-end">
-        <v-col cols="12" xs="12" sm="5" md="4" lg="3" class="align-end">
-          <v-row>
-            <v-img
-              contain
-              v-bind:src="this.artworkUrl300"
-              height="200px"
-              width="200px"
-            />
-          </v-row>
-        </v-col>
-        <v-col class="album-info text-center text-sm-start pl-3">
-          <p class="body-2 font-weight-thin mb-0 pl-1 mt-sm-2">Album</p>
-          <a
-            class="link white--text"
-            v-bind:href="'/#/album/' + this.album.collectionId"
-          >
-            <h1 class="font-weight-bold display-2 mb-3">
-              {{ album.collectionName }}
-            </h1>
-          </a>
-          <p class="body-2 grey--text darken-1 mb-1">
-            By
-            <a
-              v-bind:href="'/#/artist/' + this.album.artistId"
-              class="link white--text"
-            >
-              {{ album.artistName }}
-            </a>
-          </p>
-          <p class="body-2 mb-1 grey--text darken-1">
-            {{ this.getAlbumYear() }} • {{ album.trackCount }} songs
-          </p>
-          <p class="body-2 mb-1 grey--text darken-1">
-            {{ album.primaryGenreName }}
-          </p>
-          <v-row justify="start">
-            <v-col class="pl-0">
-              <v-btn class="buy-btn ml-3" v-on:click="buyAlbumRedirect">
-                <p class="mt-auto mb-auto">$ {{ album.collectionPrice }} Buy</p>
-              </v-btn>
-            </v-col>
-            <v-col cols="1" class="px-1">
-              <v-btn text icon>
-                <a
-                  v-bind:href="this.album.collectionViewUrl"
-                  class="d-inline-block itunes-btn ml-2"
-                />
-              </v-btn>
-            </v-col>
-            <v-col cols="1" class="px-1">
-              <TrackMenu
-                :hover="true"
-                :artistId="album.artistId"
-                :collectionId="album.collectionId"
-                :tracks="tracks"
-              />
-            </v-col>
-          </v-row>
-        </v-col>
-      </v-row>
-    </v-container>
+    <album-header
+      v-bind:album="album"
+      v-bind:artworkUrl300="artworkUrl300"
+      v-bind:albumYear="this.getAlbumYear()"
+    />
 
     <v-container class="song-list" fluid>
       <header class="songs-header">
@@ -97,11 +38,11 @@
 </template>
 
 <script>
-import { getTracks } from "../api/api.js";
-import Track from "./Track.vue";
-import { emitTrackUp, emitTrackIdUp } from "../utils/emitUtils";
-import { getHighResArtwork } from "../utils/imageUtils.js";
-import TrackMenu from "./TrackMenu.vue";
+import { getTracks } from "../../api/api.js";
+import Track from "../track/Track.vue";
+import { emitTrackUp, emitTrackIdUp } from "../../utils/emitUtils";
+import { getHighResArtwork } from "../../utils/imageUtils.js";
+import AlbumHeader from "./AlbumHeader";
 
 export default {
   name: "Album",
@@ -151,7 +92,7 @@ export default {
   },
   components: {
     Track: Track,
-    TrackMenu: TrackMenu
+    AlbumHeader: AlbumHeader
   },
   //For the album component in AlbumList
   async created() {
@@ -190,10 +131,6 @@ export default {
       const tracks = await getTracks(albumId);
       return tracks.results;
     },
-    buyAlbumRedirect() {
-      let win = window.open(this.album.collectionViewUrl, "_blank");
-      win.focus();
-    },
     emitTrackUp(track) {
       emitTrackUp(this, track);
     },
@@ -216,6 +153,7 @@ export default {
 .album-genre {
   display: block;
 }
+
 .track-nb {
   display: inline-block;
 }
@@ -225,9 +163,11 @@ export default {
   height: 30px;
   width: 30px;
 }
+
 .track:hover {
   background: #212121;
 }
+
 .track:hover .track-nb {
   display: none;
 }
@@ -235,9 +175,11 @@ export default {
 .track:hover .play-btn {
   display: inline-block !important;
 }
+
 .selected-track {
   background: #313131 !important;
 }
+
 .play-btn:focus {
   display: inline-block;
 }
@@ -245,6 +187,7 @@ export default {
 .play-btn-active {
   display: inline-block !important;
 }
+
 .track-nb-hidden {
   display: none !important;
 }
@@ -252,9 +195,11 @@ export default {
 .link {
   text-decoration: none;
 }
+
 .link:hover {
   text-decoration: underline;
 }
+
 .itunes-btn {
   width: 35px;
   overflow: hidden;

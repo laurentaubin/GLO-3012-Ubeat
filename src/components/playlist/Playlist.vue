@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1>{{ playlist.name }}</h1>
+    <PlaylistHeader v-bind:playlist="playlist" />
     <Track
       v-bind:playlistID="playlist.id"
       v-bind:key="track.trackId"
@@ -14,20 +14,20 @@
 </template>
 
 <script>
-import Track from "./Track.vue";
-import { emitTrackIdUp, emitTrackUp } from "../utils/emitUtils";
+import Track from "../track/Track.vue";
+import PlaylistHeader from "./PlaylistHeader";
+import { emitTrackIdUp, emitTrackUp } from "../../utils/emitUtils";
 
 export default {
   name: "Playlist",
   props: ["playlist"],
   components: {
-    Track: Track
+    Track: Track,
+    PlaylistHeader
   },
-  data: () => {
-    return {
-      updated: 0,
-    };
-  },
+  data: () => ({
+    updated: 0
+  }),
   methods: {
     emitTrackUp: function(track) {
       emitTrackUp(this, track);

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Album from "../components/Album";
+import Album from "../components/album/Album";
 import { getAlbum } from "../api/api.js";
 import { emitTrackUp, emitTrackIdUp } from "../utils/emitUtils";
 

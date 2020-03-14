@@ -24,7 +24,7 @@
 
 <script>
 import Album from "./Album.vue";
-import { emitTrackIdUp, emitTrackUp } from "../utils/emitUtils";
+import { emitTrackIdUp, emitTrackUp } from "../../utils/emitUtils";
 
 export default {
   name: "AlbumList",

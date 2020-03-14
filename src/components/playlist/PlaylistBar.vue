@@ -18,7 +18,6 @@
       <v-list dense class="px-0 mx-0 overflow-y-auto">
         <v-list-item-group>
           <v-list-item
-            class=""
             v-for="playlist in playlists"
             :key="playlist.id"
             :to="`/playlist/${playlist.id}`"
@@ -38,9 +37,9 @@
 </template>
 
 <script>
-import { getPlaylists } from "../api/api.js";
+import { getPlaylists } from "../../api/api.js";
 import vueCustomScrollbar from "vue-custom-scrollbar";
-import AddPlaylistButton from "./AddPlaylistButton.vue";
+import AddPlaylistButton from "../AddPlaylistButton.vue";
 
 export default {
   name: "PlaylistBar",

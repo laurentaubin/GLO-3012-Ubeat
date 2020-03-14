@@ -1,0 +1,82 @@
+<template>
+  <v-container id="mainContainer">
+    <v-container>
+      <h1 class="font-weight-bold display-2 mb-3">Artists</h1>
+    </v-container>
+    <v-divider />
+    <v-container>
+      <v-text-field solo-inverted flat hide-details dense label="Filter">
+        <v-icon slot="prepend-inner" color="#fff">
+          mdi-magnify
+        </v-icon>
+      </v-text-field>
+    </v-container>
+    <v-divider />
+    <v-container>
+      <v-container>
+        <p class="font-weight-bold headline">
+          Recently played
+        </p>
+      </v-container>
+    </v-container>
+    <v-container id="recent-artist-container">
+      <artist-card v-bind:artist="artist" />
+    </v-container>
+    <v-divider />
+    <v-container>
+      <v-container>
+        <p class="font-weight-bold headline">
+          Recommended for you
+        </p>
+      </v-container>
+      <v-container class="d-flex">
+        <artist-card />
+        <artist-card />
+      </v-container>
+    </v-container>
+  </v-container>
+</template>
+
+<script>
+import ArtistCard from "../components/artist/ArtistCard";
+import { getArtist } from "../api/api";
+
+export default {
+  name: "ArtistHomePage",
+  components: {
+    artistCard: ArtistCard
+  },
+  data: () => {
+    return {
+      recentlyPlayedArtists: [],
+      recommendedArtists: [],
+      artist: {
+        wrapperType: "",
+        artistType: "",
+        artistName: "",
+        artistLinkUrl: "",
+        artistId: 0,
+        amgArtistId: 0,
+        primaryGenreName: "",
+        primaryGenreId: 0
+      }
+    };
+  },
+  async created() {
+    this.artist = await this.getArtistInfo();
+  },
+  methods: {
+    getArtistInfo: async function() {
+      const artist = await getArtist(334854763);
+      this.artist = artist.results[0];
+      return this.artist;
+    }
+  }
+};
+</script>
+
+<style scoped>
+#mainContainer {
+  align-self: baseline;
+}
+</style>

@@ -98,12 +98,11 @@ export const deletePlaylist = async playlistId => {
   } catch (err) {
     return err;
   }
-}
-
+};
 
 export const editPlaylistName = async (playlistId, playlist, newName) => {
   const path = `${API_URL}/playlists/${playlistId}`;
-  const body = {...playlist};
+  const body = { ...playlist };
   body.name = newName;
   console.log(body);
   try {
@@ -111,11 +110,10 @@ export const editPlaylistName = async (playlistId, playlist, newName) => {
       method: "PUT",
       body: JSON.stringify(body),
       headers: {
-        'Content-Type': 'application/json'
-      },
+        "Content-Type": "application/json"
+      }
     });
-    const data = response.json();
-    return data;
+    return response.json();
   } catch (err) {
     return err;
   }

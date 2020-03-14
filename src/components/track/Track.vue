@@ -36,7 +36,7 @@
 
 <script>
 import TrackMenu from "./TrackMenu.vue";
-import {deleteTrackFromPlaylist} from "../api/api";
+import { deleteTrackFromPlaylist } from "../../api/api.js";
 
 export default {
   name: "Track",

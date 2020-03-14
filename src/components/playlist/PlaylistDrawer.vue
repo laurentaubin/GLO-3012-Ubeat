@@ -1,6 +1,5 @@
 <template>
   <v-list dense nav>
-    <!-- Home -->
     <v-list-item v-for="playlist in playlists" :key="playlist.id" v-on:click="addSongToPlaylist(playlist.id)" :to="`/playlist/${playlist.id}`">
       <v-icon left></v-icon>
       <v-list-item-content>
@@ -14,7 +13,7 @@
 </template>
 
 <script>
-import { addTrackToPlaylist } from "../api/api.js";
+import { addTrackToPlaylist } from "../../api/api.js";
 
 export default {
   name: "PlaylistDrawer",

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import router from "../router/index.js";
+import router from "../../router";
 
 export default {
   name: "TrackMenu",

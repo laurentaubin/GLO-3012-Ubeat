@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import PlaylistBar from "./PlaylistBar.vue";
+import PlaylistBar from "./playlist/PlaylistBar.vue";
 
 export default {
   props: {

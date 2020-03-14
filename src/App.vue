@@ -49,6 +49,7 @@
           <router-view
             v-on:select-track="trackClicked"
             v-on:play-track="playTrack"
+            :key="$route.fullPath"
           />
         </v-container>
       </v-content>
@@ -59,7 +60,7 @@
 <script>
 import Navigation from "./components/Navigation";
 import AvatarMenu from "./components/AvatarMenu";
-import PlaylistDrawer from "./components/PlaylistDrawer";
+import PlaylistDrawer from "./components/playlist/PlaylistDrawer";
 
 export default {
   name: "app",

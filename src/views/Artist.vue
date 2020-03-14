@@ -1,52 +1,19 @@
 <template>
   <v-container>
     <!-- Artist header -->
-    <v-container>
-      <v-row
-        :class="{
-          'pl-0': $vuetify.breakpoint.xs,
-          'pl-12': $vuetify.breakpoint.smAndUp
-        }"
-      >
-        <v-col
-          cols="12"
-          xs="12"
-          sm="4"
-          md="4"
-          lg="3"
-          class="d-flex align-center"
-        >
-          <!--- TODO replace hardcoded image with some sort of api call -->
-          <v-img
-            contain
-            v-bind:src="this.artistArtworkUrl"
-            height="300px"
-            width="300px"
-          />
-        </v-col>
-        <v-col xm="12" sm="8" md="6" class="d-flex align-center">
-          <v-row class="align-center">
-            <v-col class="pt-md-12 text-center text-sm-start">
-              <p class="font-weight-regular subtitle-1 ml-md-1">
-                {{ artist.primaryGenreName }}
-              </p>
-              <h1 class="font-weight-bold display-4">
-                {{ artist.artistName }}
-              </h1>
-            </v-col>
-          </v-row>
-        </v-col>
-      </v-row>
-    </v-container>
+    <artist-header
+      v-bind:artist="artist"
+      v-bind:artistArtworkUrl="artistArtworkUrl"
+    />
+    <v-divider />
+    <h1 class="title font-weight-bold">Albums</h1>
+
     <!-- Artist albums -->
     <v-container
       :class="{
-        'pl-0': $vuetify.breakpoint.xs,
-        'px-12': $vuetify.breakpoint.smAndUp
+        'pl-0': $vuetify.breakpoint.xs
       }"
     >
-      <v-divider />
-      <h1 class="title font-weight-bold">Albums</h1>
       <albumList
         v-bind:albums="albums"
         class="px-0"
@@ -58,16 +25,18 @@
 </template>
 
 <script>
-import AlbumList from "../components/AlbumList.vue";
+import AlbumList from "../components/album/AlbumList.vue";
 import { getArtist, getAlbums } from "../api/api.js";
 import { emitTrackIdUp, emitTrackUp } from "../utils/emitUtils";
 import { getArtistArtworkUrl } from "../utils/scraperUtils.js";
 import { getHighResArtwork } from "../utils/imageUtils.js";
+import ArtistHeader from "../components/artist/ArtistHeader";
 
 export default {
   name: "Artist",
   components: {
-    albumList: AlbumList
+    albumList: AlbumList,
+    artistHeader: ArtistHeader
   },
   data: function() {
     return {
@@ -138,4 +107,10 @@ export default {
 };
 </script>
 
-<style />
+<style>
+.artist-header {
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+</style>
