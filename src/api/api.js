@@ -87,6 +87,40 @@ export const getPlaylist = async playlistId => {
   }
 };
 
+export const deletePlaylist = async playlistId => {
+  const path = `${API_URL}/playlists/${playlistId}`;
+  try {
+    const response = await fetch(path, {
+      method: "DELETE"
+    });
+    const data = response.json();
+    return data;
+  } catch (err) {
+    return err;
+  }
+}
+
+
+export const editPlaylistName = async (playlistId, playlist, newName) => {
+  const path = `${API_URL}/playlists/${playlistId}`;
+  const body = {...playlist};
+  body.name = newName;
+  console.log(body);
+  try {
+    const response = await fetch(path, {
+      method: "PUT",
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    const data = response.json();
+    return data;
+  } catch (err) {
+    return err;
+  }
+};
+
 export const addTrackToPlaylist = async (track, playlistId) => {
   const path = `${API_URL}/playlists/${playlistId}/tracks`;
   const body = track;
@@ -94,6 +128,22 @@ export const addTrackToPlaylist = async (track, playlistId) => {
     const response = await fetch(path, {
       method: "POST",
       body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    const data = response.json();
+    return data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const deleteTrackFromPlaylist = async (track, playlistId) => {
+  const path = `${API_URL}/playlists/${playlistId}/tracks/${track.trackId}`;
+  try {
+    const response = await fetch(path, {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json"
       }

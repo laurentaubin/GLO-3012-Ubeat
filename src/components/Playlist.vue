@@ -2,6 +2,7 @@
   <v-container>
     <h1>{{ playlist.name }}</h1>
     <Track
+      v-bind:playlistID="playlist.id"
       v-bind:key="track.trackId"
       v-bind:track="track"
       v-bind:trackNumber="playlist.tracks.indexOf(track) + 1"
@@ -22,9 +23,9 @@ export default {
   components: {
     Track: Track
   },
-  data: function() {
+  data: () => {
     return {
-      updated: 0
+      updated: 0,
     };
   },
   methods: {

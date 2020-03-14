@@ -19,6 +19,9 @@
         <v-list-item v-on:click="showDrawer()">
           <v-list-item-title>Add to playlist </v-list-item-title>
         </v-list-item>
+        <v-list-item v-on:click="this.btnClickHandler">
+          <v-list-item-title>Remove</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-menu>
   </div>
@@ -29,7 +32,10 @@ import router from "../router/index.js";
 
 export default {
   name: "TrackMenu",
-  props: ["hover", "artistId", "collectionId", "track", "tracks"],
+  props: ["hover", "artistId", "collectionId", "track", "tracks", "btnClickHandler"],
+  data: function() {
+    return {}
+  },
   methods: {
     showDrawer() {
       if (this.tracks === undefined) {
@@ -43,7 +49,7 @@ export default {
     },
     goToAlbum() {
       router.push(`/album/${this.collectionId}`);
-    }
+    },
   }
 };
 </script>
