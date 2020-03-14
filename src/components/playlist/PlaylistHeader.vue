@@ -2,9 +2,7 @@
   <v-container>
     <v-container>
       <v-container>
-        <p
-          class="body-2 font-weight-thin mb-0 pl-1 mt-sm-2 text-center"
-        >
+        <p class="body-2 font-weight-thin mb-0 pl-1 mt-sm-2 text-center">
           Playlist
         </p>
         <p
@@ -17,15 +15,15 @@
         </p>
       </v-container>
       <v-container class="d-flex flex-wrap justify-space-around ">
-
-          <v-btn
-            v-on:click="dialog = !dialog"
-            color="rgb(88,86,214)"
-            class="mb-2 d-flex justify-center"
+        <v-btn
+          v-on:click="dialog = !dialog"
+          color="rgb(88,86,214)"
+          class="mb-2 d-flex justify-center"
           >Edit playlist</v-btn
-          >
-          <v-btn v-on:click="deletePlaylistTrigger = !deletePlaylistTrigger"
-          >Delete playlist</v-btn>
+        >
+        <v-btn v-on:click="deletePlaylistTrigger = !deletePlaylistTrigger"
+          >Delete playlist</v-btn
+        >
       </v-container>
       <v-dialog v-model="deletePlaylistTrigger" max-width="290">
         <v-card class="d-block">
@@ -53,7 +51,8 @@
 </template>
 
 <script>
-import { deletePlaylist} from "../../api/api";
+import { deletePlaylist, editPlaylistName } from "../../api/api";
+import Router from "../../router";
 import {emitUpdatedName} from "../../utils/emitUtils";
 
 export default {
@@ -74,9 +73,11 @@ export default {
 
     },
     deletePlaylist: async function() {
-      await deletePlaylist(this.playlist.id);
-      this.deletePlaylistTrigger = false;
-      // redirects to home page ??
+      const router = Router;
+      await deletePlaylist(this.playlist.id).then(() => {
+        this.deletePlaylistTrigger = false;
+        router.push("/");
+      });
     }
   }
 };

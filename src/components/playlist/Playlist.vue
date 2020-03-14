@@ -3,10 +3,10 @@
     <PlaylistHeader v-bind:playlist="playlist" v-on:updated-name="emitUpdatedName"/>
     <Track
       v-bind:playlistID="playlist.id"
-      v-bind:key="track.trackId"
+      v-bind:key="i"
       v-bind:track="track"
-      v-bind:trackNumber="playlist.tracks.indexOf(track) + 1"
-      v-for="track in playlist.tracks"
+      v-bind:trackNumber="i + 1"
+      v-for="(track, i) in playlist.tracks"
       v-on:select-track="emitTrackIdUp"
       v-on:play-track="emitTrackUp"
     />
