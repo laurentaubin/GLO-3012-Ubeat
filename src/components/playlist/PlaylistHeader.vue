@@ -41,7 +41,7 @@
       <v-dialog v-model="dialog" max-width="290">
         <v-card>
           <v-text-field
-            v-model="this.newPlaylistName"
+            v-model="newPlaylistName"
             label="Enter new playlist name"
           ></v-text-field>
         </v-card>
@@ -53,7 +53,8 @@
 </template>
 
 <script>
-import { deletePlaylist, editPlaylistName } from "../../api/api";
+import { deletePlaylist} from "../../api/api";
+import {emitUpdatedName} from "../../utils/emitUtils";
 
 export default {
   name: "PlaylistHeader",
@@ -66,13 +67,11 @@ export default {
     };
   },
   methods: {
-    changePlaylistName: async function() {
-      this.playlist = await editPlaylistName(
-        this.playlist.id,
-        this.playlist,
-        this.newPlaylistName
-      );
+    changePlaylistName: function() {
+      const newName = this.newPlaylistName;
+      emitUpdatedName(this, newName);
       this.dialog = false;
+
     },
     deletePlaylist: async function() {
       await deletePlaylist(this.playlist.id);

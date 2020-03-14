@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <PlaylistHeader v-bind:playlist="playlist" />
+    <PlaylistHeader v-bind:playlist="playlist" v-on:updated-name="emitUpdatedName"/>
     <Track
       v-bind:playlistID="playlist.id"
       v-bind:key="track.trackId"
@@ -16,7 +16,7 @@
 <script>
 import Track from "../track/Track.vue";
 import PlaylistHeader from "./PlaylistHeader";
-import { emitTrackIdUp, emitTrackUp } from "../../utils/emitUtils";
+import {emitTrackIdUp, emitTrackUp, emitUpdatedName} from "../../utils/emitUtils";
 
 export default {
   name: "Playlist",
@@ -34,6 +34,9 @@ export default {
     },
     emitTrackIdUp: function(trackId) {
       emitTrackIdUp(this, trackId);
+    },
+    emitUpdatedName: function(updatedName) {
+      emitUpdatedName(this, updatedName);
     }
   }
 };
