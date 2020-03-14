@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { deletePlaylist, editPlaylistName } from "../../api/api";
+import { deletePlaylist } from "../../api/api";
 import Router from "../../router";
 import {emitUpdatedName} from "../../utils/emitUtils";
 
