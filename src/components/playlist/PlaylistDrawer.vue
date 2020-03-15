@@ -1,6 +1,6 @@
 <template>
-  <v-list dense nav>
-    <v-list-item v-for="playlist in playlists" :key="playlist.id" v-on:click="addSongToPlaylist(playlist.id)" :to="`/playlist/${playlist.id}`">
+  <v-list dense>
+    <v-list-item v-for="playlist in playlists" :key="playlist.id" v-on:click="addSongToPlaylist(playlist.id)">
       <v-icon left></v-icon>
       <v-list-item-content>
         <v-list-item-title
@@ -22,6 +22,7 @@ export default {
     addSongToPlaylist: function(playlistID) {
       for (let i = 0; i < this.tracks.length; i++) {
         addTrackToPlaylist(this.tracks[i], playlistID);
+        this.$emit("close-playlist-drawer");
       }
     }
   }

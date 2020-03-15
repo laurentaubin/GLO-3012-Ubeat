@@ -5,44 +5,11 @@
         <nav-menu v-on:playlists-ready="updatePlaylists" />
       </v-navigation-drawer>
 
-      <v-navigation-drawer v-model="playlistDrawer" :right="true" app clipped>
-        <playlist-drawer v-bind:playlists="playlists" v-bind:tracks="trackMenuTracks"/>
+      <v-navigation-drawer v-model="playlistDrawer" :right="true" app disable-resize-watcher>
+        <playlist-drawer v-bind:playlists="playlists" v-bind:tracks="trackMenuTracks" v-on:close-playlist-drawer="closePlaylistDrawer"/>
       </v-navigation-drawer>
 
-      <v-app-bar app clipped-left elevate-on-scroll>
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-        <v-row no-gutters>
-          <v-col
-            offset-md="0"
-            class="d-flex justify-center justify-sm-start justify-md-start justify-lg-start flex-grow-0"
-          >
-            <v-toolbar-title class="title ml-3 mr-5">Ubeat</v-toolbar-title>
-          </v-col>
-          <v-spacer class="hidden-xs-only" />
-          <v-col sm="5" md="3" class="justify-end">
-            <v-text-field
-              solo-inverted
-              flat
-              hide-details
-              dense
-              rounded
-              label="Search"
-            >
-              <v-icon slot="prepend-inner" color="#fff" class="hidden-xs-only">
-                mdi-magnify
-              </v-icon>
-            </v-text-field>
-          </v-col>
-        </v-row>
-        <v-menu offset-y>
-          <template v-slot:activator="{ on }">
-            <v-btn depressed class="mx-2" fab v-on="on">
-              <v-icon>mdi-account</v-icon>
-            </v-btn>
-          </template>
-          <avatar-menu />
-        </v-menu>
-      </v-app-bar>
+      <Header v-on:close-navigation-drawer="closeNavigationDrawer"/>
 
       <v-content class="align-content-center">
         <v-container class="fill-height" fluid>
@@ -59,15 +26,15 @@
 
 <script>
 import Navigation from "./components/Navigation";
-import AvatarMenu from "./components/AvatarMenu";
 import PlaylistDrawer from "./components/playlist/PlaylistDrawer";
+import Header from "./components/Header";
 
 export default {
   name: "app",
   components: {
     "nav-menu": Navigation,
-    "avatar-menu": AvatarMenu,
-    "playlist-drawer": PlaylistDrawer
+    "playlist-drawer": PlaylistDrawer,
+    "Header" : Header
   },
   props: {
     source: String
@@ -150,6 +117,12 @@ export default {
     },
     updatePlaylists(playlists) {
       this.playlists = playlists;
+    },
+    closePlaylistDrawer() {
+      this.playlistDrawer = !this.playlistDrawer;
+    },
+    closeNavigationDrawer() {
+      this.drawer = !this.drawer;
     }
   }
 };

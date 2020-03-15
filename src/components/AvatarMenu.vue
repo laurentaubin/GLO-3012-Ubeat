@@ -1,6 +1,5 @@
 <template>
   <v-list dense class="mx-auto">
-    <!-- Home -->
     <v-list-item v-for="page in pages" :key="page.text" :to="page.path">
       <v-icon left v-text="page.icon" />
       <v-list-item-content>
@@ -16,7 +15,6 @@ export default {
     source: String
   },
   data: () => ({
-    drawer: null,
     pages: [
       {
         text: "Settings",
@@ -25,9 +23,6 @@ export default {
       },
       { text: "Log Out", path: "/", icon: "mdi-logout" }
     ]
-  }),
-  created() {
-    this.$vuetify.theme.dark = true;
-  }
+  })
 };
 </script>
