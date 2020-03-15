@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-dialog v-model="createPlaylistDialog" persistent max-width="290">
+    <v-dialog v-model="createPlaylistDialog" persistent max-width="460">
       <template v-slot:activator="{ on }">
         <v-btn class="my-6" v-on="on">
           <v-icon class="ml-0 mr-2">mdi-plus-circle-outline</v-icon>
@@ -9,32 +9,31 @@
       </template>
       <v-card>
         <v-card-title>
-          Create a playlist
-          <v-spacer />
-          <v-hover v-slot:default="{ hover }">
-            <v-icon
-              :color="hover ? 'white' : 'grey'"
-              size="24"
-              @click="createPlaylistDialog = false"
-              >mdi-close
-            </v-icon>
-          </v-hover>
+          Create a new playlist
         </v-card-title>
-        <v-card-text>
+        <v-card-text class="pb-0">
           <v-text-field
             v-model="playlistName"
-            label="Name"
-            placeholder="My playlist"
+            placeholder="Enter playlist name..."
           ></v-text-field>
         </v-card-text>
         <v-card-actions class="justify-center">
           <v-btn
             @click="
-              createPlaylist(playlistName, 'test@francis.com');
-              playlistName = null;
+              playlistName = '';
               createPlaylistDialog = false;
             "
-            >Create playlist</v-btn
+            >Cancel</v-btn
+          >
+          <v-spacer />
+          <v-btn
+            @click="
+              createPlaylist(playlistName, 'test@francis.com');
+              playlistName = '';
+              createPlaylistDialog = false;
+            "
+            color="green darken-2"
+            >OK</v-btn
           >
         </v-card-actions>
       </v-card>
