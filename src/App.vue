@@ -5,11 +5,20 @@
         <nav-menu v-on:playlists-ready="updatePlaylists" />
       </v-navigation-drawer>
 
-      <v-navigation-drawer v-model="playlistDrawer" :right="true" app disable-resize-watcher>
-        <playlist-drawer v-bind:playlists="playlists" v-bind:tracks="trackMenuTracks" v-on:close-playlist-drawer="closePlaylistDrawer"/>
+      <v-navigation-drawer
+        v-model="playlistDrawer"
+        :right="true"
+        app
+        disable-resize-watcher
+      >
+        <playlist-drawer
+          v-bind:playlists="playlists"
+          v-bind:tracks="trackMenuTracks"
+          v-on:close-playlist-drawer="closePlaylistDrawer"
+        />
       </v-navigation-drawer>
 
-      <Header v-on:close-navigation-drawer="closeNavigationDrawer"/>
+      <Header v-on:close-navigation-drawer="closeNavigationDrawer" />
 
       <v-content class="align-content-center">
         <v-container class="fill-height" fluid>
@@ -34,7 +43,7 @@ export default {
   components: {
     "nav-menu": Navigation,
     "playlist-drawer": PlaylistDrawer,
-    "Header" : Header
+    Header: Header
   },
   props: {
     source: String

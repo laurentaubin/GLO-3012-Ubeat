@@ -65,7 +65,11 @@ export default {
       emitTrackIdUp(this, trackId);
     },
     async changePlaylistName(newName) {
-      this.playlist = await editPlaylistName(this.playlist.id, this.playlist, newName);
+      this.playlist = await editPlaylistName(
+        this.playlist.id,
+        this.playlist,
+        newName
+      );
     },
     deleteTrack: async function(track_to_remove, playlistID) {
       this.trackIsDeleting = true;

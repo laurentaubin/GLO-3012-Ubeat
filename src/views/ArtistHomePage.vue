@@ -21,7 +21,10 @@
     </v-container>
     <v-container id="recent-artist-container">
       <div v-if="artistLoading" style="width: 200px">
-        <v-skeleton-loader type="image" class="artist-image"></v-skeleton-loader>
+        <v-skeleton-loader
+          type="image"
+          class="artist-image"
+        ></v-skeleton-loader>
         <v-skeleton-loader type="card-heading"></v-skeleton-loader>
       </div>
       <artist-card v-else v-bind:artist="artist" />
@@ -64,7 +67,7 @@ export default {
         primaryGenreName: "",
         primaryGenreId: 0
       },
-      artistLoading : true
+      artistLoading: true
     };
   },
   async created() {
@@ -85,10 +88,10 @@ export default {
 #mainContainer {
   align-self: baseline;
 }
-  .artist-image {
-    width: 200px;
-    border-radius: 50%;
-    position: center;
-    vertical-align: middle;
-  }
+.artist-image {
+  width: 200px;
+  border-radius: 50%;
+  position: center;
+  vertical-align: middle;
+}
 </style>

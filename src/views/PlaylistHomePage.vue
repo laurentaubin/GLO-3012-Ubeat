@@ -11,7 +11,7 @@
         </v-icon>
       </v-text-field>
       <v-container>
-        <p class="body-1 font-weight-bold mb-0 mt-5"> Your playlists</p>
+        <p class="body-1 font-weight-bold mb-0 mt-5">Your playlists</p>
       </v-container>
       <v-divider />
     </v-container>
@@ -36,8 +36,7 @@ export default {
   padding: 0;
 }
 
-  .playlist-container {
-
-    padding: 0;
-  }
+.playlist-container {
+  padding: 0;
+}
 </style>

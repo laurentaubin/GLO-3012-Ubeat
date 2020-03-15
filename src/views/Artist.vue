@@ -1,7 +1,10 @@
 <template>
   <v-container>
     <v-container v-if="artistLoading" class="d-flex justify-center">
-        <v-skeleton-loader type="image" style="width: 200px; height: 200px; border-radius: 50%"></v-skeleton-loader>
+      <v-skeleton-loader
+        type="image"
+        style="width: 200px; height: 200px; border-radius: 50%"
+      ></v-skeleton-loader>
     </v-container>
     <artist-header
       v-else
@@ -13,7 +16,10 @@
 
     <!-- Artist albums -->
     <v-container v-if="albumsLoading" class="d-flex justify-center">
-        <v-skeleton-loader type="image" style="width: 200px; height: 200px"></v-skeleton-loader>
+      <v-skeleton-loader
+        type="image"
+        style="width: 200px; height: 200px"
+      ></v-skeleton-loader>
     </v-container>
     <v-container v-else>
       <albumList
@@ -115,5 +121,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

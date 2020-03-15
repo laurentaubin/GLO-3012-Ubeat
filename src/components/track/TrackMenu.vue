@@ -32,9 +32,17 @@ import router from "../../router";
 
 export default {
   name: "TrackMenu",
-  props: ["hover", "artistId", "collectionId", "track", "tracks", "btnClickHandler", "inPlaylist"],
+  props: [
+    "hover",
+    "artistId",
+    "collectionId",
+    "track",
+    "tracks",
+    "btnClickHandler",
+    "inPlaylist"
+  ],
   data: function() {
-    return {}
+    return {};
   },
   methods: {
     showDrawer() {
