@@ -42,6 +42,7 @@
         v-for="track in tracks"
         v-on:select-track="emitTrackIdUp"
         v-on:play-track="emitTrackUp"
+        v-bind:inPlaylist="false"
       />
     </v-container>
   </v-container>

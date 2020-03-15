@@ -19,7 +19,7 @@
         <v-list-item v-on:click="showDrawer()">
           <v-list-item-title>Add to playlist </v-list-item-title>
         </v-list-item>
-        <v-list-item v-on:click="this.btnClickHandler">
+        <v-list-item v-if="inPlaylist" v-on:click="this.btnClickHandler">
           <v-list-item-title>Remove</v-list-item-title>
         </v-list-item>
       </v-list>
@@ -32,7 +32,7 @@ import router from "../../router";
 
 export default {
   name: "TrackMenu",
-  props: ["hover", "artistId", "collectionId", "track", "tracks", "btnClickHandler"],
+  props: ["hover", "artistId", "collectionId", "track", "tracks", "btnClickHandler", "inPlaylist"],
   data: function() {
     return {}
   },

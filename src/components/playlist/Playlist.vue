@@ -9,6 +9,8 @@
       v-for="(track) in playlist.tracks"
       v-on:select-track="emitTrackIdUp"
       v-on:play-track="emitTrackUp"
+      v-on:delete-track="emitDeleteTrack"
+      v-bind:inPlaylist="true"
     />
   </v-container>
 </template>
@@ -37,6 +39,9 @@ export default {
     },
     emitUpdatedName: function(updatedName) {
       emitUpdatedName(this, updatedName);
+    },
+    emitDeleteTrack: function(track_to_remove, playlistID) {
+      this.$emit("delete-track", track_to_remove, playlistID);
     }
   }
 };

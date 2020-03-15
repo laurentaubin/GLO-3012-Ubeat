@@ -18,7 +18,7 @@ export default {
     };
   },
   async created() {
-    this.playlists = await getPlaylists();
+    this.playlists = await this.getPlaylists();
   },
   components: {
     playlistCard: PlaylistCard
@@ -29,6 +29,7 @@ export default {
       this.playlists = playlists.filter(
         playlist => playlist.owner.email === "test@francis.com"
       );
+      return this.playlists;
     }
   }
 };

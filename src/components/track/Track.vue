@@ -25,6 +25,7 @@
           v-bind:track="track"
           v-bind:tracks="tracks"
           :btnClickHandler="handleTrackDeleted"
+          v-bind:inPlaylist="inPlaylist"
         />
       </v-col>
       <v-col cols="1" class="d-flex align-center">{{
@@ -36,11 +37,10 @@
 
 <script>
 import TrackMenu from "./TrackMenu.vue";
-import { deleteTrackFromPlaylist } from "../../api/api.js";
 
 export default {
   name: "Track",
-  props: ["track", "trackNumber", "tracks", "playlistID"],
+  props: ["track", "trackNumber", "tracks", "playlistID", "inPlaylist"],
   components: {
     "track-menu": TrackMenu
   },
@@ -62,8 +62,8 @@ export default {
       return minutes + ":" + seconds;
     },
     handleTrackDeleted() {
-      deleteTrackFromPlaylist(this.track, this.playlistID);
-      this.isDeleted=true;
+      //this.isDeleted = true;
+      this.$emit("delete-track", this.track, this.playlistID);
     }
   }
 };

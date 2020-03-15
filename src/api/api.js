@@ -104,7 +104,6 @@ export const editPlaylistName = async (playlistId, playlist, newName) => {
   const path = `${API_URL}/playlists/${playlistId}`;
   const body = { ...playlist };
   body.name = newName;
-  console.log(body);
   try {
     const response = await fetch(path, {
       method: "PUT",

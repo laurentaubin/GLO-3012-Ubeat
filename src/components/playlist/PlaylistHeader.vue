@@ -70,7 +70,6 @@ export default {
       const newName = this.newPlaylistName;
       emitUpdatedName(this, newName);
       this.dialog = false;
-
     },
     deletePlaylist: async function() {
       const router = Router;

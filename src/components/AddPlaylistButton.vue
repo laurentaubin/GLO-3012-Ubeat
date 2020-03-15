@@ -57,9 +57,6 @@ export default {
       const playlist = await createPlaylist(name, owner);
       router.push(`/playlist/${playlist.id}`);
       router.go(1);
-    },
-    test: function() {
-      console.log(21321);
     }
   }
 };
