@@ -87,6 +87,6 @@ v-list__tile {
   position: relative;
   margin: auto;
   width: 225px;
-  height: 300px;
+  max-height: 300px;
 }
 </style>
