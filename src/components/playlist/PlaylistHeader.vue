@@ -17,7 +17,7 @@
       <v-container class="d-flex flex-wrap justify-space-around ">
         <v-btn
           v-on:click="editPlaylistDialog = true"
-          color="rgb(88,86,214)"
+          color="indigo accent-4"
           class="mb-2 d-flex justify-center"
           >Edit playlist</v-btn
         >
@@ -26,7 +26,7 @@
         >
       </v-container>
 
-      <v-dialog v-model="editPlaylistDialog" max-width="290">
+      <v-dialog v-model="editPlaylistDialog" max-width="460">
         <v-card>
           <v-card-text class="pt-2 pb-0">
             <v-text-field
@@ -36,9 +36,26 @@
           </v-card-text>
           <v-card-actions class="pt-0">
             <v-spacer />
-            <v-btn v-on:click="changePlaylistName" color="rgb(48,209,88)"
+            <v-btn v-on:click="changePlaylistName" color="green darken-2"
               >OK</v-btn
             >
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="invalidPlaylistName" max-width="500">
+        <v-card>
+          <v-card-title>
+            The playlist name was invalid. Please try again.
+          </v-card-title>
+          <v-card-actions>
+            <v-spacer />
+            <v-btn
+              v-on:click="invalidPlaylistName = false"
+              color="green darken-2"
+            >
+              OK
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -55,7 +72,12 @@
           <v-card-actions>
             <v-btn v-on:click="deletePlaylistDialog = false"> Cancel </v-btn>
             <v-spacer />
-            <v-btn v-on:click="deletePlaylist" color="rgb(255,69,58)">OK</v-btn>
+            <v-btn
+              v-on:click="deletePlaylist"
+              color="green darken-2"
+              text-color="black"
+              >OK</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -68,6 +90,7 @@
 import { deletePlaylist } from "../../api/api";
 import Router from "../../router";
 import { emitUpdatedName } from "../../utils/emitUtils";
+import { isPlaylistNameValid } from "../../utils/validationUtils.js";
 
 export default {
   name: "PlaylistHeader",
@@ -76,11 +99,18 @@ export default {
     return {
       newPlaylistName: "",
       deletePlaylistDialog: false,
-      editPlaylistDialog: false
+      editPlaylistDialog: false,
+      invalidPlaylistName: false
     };
   },
   methods: {
     changePlaylistName: function() {
+      if (!isPlaylistNameValid(this.newPlaylistName)) {
+        this.editPlaylistDialog = false;
+        this.invalidPlaylistName = true;
+        return;
+      }
+
       const newName = this.newPlaylistName;
       emitUpdatedName(this, newName);
       this.editPlaylistDialog = false;

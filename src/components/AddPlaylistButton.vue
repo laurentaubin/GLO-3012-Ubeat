@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-dialog v-model="dialog" persistent max-width="290">
+    <v-dialog v-model="createPlaylistDialog" persistent max-width="290">
       <template v-slot:activator="{ on }">
         <v-btn class="my-6" v-on="on">
           <v-icon class="ml-0 mr-2">mdi-plus-circle-outline</v-icon>
@@ -15,7 +15,7 @@
             <v-icon
               :color="hover ? 'white' : 'grey'"
               size="24"
-              @click="dialog = false"
+              @click="createPlaylistDialog = false"
               >mdi-close
             </v-icon>
           </v-hover>
@@ -32,10 +32,27 @@
             @click="
               createPlaylist(playlistName, 'test@francis.com');
               playlistName = null;
-              dialog = false;
+              createPlaylistDialog = false;
             "
             >Create playlist</v-btn
           >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="invalidPlaylistName" max-width="500">
+      <v-card>
+        <v-card-title>
+          The playlist name was invalid. Please try again.
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            v-on:click="invalidPlaylistName = false"
+            color="green darken-2"
+          >
+            OK
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -44,16 +61,24 @@
 
 <script>
 import { createPlaylist } from "../api/api.js";
+import { isPlaylistNameValid } from "../utils/validationUtils.js";
 import router from "../router/index.js";
 
 export default {
   name: "AddPlaylistButton",
   data: () => ({
-    dialog: false,
-    playlistName: null
+    createPlaylistDialog: false,
+    playlistName: "",
+    invalidPlaylistName: false
   }),
   methods: {
     createPlaylist: async function(name, owner) {
+      console.log("create playlist");
+      if (!isPlaylistNameValid(name)) {
+        console.log("invalid name");
+        this.invalidPlaylistName = true;
+        return;
+      }
       const playlist = await createPlaylist(name, owner);
       router.push(`/playlist/${playlist.id}`);
       router.go(1);
