@@ -27,9 +27,17 @@ export default {
   props: ["playlists", "tracks"],
   methods: {
     addSongToPlaylist: function(playlistID) {
+      let playlist = this.playlists.filter(
+        _playlist => _playlist.id === playlistID
+      )[0];
+      let songs = playlist.tracks.map(
+        track => track.trackId
+      );
+      this.$emit("close-playlist-drawer");
       for (let i = 0; i < this.tracks.length; i++) {
-        addTrackToPlaylist(this.tracks[i], playlistID);
-        this.$emit("close-playlist-drawer");
+        if (songs.indexOf(this.tracks[i].trackId) === -1) {
+          addTrackToPlaylist(this.tracks[i], playlistID);
+        }
       }
     },
     closeDrawer: function() {
