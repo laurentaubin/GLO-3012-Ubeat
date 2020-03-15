@@ -45,8 +45,11 @@
 
       <v-dialog v-model="invalidPlaylistName" max-width="500">
         <v-card>
-          <v-card-title>
-            The playlist name was invalid. Please try again.
+          <v-card-title class="pb-0">
+            The playlist name was invalid.
+          </v-card-title>
+          <v-card-title class="pt-0">
+            Please try again.
           </v-card-title>
           <v-card-actions>
             <v-spacer />
