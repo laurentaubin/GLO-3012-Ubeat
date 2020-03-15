@@ -15,7 +15,7 @@
       </v-container>
       <v-divider />
     </v-container>
-      <playlist-home-page-content />
+    <playlist-home-page-content />
   </v-container>
 </template>
 

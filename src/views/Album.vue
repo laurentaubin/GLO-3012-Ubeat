@@ -1,6 +1,7 @@
 <template>
   <Album
     v-bind:album="album"
+    v-bind:loadingAlbum="loadingAlbum"
     v-on:select-track="emitTrackIdUp"
     v-on:play-track="emitTrackUp"
   />
@@ -40,7 +41,8 @@ export default {
         currency: "",
         releaseDate: "",
         primaryGenreName: ""
-      }
+      },
+      loadingAlbum: true
     };
   },
   async created() {
@@ -48,7 +50,9 @@ export default {
   },
   methods: {
     getAlbumInfo: async function() {
+      this.loadingAlbum = true;
       let album = await getAlbum(this.$route.params.id);
+      this.loadingAlbum = false;
       return album.results[0];
     },
     emitTrackUp(track) {

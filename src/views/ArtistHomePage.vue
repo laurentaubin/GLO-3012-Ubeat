@@ -20,7 +20,11 @@
       </v-container>
     </v-container>
     <v-container id="recent-artist-container">
-      <artist-card v-bind:artist="artist" />
+      <div v-if="artistLoading" style="width: 200px">
+        <v-skeleton-loader type="image" class="artist-image"></v-skeleton-loader>
+        <v-skeleton-loader type="card-heading"></v-skeleton-loader>
+      </div>
+      <artist-card v-else v-bind:artist="artist" />
     </v-container>
     <v-divider />
     <v-container>
@@ -60,7 +64,7 @@ export default {
         primaryGenreName: "",
         primaryGenreId: 0
       },
-      loading : false
+      artistLoading : true
     };
   },
   async created() {
@@ -68,7 +72,9 @@ export default {
   },
   methods: {
     getArtistInfo: async function() {
+      this.artistLoading = true;
       let artist = await getArtist(334854763);
+      this.artistLoading = false;
       return artist.results[0];
     }
   }
@@ -79,4 +85,10 @@ export default {
 #mainContainer {
   align-self: baseline;
 }
+  .artist-image {
+    width: 200px;
+    border-radius: 50%;
+    position: center;
+    vertical-align: middle;
+  }
 </style>

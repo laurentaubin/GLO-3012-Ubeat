@@ -1,6 +1,16 @@
 <template>
   <v-container>
+    <v-dialog v-model="trackIsDeleting">
+      <v-progress-circular
+        class="mt-6"
+        style="left: 38%;"
+        size="50"
+        :indeterminate="true"
+        color="rgb(88,86,214)"
+      ></v-progress-circular>
+    </v-dialog>
     <playlist
+      v-bind:playlistLoading="playlistLoading"
       v-bind:playlist="playlist"
       v-on:select-track="emitTrackIdUp"
       v-on:play-track="emitTrackUp"
@@ -33,7 +43,9 @@ export default {
         name: "",
         tracks: [],
         id: 0
-      }
+      },
+      playlistLoading: true,
+      trackIsDeleting: false
     };
   },
   created: async function() {
@@ -41,7 +53,10 @@ export default {
   },
   methods: {
     getPlaylist: async function() {
-      return await getPlaylist(this.$route.params.id);
+      this.playlistLoading = true;
+      this.playlist = await getPlaylist(this.$route.params.id);
+      this.playlistLoading = false;
+      return this.playlist;
     },
     emitTrackUp: function(track) {
       emitTrackUp(this, track);
@@ -52,11 +67,13 @@ export default {
     async changePlaylistName(newName) {
       this.playlist = await editPlaylistName(this.playlist.id, this.playlist, newName);
     },
-    deleteTrack: function(track_to_remove, playlistID) {
+    deleteTrack: async function(track_to_remove, playlistID) {
+      this.trackIsDeleting = true;
       this.playlist.tracks = this.playlist.tracks.filter(
         track => track.trackId !== track_to_remove.trackId
       );
-      deleteTrackFromPlaylist(track_to_remove, playlistID);
+      await deleteTrackFromPlaylist(track_to_remove, playlistID);
+      this.trackIsDeleting = false;
     }
   }
 };

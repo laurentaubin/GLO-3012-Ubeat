@@ -60,6 +60,11 @@
 export default {
   name: "AlbumHeader",
   props: ["album", "artworkUrl300", "albumYear"],
+  data: function() {
+    return {
+      albumPriceIsLoaded: this.album.collectionPrice
+    };
+  },
   methods: {
     buyAlbumRedirect() {
       let win = window.open(this.album.collectionViewUrl, "_blank");
@@ -77,10 +82,6 @@ export default {
   vertical-align: middle;
 }
 .header-informations {
-  margin-left: 10px;
-}
-
-.track-menu {
   margin-left: 10px;
 }
 </style>

@@ -54,7 +54,6 @@ export default {
       const minutes = Math.floor((millis / 1000 / 60) << 0);
       let seconds = Math.floor((millis / 1000) % 60);
 
-      // To avoid times like 4:0 and 3:2
       if (seconds < 10) {
         seconds = "0" + seconds;
       }
@@ -62,7 +61,6 @@ export default {
       return minutes + ":" + seconds;
     },
     handleTrackDeleted() {
-      //this.isDeleted = true;
       this.$emit("delete-track", this.track, this.playlistID);
     }
   }

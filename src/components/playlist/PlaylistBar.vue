@@ -7,6 +7,7 @@
         style="left: 38%;"
         size="50"
         :indeterminate="true"
+        color="rgb(88,86,214)"
       ></v-progress-circular>
     </v-container>
     <!-- TODO Find a way to have dynamic max-height -->

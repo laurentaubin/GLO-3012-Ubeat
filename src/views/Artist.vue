@@ -1,7 +1,10 @@
 <template>
   <v-container>
-    <!-- Artist header -->
+    <v-container v-if="artistLoading" class="d-flex justify-center">
+        <v-skeleton-loader type="image" style="width: 200px; height: 200px; border-radius: 50%"></v-skeleton-loader>
+    </v-container>
     <artist-header
+      v-else
       v-bind:artist="artist"
       v-bind:artistArtworkUrl="artistArtworkUrl"
     />
@@ -9,11 +12,10 @@
     <h1 class="title font-weight-bold">Albums</h1>
 
     <!-- Artist albums -->
-    <v-container
-      :class="{
-        'pl-0': $vuetify.breakpoint.xs
-      }"
-    >
+    <v-container v-if="albumsLoading" class="d-flex justify-center">
+        <v-skeleton-loader type="image" style="width: 200px; height: 200px"></v-skeleton-loader>
+    </v-container>
+    <v-container v-else>
       <albumList
         v-bind:albums="albums"
         class="px-0"
@@ -75,7 +77,9 @@ export default {
           primaryGenreName: ""
         }
       ],
-      artistArtworkUrl: ""
+      artistArtworkUrl: "",
+      artistLoading: true,
+      albumsLoading: true
     };
   },
   created: async function() {
@@ -85,12 +89,16 @@ export default {
   },
   methods: {
     getArtistInfo: async function() {
+      this.artistLoading = true;
       const artist = await getArtist(this.$route.params.id);
       this.artist = artist.results[0];
+      this.artistLoading = false;
       return this.artist;
     },
     getAlbumsInfo: async function() {
+      this.albumsLoading = true;
       const albums = await getAlbums(this.$route.params.id);
+      this.albumsLoading = false;
       return albums.results;
     },
     getArtistArtworkUrl: async function() {
@@ -108,9 +116,4 @@ export default {
 </script>
 
 <style>
-.artist-header {
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
 </style>

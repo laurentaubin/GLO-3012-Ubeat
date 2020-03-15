@@ -20,7 +20,10 @@
       </v-container>
     </v-container>
     <v-container id="recent-artist-container">
-      <album-card v-bind:album="album" />
+      <div v-if="albumLoading" style="width: 200px">
+        <v-skeleton-loader type="card"></v-skeleton-loader>
+      </div>
+      <album-card v-else v-bind:album="album" />
     </v-container>
     <v-divider />
     <v-container>
@@ -67,7 +70,8 @@ export default {
         currency: "",
         releaseDate: "",
         primaryGenreName: ""
-      }
+      },
+      albumLoading: true
     };
   },
   async created() {
@@ -75,7 +79,9 @@ export default {
   },
   methods: {
     getAlbumInfo: async function() {
+      this.albumLoading = true;
       let album = await getAlbum(1253656856);
+      this.albumLoading = false;
       return album.results[0];
     }
   }

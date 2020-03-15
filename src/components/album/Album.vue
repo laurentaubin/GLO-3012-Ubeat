@@ -1,6 +1,22 @@
 <template>
   <v-container class="px-0">
+    <v-container v-if="loadingAlbum" class="justify-center">
+      <v-skeleton-loader
+        type="image"
+        style="width: 100%"
+      ></v-skeleton-loader>
+      <v-container class="d-flex justify-center">
+        <v-skeleton-loader
+          type="button"
+          class="mr-3"
+        ></v-skeleton-loader>
+        <v-skeleton-loader
+          type="button"
+        ></v-skeleton-loader>
+      </v-container>
+    </v-container>
     <album-header
+      v-else
       v-bind:album="album"
       v-bind:artworkUrl300="artworkUrl300"
       v-bind:albumYear="this.getAlbumYear()"
@@ -35,7 +51,14 @@
         </v-row>
       </header>
       <v-divider />
+      <v-container v-if="tracksLoading">
+        <v-skeleton-loader
+          type="text"
+          style="width: 100%"
+        ></v-skeleton-loader>
+      </v-container>
       <Track
+        v-else
         v-bind:key="track.trackId"
         v-bind:track="track"
         v-bind:trackNumber="tracks.indexOf(track) + 1"
@@ -58,7 +81,7 @@ import AlbumMenu from "./AlbumMenu";
 
 export default {
   name: "Album",
-  props: ["album"],
+  props: ["album", "loadingAlbum"],
   data: function() {
     return {
       tracks: [
@@ -99,7 +122,8 @@ export default {
       ],
       transparent: "rgba(255, 255, 255, 0)",
       updated: 0,
-      artworkUrl300: ""
+      artworkUrl300: "",
+      tracksLoading: true
     };
   },
   components: {
@@ -140,8 +164,10 @@ export default {
       return date.getFullYear();
     },
     getTracksInfo: async function() {
+      this.tracksLoading = true;
       const albumId = this.album.collectionId;
       const tracks = await getTracks(albumId);
+      this.tracksLoading = false;
       return tracks.results;
     },
     emitTrackUp(track) {
