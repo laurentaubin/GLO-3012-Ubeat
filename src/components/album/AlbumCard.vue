@@ -1,5 +1,5 @@
 <template>
-  <v-card class="album-card" raised>
+  <v-card v-if="album" class="album-card" raised>
     <v-container class="d-flex justify-center">
       <v-img class="album-image" v-bind:src="album.artworkUrl100" />
     </v-container>

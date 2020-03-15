@@ -46,7 +46,7 @@ export default {
   components: {
     artistCard: ArtistCard
   },
-  data: () => {
+  data() {
     return {
       recentlyPlayedArtists: [],
       recommendedArtists: [],
@@ -59,7 +59,8 @@ export default {
         amgArtistId: 0,
         primaryGenreName: "",
         primaryGenreId: 0
-      }
+      },
+      loading : false
     };
   },
   async created() {
@@ -67,9 +68,8 @@ export default {
   },
   methods: {
     getArtistInfo: async function() {
-      const artist = await getArtist(334854763);
-      this.artist = artist.results[0];
-      return this.artist;
+      let artist = await getArtist(334854763);
+      return artist.results[0];
     }
   }
 };

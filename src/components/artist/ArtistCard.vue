@@ -1,5 +1,5 @@
 <template>
-  <v-card class="artist-card">
+  <v-card v-if=artist class="artist-card">
     <v-container class="d-flex justify-center">
       <v-img
         class="artist-image"
@@ -11,7 +11,7 @@
     </v-container>
     <v-container class="d-flex justify-center pt-0">
       <a v-bind:href="'/#/artist/' + artist.artistId" class="link white--text font-weight-bold">
-        {{artist.artistName}}
+        {{ artist.artistName }}
       </a>
     </v-container>
   </v-card>

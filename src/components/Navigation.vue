@@ -1,6 +1,5 @@
 <template>
   <v-list dense nav>
-    <!-- Home -->
     <v-list-item v-for="page in pages" :key="page.text" :to="page.path">
       <v-icon left v-text="page.icon" />
       <v-list-item-content>
@@ -28,7 +27,6 @@ export default {
     PlaylistBar: PlaylistBar
   },
   data: () => ({
-    drawer: null,
     pages: [
       { text: "Home", path: "/", icon: "mdi-home" },
       { text: "Album", path: "/album", icon: "mdi-music-box" },
