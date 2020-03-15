@@ -16,34 +16,48 @@
       </v-container>
       <v-container class="d-flex flex-wrap justify-space-around ">
         <v-btn
-          v-on:click="dialog = !dialog"
+          v-on:click="editPlaylistDialog = true"
           color="rgb(88,86,214)"
           class="mb-2 d-flex justify-center"
           >Edit playlist</v-btn
         >
-        <v-btn v-on:click="deletePlaylistTrigger = !deletePlaylistTrigger"
+        <v-btn v-on:click="deletePlaylistDialog = !deletePlaylistDialog"
           >Delete playlist</v-btn
         >
       </v-container>
-      <v-dialog v-model="deletePlaylistTrigger" max-width="290">
-        <v-card class="d-block">
-          <p>
-            Are you sure you want to delete this playlist? This action cannot be
-            undone
-          </p>
-          <v-container class="d-flex justify-center">
-            <v-btn v-on:click="deletePlaylist" color="rgb(255,69,58)">OK</v-btn>
-          </v-container>
+
+      <v-dialog v-model="editPlaylistDialog" max-width="290">
+        <v-card>
+          <v-card-text class="pt-2 pb-0">
+            <v-text-field
+              v-model="newPlaylistName"
+              label="Enter new playlist name"
+            ></v-text-field>
+          </v-card-text>
+          <v-card-actions class="pt-0">
+            <v-spacer />
+            <v-btn v-on:click="changePlaylistName" color="rgb(48,209,88)"
+              >OK</v-btn
+            >
+          </v-card-actions>
         </v-card>
       </v-dialog>
-      <v-dialog v-model="dialog" max-width="290">
+
+      <v-dialog
+        v-model="deletePlaylistDialog"
+        :max-width="$vuetify.breakpoint.xs ? '280' : '460'"
+      >
         <v-card>
-          <v-text-field
-            v-model="newPlaylistName"
-            label="Enter new playlist name"
-          ></v-text-field>
+          <v-card-title class="dialog-card text-center">
+            Are you sure you want to delete this playlist? This action cannot be
+            undone.
+          </v-card-title>
+          <v-card-actions>
+            <v-btn v-on:click="deletePlaylistDialog = false"> Cancel </v-btn>
+            <v-spacer />
+            <v-btn v-on:click="deletePlaylist" color="rgb(255,69,58)">OK</v-btn>
+          </v-card-actions>
         </v-card>
-        <v-btn v-on:click="changePlaylistName" color="rgb(48,209,88)">OK</v-btn>
       </v-dialog>
     </v-container>
     <v-divider />
@@ -53,7 +67,7 @@
 <script>
 import { deletePlaylist } from "../../api/api";
 import Router from "../../router";
-import {emitUpdatedName} from "../../utils/emitUtils";
+import { emitUpdatedName } from "../../utils/emitUtils";
 
 export default {
   name: "PlaylistHeader",
@@ -61,20 +75,20 @@ export default {
   data: () => {
     return {
       newPlaylistName: "",
-      deletePlaylistTrigger: false,
-      dialog: false
+      deletePlaylistDialog: false,
+      editPlaylistDialog: false
     };
   },
   methods: {
     changePlaylistName: function() {
       const newName = this.newPlaylistName;
       emitUpdatedName(this, newName);
-      this.dialog = false;
+      this.editPlaylistDialog = false;
     },
     deletePlaylist: async function() {
       const router = Router;
       await deletePlaylist(this.playlist.id).then(() => {
-        this.deletePlaylistTrigger = false;
+        this.deletePlaylistDialog = false;
         router.push("/");
       });
     }
@@ -85,5 +99,9 @@ export default {
 <style scoped>
 .edit-btn {
   background-color: rgb(88, 86, 214);
+}
+
+.dialog-card {
+  word-break: normal !important;
 }
 </style>
