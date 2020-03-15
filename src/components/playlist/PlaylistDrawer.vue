@@ -53,7 +53,7 @@ export default {
           duplicates.push(this.tracks[i].trackName);
         }
       }
-      if (duplicates !== []) {
+      if (duplicates.length != 0) {
         const reducer = (accumulator, currentValue) => accumulator + ". " + currentValue;
         let duplicateSongs = duplicates.reduce(reducer);
         this.duplicateSong = "We detected duplicate songs : [" + duplicateSongs + ".] The duplicates won't be added to the playlist."
