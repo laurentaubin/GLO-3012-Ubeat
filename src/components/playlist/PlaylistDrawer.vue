@@ -1,13 +1,32 @@
 <template>
   <v-container>
-    <v-dialog v-model="dialog" max-width="290">
-      <v-card-text class="pt-2 pb-0">
-        {{ duplicateSong }}
-      </v-card-text>
-      <v-btn v-on:click="dialog = false" color="rgb(48,209,88)">OK</v-btn>
+    <v-dialog v-model="duplicateTracksDialog" max-width="460">
+      <v-card>
+        <v-card-title>
+          We detected duplicate songs
+        </v-card-title>
+        <v-card-text class="pb-0">
+          <p>
+            {{ duplicateSongMessage }}
+          </p>
+          <p>The duplicate songs won't be added to the playlist</p>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            v-on:click="duplicateTracksDialog = false"
+            color="rgb(48,209,88)"
+            >OK</v-btn
+          >
+        </v-card-actions>
+      </v-card>
     </v-dialog>
     <v-list dense>
-      <v-list-item v-for="playlist in playlists" :key="playlist.id" v-on:click="addSongToPlaylist(playlist.id)">
+      <v-list-item
+        v-for="playlist in playlists"
+        :key="playlist.id"
+        v-on:click="addSongToPlaylist(playlist.id)"
+      >
         <v-icon left></v-icon>
         <v-list-item-content>
           <v-list-item-title
@@ -33,8 +52,8 @@ export default {
   props: ["playlists", "tracks"],
   data: function() {
     return {
-      dialog: false,
-      duplicateSong: ""
+      duplicateTracksDialog: false,
+      duplicateSongMessage: ""
     };
   },
   methods: {
@@ -42,9 +61,7 @@ export default {
       let playlist = this.playlists.filter(
         _playlist => _playlist.id === playlistID
       )[0];
-      let songs = playlist.tracks.map(
-        track => track.trackId
-      );
+      let songs = playlist.tracks.map(track => track.trackId);
       this.$emit("close-playlist-drawer");
 
       let duplicates = [];
@@ -54,10 +71,11 @@ export default {
         }
       }
       if (duplicates.length != 0) {
-        const reducer = (accumulator, currentValue) => accumulator + ". " + currentValue;
-        let duplicateSongs = duplicates.reduce(reducer);
-        this.duplicateSong = "We detected duplicate songs : [" + duplicateSongs + ".] The duplicates won't be added to the playlist."
-        this.dialog = true;
+        const reducer = (accumulator, currentValue) =>
+          accumulator + ", " + currentValue;
+        const duplicateSongs = duplicates.reduce(reducer);
+        this.duplicateSongMessage = "[" + duplicateSongs + "]";
+        this.duplicateTracksDialog = true;
       }
 
       for (let i = 0; i < this.tracks.length; i++) {
