@@ -41,7 +41,7 @@
       </div>
     </v-container>
     <div class="d-flex">
-      <v-container class="d-flex">
+      <v-container class="d-flex justify-center">
         <v-btn class="buy-btn ml-3" v-on:click="buyAlbumRedirect">
           <p class="mt-auto mb-auto">$ {{ album.collectionPrice }} Buy</p>
         </v-btn>
@@ -52,22 +52,11 @@
           />
         </v-btn>
       </v-container>
-      <v-container class="d-flex justify-end">
-        <track-menu
-          :hover="true"
-          :artistId="album.artistId"
-          :collectionId="album.collectionId"
-          :tracks="tracks"
-          class="track-menu"
-        />
-      </v-container>
     </div>
   </v-container>
 </template>
 
 <script>
-import TrackMenu from "../track/TrackMenu";
-
 export default {
   name: "AlbumHeader",
   props: ["album", "artworkUrl300", "albumYear"],
@@ -76,9 +65,6 @@ export default {
       let win = window.open(this.album.collectionViewUrl, "_blank");
       win.focus();
     }
-  },
-  components: {
-    trackMenu: TrackMenu
   }
 };
 </script>

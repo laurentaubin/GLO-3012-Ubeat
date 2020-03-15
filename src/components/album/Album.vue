@@ -5,6 +5,16 @@
       v-bind:artworkUrl300="artworkUrl300"
       v-bind:albumYear="this.getAlbumYear()"
     />
+    <v-container class="d-flex justify-end">
+      <v-menu bottom left>
+        <template v-slot:activator="{ on }">
+          <v-btn dark icon v-on="on">
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+        <album-menu v-bind:tracks="tracks" />
+      </v-menu>
+    </v-container>
 
     <v-container class="song-list" fluid>
       <header class="songs-header">
@@ -43,6 +53,7 @@ import Track from "../track/Track.vue";
 import { emitTrackUp, emitTrackIdUp } from "../../utils/emitUtils";
 import { getHighResArtwork } from "../../utils/imageUtils.js";
 import AlbumHeader from "./AlbumHeader";
+import AlbumMenu from "./AlbumMenu";
 
 export default {
   name: "Album",
@@ -92,7 +103,8 @@ export default {
   },
   components: {
     Track: Track,
-    AlbumHeader: AlbumHeader
+    AlbumHeader: AlbumHeader,
+    AlbumMenu: AlbumMenu
   },
   //For the album component in AlbumList
   async created() {

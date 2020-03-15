@@ -49,7 +49,7 @@ export default {
     },
     goToAlbum() {
       router.push(`/album/${this.collectionId}`);
-    },
+    }
   }
 };
 </script>
