@@ -10,6 +10,7 @@ import AccountSettings from "@/views/AccountSettings";
 import ArtistHomePage from "../views/ArtistHomePage";
 import AlbumHomePage from "../views/AlbumHomePage";
 import PlaylistHomePage from "../views/PlaylistHomePage";
+import SignUp from "../views/SignUp.vue";
 
 Vue.use(Router);
 
@@ -64,6 +65,11 @@ export default new Router({
       path: "/playlist",
       name: "PlaylistHomePage",
       component: PlaylistHomePage
+    },
+    {
+      path: "/signup",
+      name: "SignUpPage",
+      component: SignUp
     }
   ]
 });
