@@ -151,3 +151,19 @@ export const deleteTrackFromPlaylist = async (track, playlistId) => {
     return err;
   }
 };
+
+export const signUp = async (name, email, password) => {
+  const path = `http://ubeat.herokuapp.com/signup?name=${name}&email=${email}&password=${password}`;
+  try {
+    const response = await fetch(path, {
+      method: "POST",
+      headers: {
+        "Content-Type": "x-www-form-urlencoded;charset=utf-8"
+      }
+    });
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    return err;
+  }
+};

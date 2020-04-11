@@ -6,16 +6,9 @@
       <v-row class="py-0">
         <v-col class="py-0">
           <v-text-field
-            v-model="firstName"
-            label="First name"
-            :rules="[rules.required]"
-          ></v-text-field>
-        </v-col>
-        <v-col class="py-0">
-          <v-text-field
-            v-model="lastName"
-            label="Last name"
-            :rules="[rules.required]"
+            v-model="name"
+            label="Name"
+            :error="invalidName"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -24,7 +17,7 @@
         class="py-0"
         v-model="email"
         label="Email"
-        :rules="[rules.required, rules.email]"
+        :error="invalidEmail"
       ></v-text-field>
 
       <v-row class="py-0">
@@ -35,7 +28,7 @@
             v-model="password"
             label="Password"
             @click:append="showPassword = !showPassword"
-            :rules="[rules.required]"
+            :error="invalidPassword"
           ></v-text-field>
         </v-col>
         <v-col class="py-0">
@@ -45,14 +38,14 @@
             v-model="confirmedPassword"
             label="Confirm"
             @click:append="showConfirmed = !showConfirmed"
-            :rules="[rules.required]"
+            :error="invalidPassword"
           >
           </v-text-field>
         </v-col>
       </v-row>
 
       <v-container>
-        <v-btn @click="signup()">
+        <v-btn @click="signUpFunction">
           Sign up
         </v-btn>
       </v-container>
@@ -66,32 +59,68 @@
         >
       </p>
     </v-container>
+    <v-btn v-on:click="signUpFunction">
+      click me
+    </v-btn>
   </v-container>
 </template>
 
 <script>
+import { signUp } from "../api/api";
+import Router from "../router/index";
+
 export default {
   name: "SignUpForm",
-  data: () => ({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmedPassword: "",
-    showPassword: false,
-    showConfirmed: false,
-    rules: {
-      required: value => !!value || "Required.",
-      counter: value => value.length <= 20 || "Max 20 characters",
-      email: value => {
-        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return pattern.test(value) || "Invalid e-mail.";
-      }
-    }
-  }),
+  data: function() {
+    return {
+      name: "",
+      email: "",
+      password: "",
+      confirmedPassword: "",
+      invalidName: false,
+      invalidEmail: false,
+      invalidPassword: false,
+      showPassword: false,
+      showConfirmed: false,
+      emailRegExp: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    };
+  },
   methods: {
-    signUp: function() {
-      //todo
+    isNameValid: function() {
+      if (this === "") {
+        this.invalidName = true;
+        return false;
+      }
+      this.invalidName = false;
+      return true;
+    },
+    isPasswordValid: function() {
+      if (
+        this.password === "" ||
+        this.confirmedPassword === "" ||
+        this.password !== this.confirmedPassword
+      ) {
+        this.invalidPassword = true;
+        return false;
+      }
+      this.invalidPassword = false;
+      return true;
+    },
+    isEmailValid: function() {
+      if (!this.emailRegExp.test(this.email)) {
+        this.invalidEmail = true;
+        return false;
+      }
+      this.invalidEmail = false;
+      return true;
+    },
+    signUpFunction: async function() {
+      if (this.isEmailValid() && this.isNameValid() && this.isPasswordValid()) {
+        await signUp(this.name, this.email, this.password);
+        await Router.push("/");
+      } else {
+        //TODO Faire une notif pour dire que ça fail
+      }
     }
   }
 };
