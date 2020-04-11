@@ -5,11 +5,7 @@
     </v-container>
     <v-divider />
     <v-container>
-      <v-text-field solo-inverted flat hide-details dense label="Filter">
-        <v-icon slot="prepend-inner" color="#fff">
-          mdi-magnify
-        </v-icon>
-      </v-text-field>
+      <autocomplete type="artist" />
     </v-container>
     <v-divider />
     <v-container>
@@ -46,12 +42,14 @@
 
 <script>
 import ArtistCard from "../components/artist/ArtistCard";
+import Autocomplete from "../components/search/Autocomplete";
 import { getArtist } from "../api/api";
 
 export default {
   name: "ArtistHomePage",
   components: {
-    artistCard: ArtistCard
+    artistCard: ArtistCard,
+    autocomplete: Autocomplete
   },
   data() {
     return {

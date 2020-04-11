@@ -167,3 +167,14 @@ export const signUp = async (name, email, password) => {
     return err;
   }
 };
+
+export const searchArtists = async query => {
+  const path = `${API_URL}/search/artists?q=${query}`;
+  try {
+    const response = await fetch(path);
+    const data = await response.json();
+    return data.results;
+  } catch (err) {
+    return err;
+  }
+};
