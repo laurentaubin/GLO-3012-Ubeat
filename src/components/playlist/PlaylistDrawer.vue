@@ -72,10 +72,13 @@ export default {
       }
       if (duplicates.length != 0) {
         const reducer = (accumulator, currentValue) =>
-          accumulator + ", " + currentValue;
-        const duplicateSongs = duplicates.reduce(reducer);
-        this.duplicateSongMessage = "[" + duplicateSongs + "]";
-        this.duplicateTracksDialog = true;
+          accumulator + ". " + currentValue;
+        let duplicateSongs = duplicates.reduce(reducer);
+        this.duplicateSong =
+          "We detected duplicate songs : [" +
+          duplicateSongs +
+          ".] The duplicates won't be added to the playlist.";
+        this.dialog = true;
       }
 
       for (let i = 0; i < this.tracks.length; i++) {

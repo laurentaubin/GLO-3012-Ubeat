@@ -53,7 +53,6 @@
 
 <script>
 import router from "../router/index.js";
-
 export default {
   name: "LoginForm",
   data: () => ({
