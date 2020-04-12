@@ -178,3 +178,14 @@ export const searchArtists = async query => {
     return err;
   }
 };
+
+export const searchAlbums = async query => {
+  const path = `${API_URL}/search/albums?q=${query}`;
+  try {
+    const response = await fetch(path);
+    const data = await response.json();
+    return data.results;
+  } catch (err) {
+    return err;
+  }
+};

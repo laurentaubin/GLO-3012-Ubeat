@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { searchArtists } from "../../api/api.js";
+import { searchArtists, searchAlbums } from "../../api/api.js";
 
 export default {
   name: "Autocomplete",
@@ -47,6 +47,9 @@ export default {
         case "artist":
           await this.updateArtistNames(query);
           break;
+        case "album":
+          await this.updateAlbumNames(query);
+          break;
       }
     },
     updateArtistNames: async function(query) {
@@ -54,6 +57,13 @@ export default {
       // eslint-disable-next-line no-unused-vars
       for (const artist of artists) {
         this.items.push(artist.artistName);
+      }
+    },
+    updateAlbumNames: async function(query) {
+      const albums = await searchAlbums(query);
+      // eslint-disable-next-line no-unused-vars
+      for (const album of albums) {
+        this.items.push(album.collectionName);
       }
     }
   }

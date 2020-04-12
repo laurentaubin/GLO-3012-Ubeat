@@ -5,11 +5,7 @@
     </v-container>
     <v-divider />
     <v-container>
-      <v-text-field solo-inverted flat hide-details dense label="Filter">
-        <v-icon slot="prepend-inner" color="#fff" class="hidden-xs-only">
-          mdi-magnify
-        </v-icon>
-      </v-text-field>
+      <autocomplete type="album" />
     </v-container>
     <v-divider />
     <v-container>
@@ -38,12 +34,14 @@
 
 <script>
 import AlbumCard from "../components/album/AlbumCard";
+import Autocomplete from "../components/search/Autocomplete";
 import { getAlbum } from "../api/api";
 
 export default {
   name: "AlbumHomePage",
   components: {
-    albumCard: AlbumCard
+    albumCard: AlbumCard,
+    autocomplete: Autocomplete
   },
   data: () => {
     return {
