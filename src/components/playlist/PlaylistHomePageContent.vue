@@ -36,11 +36,13 @@ export default {
     getPlaylists: async function() {
       this.playlistsLoading = true;
       const playlists = await getPlaylists();
-      this.playlists = playlists.filter(
-        playlist => playlist.owner.email === "test@francis.com"
-      );
-      this.playlistsLoading = false;
-      return this.playlists;
+      if (playlists !== null) {
+        this.playlists = playlists.filter(
+          playlist => playlist.owner.email === "test@francis.com"
+        );
+        this.playlistsLoading = false;
+        return this.playlists;
+      }
     }
   }
 };

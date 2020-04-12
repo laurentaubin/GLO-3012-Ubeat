@@ -75,8 +75,10 @@ export default {
     getArtistInfo: async function() {
       this.artistLoading = true;
       let artist = await getArtist(334854763);
-      this.artistLoading = false;
-      return artist.results[0];
+      if (artist !== null) {
+        this.artistLoading = false;
+        return artist.results[0];
+      }
     }
   }
 };

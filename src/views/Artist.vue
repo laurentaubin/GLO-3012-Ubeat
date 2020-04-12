@@ -39,6 +39,7 @@ import { emitTrackIdUp, emitTrackUp } from "../utils/emitUtils";
 import { getArtistArtworkUrl } from "../utils/scraperUtils.js";
 import { getHighResArtwork } from "../utils/imageUtils.js";
 import ArtistHeader from "../components/artist/ArtistHeader";
+import { isConnected } from "../api/api";
 
 export default {
   name: "Artist",
@@ -89,23 +90,29 @@ export default {
     };
   },
   created: async function() {
-    this.artist = await this.getArtistInfo();
-    this.albums = await this.getAlbumsInfo();
-    this.artistArtworkUrl = await this.getArtistArtworkUrl();
+    if (isConnected()) {
+      this.artist = await this.getArtistInfo();
+      this.albums = await this.getAlbumsInfo();
+      this.artistArtworkUrl = await this.getArtistArtworkUrl();
+    }
   },
   methods: {
     getArtistInfo: async function() {
       this.artistLoading = true;
       const artist = await getArtist(this.$route.params.id);
-      this.artist = artist.results[0];
-      this.artistLoading = false;
-      return this.artist;
+      if (artist !== null) {
+        this.artist = artist.results[0];
+        this.artistLoading = false;
+        return this.artist;
+      }
     },
     getAlbumsInfo: async function() {
       this.albumsLoading = true;
       const albums = await getAlbums(this.$route.params.id);
-      this.albumsLoading = false;
-      return albums.results;
+      if (albums !== null) {
+        this.albumsLoading = false;
+        return albums.results;
+      }
     },
     getArtistArtworkUrl: async function() {
       const lowResArtwork = await getArtistArtworkUrl(this.artist.artistId);

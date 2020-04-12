@@ -52,8 +52,10 @@ export default {
     getAlbumInfo: async function() {
       this.loadingAlbum = true;
       let album = await getAlbum(this.$route.params.id);
-      this.loadingAlbum = false;
-      return album.results[0];
+      if (album !== null) {
+        this.loadingAlbum = false;
+        return album.results[0];
+      }
     },
     emitTrackUp(track) {
       emitTrackUp(this, track);

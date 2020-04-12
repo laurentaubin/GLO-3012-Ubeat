@@ -1,7 +1,18 @@
 <template>
   <v-container class="px-0 mx-0">
     <v-subheader class="subtitle-1 font-weigth">Playlists</v-subheader>
-    <v-container v-if="initialLoading" style="width: 225px; height: 150px;">
+    <v-container v-if="!isConnected">
+      <v-card>
+        <v-card-text>
+          Login or sign up to access your playlists
+        </v-card-text>
+      </v-card>
+    </v-container>
+    <v-container> </v-container>
+    <v-container
+      v-if="initialLoading && isConnected"
+      style="width: 225px; height: 150px;"
+    >
       <v-progress-circular
         class="mt-6"
         style="left: 38%;"
@@ -11,7 +22,7 @@
       ></v-progress-circular>
     </v-container>
     <vue-custom-scrollbar
-      v-else
+      v-if="isConnected && !initialLoading"
       class="scroll-area"
       :settings="scrollbarSettings"
     >
@@ -32,7 +43,7 @@
         </v-list-item-group>
       </v-list>
     </vue-custom-scrollbar>
-    <add-playlist />
+    <add-playlist v-if="isConnected" />
   </v-container>
 </template>
 
@@ -51,6 +62,7 @@ export default {
     return {
       playlists: [],
       initialLoading: false,
+      isConnected: false,
       scrollbarSettings: {
         minScrollbarLength: 40,
         maxScrollbarLength: 80
@@ -67,11 +79,17 @@ export default {
   methods: {
     getPlaylists: async function() {
       const playlists = await getPlaylists();
-      this.playlists = playlists.filter(
-        playlist => playlist.owner.email === "test@francis.com"
-      );
-      this.initialLoading = false;
-      this.$emit("playlists-ready", this.playlists);
+      if (playlists !== null) {
+        this.isConnected = true;
+        this.initialLoading = false;
+        this.playlists = playlists.filter(
+          playlist => playlist.owner.email === "test@francis.com"
+        );
+        this.$emit("playlists-ready", this.playlists);
+      } else {
+        this.initialLoading = true;
+        this.isConnected = false;
+      }
     }
   }
 };

@@ -79,8 +79,10 @@ export default {
     getAlbumInfo: async function() {
       this.albumLoading = true;
       let album = await getAlbum(1253656856);
-      this.albumLoading = false;
-      return album.results[0];
+      if (album !== null) {
+        this.albumLoading = false;
+        return album.results[0];
+      }
     }
   }
 };

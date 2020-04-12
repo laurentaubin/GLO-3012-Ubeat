@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     isNameValid: function() {
-      if (this === "") {
+      if (this.name === "") {
         this.invalidName = true;
         return false;
       }

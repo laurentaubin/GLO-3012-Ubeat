@@ -9,8 +9,9 @@
     <v-container class="py-0">
       <v-text-field
         v-model="email"
-        label="Username"
+        label="Email"
         prepend-icon="mdi-account"
+        :error="invalidLogin"
       ></v-text-field>
 
       <v-text-field
@@ -18,6 +19,7 @@
         label="Password"
         prepend-icon="mdi-lock"
         type="password"
+        :error="invalidLogin"
       ></v-text-field>
     </v-container>
 
@@ -53,10 +55,12 @@
 
 <script>
 import router from "../router/index.js";
+import { login } from "../api/api.js";
+
 export default {
   name: "LoginForm",
   data: () => ({
-    username: "",
+    email: "",
     password: "",
     rememberMe: false,
     invalidLogin: false
@@ -65,18 +69,16 @@ export default {
     signUp: function() {
       router.push("/signup");
     },
-    login: function() {
-      if (this.isValidCredentials(this.username, this.password)) {
-        // update token
-        router.push("/home");
-      } else {
-        this.invalidLogin = true;
+    login: async function() {
+      this.invalidLogin = true;
+      if (this.name !== "" && this.password !== "") {
+        this.invalidLogin = false;
+        const data = await login(this.email, this.password);
+        if (data.status === 200) {
+          this.invalidLogin = false;
+          window.location.replace("/");
+        }
       }
-    },
-    isValidCredentials(username, password) {
-      this.username = username;
-      this.password = password;
-      // TODO add api call
     }
   }
 };

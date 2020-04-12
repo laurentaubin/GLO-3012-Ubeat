@@ -85,9 +85,6 @@ export default {
 </script>
 
 <style scoped>
-.album-list {
-  text-align: center;
-}
 button {
   margin-top: 16px;
 }
