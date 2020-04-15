@@ -1,5 +1,5 @@
 <template>
-  <v-card class="playlist-card">
+  <v-card class="playlist-card" color="rgb(88,86,214)">
     <v-card-text class="text-center fon">
       <a
         v-bind:href="'/#/playlist/' + playlist.id"
