@@ -18,6 +18,7 @@
 
 <script>
 import { searchArtists, searchAlbums } from "../../api/api.js";
+import {isConnected} from "../../api/api";
 
 export default {
   name: "Autocomplete",
@@ -43,27 +44,33 @@ export default {
       this.loading = false;
     },
     updateAutocomplete: async function(query) {
-      switch (this.type) {
-        case "artist":
-          await this.updateArtistNames(query);
-          break;
-        case "album":
-          await this.updateAlbumNames(query);
-          break;
+      if (isConnected()) {
+        switch (this.type) {
+          case "artist":
+            await this.updateArtistNames(query);
+            break;
+          case "album":
+            await this.updateAlbumNames(query);
+            break;
+        }
       }
     },
     updateArtistNames: async function(query) {
-      const artists = await searchArtists(query);
-      // eslint-disable-next-line no-unused-vars
-      for (const artist of artists) {
-        this.items.push(artist.artistName);
+      if (isConnected()) {
+        const artists = await searchArtists(query);
+        // eslint-disable-next-line no-unused-vars
+        for (const artist of artists.results) {
+          this.items.push(artist.artistName);
+        }
       }
     },
     updateAlbumNames: async function(query) {
-      const albums = await searchAlbums(query);
-      // eslint-disable-next-line no-unused-vars
-      for (const album of albums) {
-        this.items.push(album.collectionName);
+      if (isConnected()) {
+        const albums = await searchAlbums(query);
+        // eslint-disable-next-line no-unused-vars
+        for (const album of albums.results) {
+          this.items.push(album.collectionName);
+        }
       }
     }
   }

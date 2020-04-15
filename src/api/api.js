@@ -206,25 +206,25 @@ export const signUp = async (name, email, password) => {
 };
 
 export const searchArtists = async query => {
-  const path = `${API_URL}/search/artists?q=${query}`;
-  try {
-    const response = await fetch(path);
-    const data = await response.json();
-    return data.results;
-  } catch (err) {
-    return err;
-  }
+  const path = `search/artists?q=${query}`;
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json"
+    }
+  };
+  return await makeApiRequest(path, options);
 };
 
 export const searchAlbums = async query => {
-  const path = `${API_URL}/search/albums?q=${query}`;
-  try {
-    const response = await fetch(path);
-    const data = await response.json();
-    return data.results;
-  } catch (err) {
-    return err;
-  }
+  const path = `search/albums?q=${query}`;
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json"
+    }
+  };
+  return await makeApiRequest(path, options);
 };
 
 export const login = async (email, password) => {
