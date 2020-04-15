@@ -43,7 +43,7 @@ export default {
   methods: {
     logout: async function() {
       await logout();
-      window.location.replace("/login");
+      this.isConnected = false;
     }
   },
   created() {
