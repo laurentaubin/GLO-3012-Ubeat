@@ -51,6 +51,7 @@
 import { getPlaylists } from "../../api/api.js";
 import vueCustomScrollbar from "vue-custom-scrollbar";
 import AddPlaylistButton from "../AddPlaylistButton.vue";
+import { getCurrentUserTokenInfo } from "../../api/api";
 
 export default {
   name: "PlaylistBar",
@@ -82,8 +83,9 @@ export default {
       if (playlists !== null) {
         this.isConnected = true;
         this.initialLoading = false;
+        const userInfo = await getCurrentUserTokenInfo();
         this.playlists = playlists.filter(
-          playlist => playlist.owner.email === "test@francis.com"
+          playlist => playlist.owner.id === userInfo.id
         );
         this.$emit("playlists-ready", this.playlists);
       } else {

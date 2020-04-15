@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { getPlaylists } from "../../api/api";
+import { getCurrentUserTokenInfo, getPlaylists } from "../../api/api";
 import PlaylistCard from "./PlaylistCard";
 
 export default {
@@ -37,8 +37,9 @@ export default {
       this.playlistsLoading = true;
       const playlists = await getPlaylists();
       if (playlists !== null) {
+        const userInfo = await getCurrentUserTokenInfo();
         this.playlists = playlists.filter(
-          playlist => playlist.owner.email === "test@francis.com"
+          playlist => playlist.owner.id === userInfo.id
         );
         this.playlistsLoading = false;
         return this.playlists;

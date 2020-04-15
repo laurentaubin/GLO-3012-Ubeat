@@ -93,24 +93,19 @@ export const getPlaylists = async () => {
 };
 
 export const createPlaylist = async (name, owner) => {
-  const path = `${API_URL}/playlists`;
+  const path = `playlists`;
   const body = {
     name: name,
     owner: owner
   };
-  try {
-    const response = await fetch(path, {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-    const data = response.json();
-    return data;
-  } catch (err) {
-    return err;
-  }
+  const options = {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  return await makeApiRequest(path, options);
 };
 
 export const getPlaylist = async playlistId => {
@@ -125,78 +120,66 @@ export const getPlaylist = async playlistId => {
 };
 
 export const deletePlaylist = async playlistId => {
-  const path = `${API_URL}/playlists/${playlistId}`;
-  try {
-    const response = await fetch(path, {
-      method: "DELETE"
-    });
-    const data = response.json();
-    return data;
-  } catch (err) {
-    return err;
-  }
+  const path = `playlists/${playlistId}`;
+  const options = {
+    method: "DELETE",
+    headers: {}
+  };
+  return await makeApiRequest(path, options);
 };
 
 export const editPlaylistName = async (playlistId, playlist, newName) => {
-  const path = `${API_URL}/playlists/${playlistId}`;
+  const path = `playlists/${playlistId}`;
   const body = { ...playlist };
   body.name = newName;
-  try {
-    const response = await fetch(path, {
-      method: "PUT",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-    return response.json();
-  } catch (err) {
-    return err;
-  }
+  const options = {
+    method: "PUT",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  return await makeApiRequest(path, options);
 };
 
 export const addTrackToPlaylist = async (track, playlistId) => {
-  const path = `${API_URL}/playlists/${playlistId}/tracks`;
+  const path = `playlists/${playlistId}/tracks`;
   const body = track;
-  try {
-    const response = await fetch(path, {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-    const data = response.json();
-    return data;
-  } catch (err) {
-    return err;
-  }
+  const options = {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  return await makeApiRequest(path, options);
 };
 
 export const deleteTrackFromPlaylist = async (track, playlistId) => {
-  const path = `${API_URL}/playlists/${playlistId}/tracks/${track.trackId}`;
-  try {
-    const response = await fetch(path, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-    const data = response.json();
-    return data;
-  } catch (err) {
-    return err;
-  }
+  const path = `playlists/${playlistId}/tracks/${track.trackId}`;
+  const options = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  return await makeApiRequest(path, options);
 };
 
 export const signUp = async (name, email, password) => {
-  const path = `http://ubeat.herokuapp.com/signup?name=${name}&email=${email}&password=${password}`;
+  const path = `http://ubeat.herokuapp.com/signup`;
+  let body = new URLSearchParams();
+  body.append("name", name);
+  body.append("email", email);
+  body.append("password", password);
+
   try {
     const response = await fetch(path, {
       method: "POST",
       headers: {
-        "Content-Type": "x-www-form-urlencoded;charset=utf-8"
-      }
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: body
     });
     const data = await response.json();
     return data;
@@ -228,13 +211,17 @@ export const searchAlbums = async query => {
 };
 
 export const login = async (email, password) => {
-  const path = `http://ubeat.herokuapp.com/login?email=${email}&password=${password}`;
+  const path = `http://ubeat.herokuapp.com/login`;
+  let body = new URLSearchParams();
+  body.append("email", email);
+  body.append("password", password);
   try {
     const response = await fetch(path, {
       method: "POST",
       headers: {
-        "Content-Type": "x-www-form-urlencoded;charset=utf-8"
-      }
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+      },
+      body: body
     });
     const data = await response.json();
     if (response.status === 200 || response.status === 401) {
@@ -261,5 +248,37 @@ export const logout = async () => {
     await fetch(path, options);
   } catch (err) {
     return err;
+  }
+};
+
+export const getCurrentUserTokenInfo = async () => {
+  const path = `tokenInfo`;
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json"
+    }
+  };
+  return await makeApiRequest(path, options);
+};
+
+export const getUserById = async userId => {
+  const path = `users/${userId}`;
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json"
+    }
+  };
+  return await makeApiRequest(path, options);
+};
+
+export const getUserPlaylists = async userId => {
+  const playlists = await getPlaylists();
+  if (playlists !== null) {
+    const userPlaylists = playlists.filter(
+      playlist => playlist.owner.id === userId
+    );
+    return userPlaylists;
   }
 };

@@ -75,9 +75,7 @@ export default {
   }),
   methods: {
     createPlaylist: async function(name, owner) {
-      console.log("create playlist");
       if (!isPlaylistNameValid(name)) {
-        console.log("invalid name");
         this.invalidPlaylistName = true;
         return;
       }
