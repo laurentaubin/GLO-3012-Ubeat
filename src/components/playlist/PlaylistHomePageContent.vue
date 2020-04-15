@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { getCurrentUserTokenInfo, getPlaylists } from "../../api/api";
+  import {getCurrentUserTokenInfo, getPlaylists, isConnected} from "../../api/api";
 import PlaylistCard from "./PlaylistCard";
 
 export default {
@@ -34,15 +34,17 @@ export default {
   },
   methods: {
     getPlaylists: async function() {
-      this.playlistsLoading = true;
-      const playlists = await getPlaylists();
-      if (playlists !== null) {
-        const userInfo = await getCurrentUserTokenInfo();
-        this.playlists = playlists.filter(
-          playlist => playlist.owner.id === userInfo.id
-        );
-        this.playlistsLoading = false;
-        return this.playlists;
+      if (isConnected()) {
+        this.playlistsLoading = true;
+        const playlists = await getPlaylists();
+        if (playlists !== null) {
+          const userInfo = await getCurrentUserTokenInfo();
+          this.playlists = playlists.filter(
+            playlist => playlist.owner.id === userInfo.id
+          );
+          this.playlistsLoading = false;
+          return this.playlists;
+        }
       }
     }
   }

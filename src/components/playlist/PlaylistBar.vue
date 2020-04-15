@@ -51,7 +51,7 @@
 import { getPlaylists } from "../../api/api.js";
 import vueCustomScrollbar from "vue-custom-scrollbar";
 import AddPlaylistButton from "../AddPlaylistButton.vue";
-import { getCurrentUserTokenInfo } from "../../api/api";
+import { getCurrentUserTokenInfo, isConnected } from "../../api/api";
 
 export default {
   name: "PlaylistBar",
@@ -71,11 +71,17 @@ export default {
     };
   },
   created() {
-    this.initialLoading = true;
-    this.getPlaylists();
+    if (isConnected()) {
+      this.initialLoading = true;
+      this.getPlaylists();
+    }
   },
   updated() {
-    this.getPlaylists();
+    if (isConnected()) {
+      this.getPlaylists();
+    } else {
+      this.isConnected = false;
+    }
   },
   methods: {
     getPlaylists: async function() {
@@ -84,10 +90,12 @@ export default {
         this.isConnected = true;
         this.initialLoading = false;
         const userInfo = await getCurrentUserTokenInfo();
-        this.playlists = playlists.filter(
-          playlist => playlist.owner.id === userInfo.id
-        );
-        this.$emit("playlists-ready", this.playlists);
+        if (userInfo !== null) {
+          this.playlists = playlists.filter(
+            playlist => playlist.owner.id === userInfo.id
+          );
+          this.$emit("playlists-ready", this.playlists);
+        }
       } else {
         this.initialLoading = true;
         this.isConnected = false;

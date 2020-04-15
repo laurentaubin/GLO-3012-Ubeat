@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import router from "../router/index.js";
+import Router from "../router/index.js";
 import { login } from "../api/api.js";
 
 export default {
@@ -67,16 +67,17 @@ export default {
   }),
   methods: {
     signUp: function() {
-      router.push("/signup");
+      Router.push("/signup");
     },
     login: async function() {
-      this.invalidLogin = true;
       if (this.name !== "" && this.password !== "") {
         this.invalidLogin = false;
         const data = await login(this.email, this.password);
         if (data.status === 200) {
           this.invalidLogin = false;
           window.location.replace("/");
+        } else {
+          this.invalidLogin = true;
         }
       }
     }

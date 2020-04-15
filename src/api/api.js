@@ -225,7 +225,10 @@ export const login = async (email, password) => {
     });
     const data = await response.json();
     if (response.status === 200 || response.status === 401) {
-      Cookies.set("token", data.token);
+      let date = new Date();
+      const minutes = 60;
+      date.setTime(date.getTime() + minutes * 60 * 1000);
+      Cookies.set("token", data.token, { expires: date });
       return {
         data: data,
         status: response.status
@@ -244,7 +247,6 @@ export const logout = async () => {
   };
   try {
     Cookies.remove("token");
-    await Router.push("/login");
     await fetch(path, options);
   } catch (err) {
     return err;

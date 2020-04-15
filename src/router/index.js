@@ -17,6 +17,7 @@ import UserHomePage from "../views/UserHomePage";
 Vue.use(Router);
 
 export default new Router({
+  mode: "history",
   routes: [
     {
       path: "/",
