@@ -7,6 +7,14 @@ export async function getArtistArtworkUrl(artistId) {
   return artistArtworkUrl;
 }
 
+export async function getArtistBiography(artistId) {
+  const htmlPage = await getHtmlPage(
+    `https://itunes.apple.com/artist/${artistId}`
+  );
+  const artistBiography = getBiography(htmlPage);
+  return artistBiography;
+}
+
 async function getHtmlPage(url) {
   try {
     const response = await fetch(url);
@@ -15,6 +23,13 @@ async function getHtmlPage(url) {
   } catch (err) {
     return err;
   }
+}
+
+function getBiography(htmlPage) {
+  const dummyElem = document.createElement("html");
+  dummyElem.innerHTML = htmlPage;
+  const biography = dummyElem.getElementsByTagName("p")[1].innerText;
+  return biography;
 }
 
 function getArtworkSrcSet(htmlPage) {

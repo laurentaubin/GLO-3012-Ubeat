@@ -14,13 +14,44 @@
         {{ artist.artistName }}
       </p>
     </div>
+    <div class="d-flex justify-center justify-md-start mb-3">
+      <v-btn
+        v-on:click="this.getBiography"
+        color="rgb(88, 86, 214)"
+      >
+        BIOGRAPHY
+      </v-btn>
+    </div>
+    <v-card v-if="showBiography">
+      <v-card-text class="text-justify">
+        {{ this.biography.text }}
+      </v-card-text>
+    </v-card>
   </v-container>
 </template>
 
 <script>
+import { getArtistBiography } from "../../utils/scraperUtils";
+
 export default {
   name: "ArtistHeader",
-  props: ["artist", "artistArtworkUrl"]
+  props: ["artist", "artistArtworkUrl"],
+  data: function() {
+    return {
+      biography: {
+        text: ""
+      },
+      showBiography: false
+    };
+  },
+  methods: {
+    getBiography: async function() {
+      if (this.biography.text === "") {
+        this.biography.text = await getArtistBiography(this.artist.artistId);
+      }
+      this.showBiography = !this.showBiography;
+    }
+  }
 };
 </script>
 
@@ -35,5 +66,9 @@ export default {
   border-radius: 50%;
   position: center;
   vertical-align: middle;
+}
+
+.active-button {
+  color: rgb(88, 86, 214);
 }
 </style>
