@@ -17,8 +17,13 @@
       </p>
     </v-container>
     <v-container v-if="!isCurrentUser" class="d-flex ">
-      <v-container class="d-flex justify-center justify-md-end">
-        <v-btn>
+      <v-container v-if="followingUser" class="d-flex justify-center justify-md-end">
+        <v-btn v-on:click="unfollow(user.id)">
+          UNFOLLOW
+        </v-btn>
+      </v-container>
+      <v-container v-else class="d-flex justify-center justify-md-end">
+        <v-btn v-on:click="follow(user.id)">
           FOLLOW
         </v-btn>
       </v-container>
@@ -27,26 +32,41 @@
 </template>
 
 <script>
-import { getCurrentUserTokenInfo } from "../../api/api";
+import { getCurrentUserTokenInfo, followUserWithID, unfollowUserWithID } from "../../api/api";
 
 export default {
   name: "UserHeader",
   props: ["user"],
   data: function() {
     return {
-      isCurrentUser: true
+      isCurrentUser: true,
+      followingUser: false,
+      currentUserTokenInfo: null
     };
   },
   async created() {
     await this.setIsCurrentUser();
+    this.followingUser = this.isFollowingUser();
   },
   async updated() {
     await this.setIsCurrentUser();
+    this.followingUser = this.isFollowingUser();
   },
   methods: {
     setIsCurrentUser: async function() {
-      const currentUserTokenInfo = await getCurrentUserTokenInfo();
-      this.isCurrentUser = currentUserTokenInfo.id === this.user.id;
+      this.currentUserTokenInfo = await getCurrentUserTokenInfo();
+      this.isCurrentUser = this.currentUserTokenInfo.id === this.user.id;
+    },
+    follow: async function(ID) {
+      await followUserWithID(ID);
+      this.followingUser = true;
+    },
+    unfollow: async function(ID) {
+      await unfollowUserWithID(ID);
+      this.followingUser = false;
+    },
+    isFollowingUser: function() {
+      return this.currentUserTokenInfo.following.map(user => user.id).includes(this.user.id.toString());
     }
   }
 };

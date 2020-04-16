@@ -166,6 +166,32 @@ export const deleteTrackFromPlaylist = async (track, playlistId) => {
   return await makeApiRequest(path, options);
 };
 
+export const unfollowUserWithID = async ID => {
+  const path = `follow/${ID}`;
+  const options = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  return await makeApiRequest(path, options);
+};
+
+export const followUserWithID = async ID => {
+  const path = `follow`;
+  const body = {
+    id: ID
+  };
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(body)
+  };
+  return await makeApiRequest(path, options);
+};
+
 export const signUp = async (name, email, password) => {
   const path = `http://ubeat.herokuapp.com/signup`;
   let body = new URLSearchParams();
