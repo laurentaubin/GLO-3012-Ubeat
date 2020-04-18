@@ -13,6 +13,7 @@ import PlaylistHomePage from "../views/PlaylistHomePage";
 import SignUp from "../views/SignUp.vue";
 import Login from "../views/Login.vue";
 import UserHomePage from "../views/UserHomePage";
+import UserSearchResult from "../views/UserSearchResult";
 
 Vue.use(Router);
 
@@ -81,8 +82,13 @@ export default new Router({
     },
     {
       path: "/user",
-      name: "User",
+      name: "UserHomePage",
       component: UserHomePage
+    }, {
+      path: "/userSearchResults",
+      name: "UserSearchResultsPage",
+      component: UserSearchResult,
+      props: true
     }
   ]
 });

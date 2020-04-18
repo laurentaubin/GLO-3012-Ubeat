@@ -236,6 +236,17 @@ export const searchAlbums = async query => {
   return await makeApiRequest(path, options);
 };
 
+export const getAllUsers = async () => {
+  const path = `users`;
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json"
+    }
+  };
+  return await makeApiRequest(path, options);
+};
+
 export const login = async (email, password) => {
   const path = `http://ubeat.herokuapp.com/login`;
   let body = new URLSearchParams();
