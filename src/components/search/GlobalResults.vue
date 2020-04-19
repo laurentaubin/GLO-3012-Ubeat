@@ -13,7 +13,9 @@
 
       <v-container>
         <p class="title">Tracks</p>
-        <TrackResults :query="query" />
+        <TrackResults :query="query"
+                      v-on:select-track="emitTrackIdUp"
+                      v-on:play-track="emitTrackUp"/>
       </v-container>
     </v-container>
   </v-container>

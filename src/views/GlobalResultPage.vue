@@ -5,7 +5,9 @@
         Results for: "{{ this.query }}"
       </v-container>
     </v-container>
-    <GlobalResults :query="query" />
+    <GlobalResults :query="query"
+                   v-on:select-track="emitTrackIdUp"
+                   v-on:play-track="emitTrackUp"/>
   </v-container>
 </template>
 
