@@ -1,5 +1,10 @@
 <template>
   <v-container>
+    <v-container class="d-flex">
+      <v-container class="font-weight-bold display-2 mb-3">
+        Results for artist: "{{ query }}"
+      </v-container>
+    </v-container>
     <ArtistResults :query="query" />
   </v-container>
 </template>
