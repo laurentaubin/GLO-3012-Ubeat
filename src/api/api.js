@@ -343,3 +343,8 @@ export const getUserPlaylists = async userId => {
     return userPlaylists;
   }
 };
+
+export const getArtists = async () => {
+  let query = "a&limit=100";
+  return await searchArtists(query);
+};

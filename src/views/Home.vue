@@ -4,18 +4,18 @@
       <h1 class="font-weight-bold display-2 mb-3 pb-10">Home</h1>
     </v-container>
 
-    <v-container>
+    <v-container v-for="style in Object.keys(artistsByStyle)" v-bind:key="style">
       <v-row no-gutters>
-        <h1 class="title font-weight-bold">Recently played</h1>
+        <h1 class="title font-weight-bold">Top {{ style }} Artists For You</h1>
       </v-row>
       <v-divider class="pb-3" />
       <v-row no-gutter class="d-flex">
-        <v-card class="mr-3 mb-3">
+        <v-card class="mr-3 mb-3" v-for="artist in artistsByStyle[style]" v-bind:key="artist.artistId">
           <v-row>
             <v-col class="d-flex mx-3 my-sm-1">
               <v-img
                 contain
-                src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
+                v-bind:src="artist.artwork"
                 height="200px"
                 width="200px"
               />
@@ -23,119 +23,8 @@
           </v-row>
           <v-row>
             <v-col class="d-flex justify-center">
-              <a href="/#/artist" class="link white--text">
-                Kesha
-              </a>
-            </v-col>
-          </v-row>
-        </v-card>
-        <v-card class="mr-3 mb-3">
-          <v-row>
-            <v-col class="d-flex justify-start mx-3 my-sm-1">
-              <v-img
-                contain
-                src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-                height="200px"
-                width="200px"
-              />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col class="d-flex justify-center">
-              <a href="/#/artist" class="link white--text">
-                Kesha
-              </a>
-            </v-col>
-          </v-row>
-        </v-card>
-      </v-row>
-    </v-container>
-    <v-container>
-      <v-row no-gutters>
-        <h1 class="title font-weight-bold">Artists</h1>
-      </v-row>
-      <v-divider class="pb-3" />
-      <v-row no-gutters class="d-flex align-center">
-        <v-card class="mr-3 mb-3">
-          <v-row>
-            <v-col class="d-flex justify-start mx-3 my-sm-1">
-              <v-img
-                contain
-                src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-                height="200px"
-                width="200px"
-              />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col class="d-flex justify-center">
-              <a href="/#/artist" class="link white--text">
-                Kesha
-              </a>
-            </v-col>
-          </v-row>
-        </v-card>
-      </v-row>
-    </v-container>
-    <v-container>
-      <v-row no-gutters>
-        <h1 class="title font-weight-bold">Albums</h1>
-      </v-row>
-      <v-divider class="pb-3" />
-      <v-row no-gutters class="d-flex align-center">
-        <v-card class="mr-3 mb-3">
-          <v-row>
-            <v-col class="d-flex justify-start mx-3 my-sm-1">
-              <v-img
-                contain
-                src="https://is3-ssl.mzstatic.com/image/thumb/Music113/v4/52/0a/df/520adf4c-36e7-5d7d-114d-c5682df53b98/886447918104.jpg/939x0w.jpg"
-                height="200px"
-                width="200px"
-              />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col class="d-flex justify-center">
-              <a href="/#/album" class="link white--text">
-                High road
-              </a>
-            </v-col>
-          </v-row>
-        </v-card>
-        <v-card class="mr-3 mb-3">
-          <v-row>
-            <v-col class="d-flex justify-start mx-3 my-sm-1">
-              <v-img
-                contain
-                src="https://is3-ssl.mzstatic.com/image/thumb/Music113/v4/52/0a/df/520adf4c-36e7-5d7d-114d-c5682df53b98/886447918104.jpg/939x0w.jpg"
-                height="200px"
-                width="200px"
-              />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col class="d-flex justify-center">
-              <a href="/#/album" class="link white--text">
-                High road
-              </a>
-            </v-col>
-          </v-row>
-        </v-card>
-        <v-card class="mr-3 mb-3">
-          <v-row>
-            <v-col class="d-flex justify-start mx-3 my-sm-1">
-              <v-img
-                contain
-                src="https://is3-ssl.mzstatic.com/image/thumb/Music113/v4/52/0a/df/520adf4c-36e7-5d7d-114d-c5682df53b98/886447918104.jpg/939x0w.jpg"
-                height="200px"
-                width="200px"
-              />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col class="d-flex justify-center">
-              <a href="/#/album" class="link white--text">
-                High road
+              <a :href="`/artist/${artist.artistId}`" class="link white--text">
+                {{ artist.artistName }}
               </a>
             </v-col>
           </v-row>
@@ -146,8 +35,66 @@
 </template>
 
 <script>
+import { getArtists } from "../api/api";
+import {getArtistArtworkUrl} from "../utils/scraperUtils";
+
 export default {
-  name: "Home"
+  name: "Home",
+  data: () => {
+    return {
+      artistsByStyle: {}
+    };
+  },
+  async created() {
+    this.artistsByStyle = await this.getArtistsByStyle();
+  },
+  methods: {
+    getArtistsByStyle: async function() {
+      let artistsByStyle = {};
+      const results = await getArtists();
+      const artists = results.results;
+      // eslint-disable-next-line no-unused-vars
+      for (let artist of artists) {
+        if (artist.primaryGenreName in artistsByStyle) {
+          artistsByStyle[artist.primaryGenreName].push(artist);
+        } else {
+          artistsByStyle[artist.primaryGenreName] = [artist];
+        }
+      }
+      artistsByStyle = this.removeRandomStyles(artistsByStyle);
+      artistsByStyle = this.sortRecommendations(artistsByStyle);
+
+      // eslint-disable-next-line no-unused-vars
+      for (let style of Object.keys(artistsByStyle)) {
+        artistsByStyle[style] = artistsByStyle[style].slice(0, 3);
+        for (let i = 0; i < artistsByStyle[style].length; i++) {
+          artistsByStyle[style][i]["artwork"] = await getArtistArtworkUrl(artistsByStyle[style][i].artistId);
+        }
+      }
+      return artistsByStyle;
+    },
+    sortRecommendations: function(artistsByStyle) {
+      Object.keys(artistsByStyle).forEach(key => {
+        artistsByStyle[key] = this.shuffle(artistsByStyle[key]);
+      });
+      return artistsByStyle;
+    },
+    shuffle: function(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    },
+    removeRandomStyles: function(artistsByStyle) {
+      const entries = Object.entries(artistsByStyle);
+      let newStyles = {};
+      for (let i = 0; i < 5; i++) {
+        newStyles[entries[i][0]] = entries[i][1];
+      }
+      return newStyles;
+    }
+  }
 };
 </script>
 
