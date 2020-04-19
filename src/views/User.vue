@@ -24,7 +24,15 @@
         </v-container>
       </v-tab-item>
       <v-tab-item>
-        <v-card>
+        <v-container class="d-flex justify-center" v-if="playlistsLoading">
+          <v-progress-circular
+            class="mt-6 justify-center"
+            size="50"
+            :indeterminate="true"
+            color="rgb(88,86,214)"
+          ></v-progress-circular>
+        </v-container>
+        <v-card v-else>
           <v-card-text
             v-bind:key="follower.id"
             v-for="follower in user.following"
@@ -53,7 +61,8 @@ export default {
         following: []
       },
       playlists: [],
-      playlistsLoading: true
+      playlistsLoading: true,
+      folowingLoading: true
     };
   },
   created: async function() {

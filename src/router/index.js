@@ -17,6 +17,7 @@ import AlbumResultPage from "../views/AlbumResultPage.vue";
 import ArtistResultPage from "../views/ArtistResultPage.vue";
 import GlobalResultPage from "../views/GlobalResultPage.vue";
 import UserSearchResult from "../views/UserSearchResult";
+import logoutLoading from "../views/logoutLoading";
 
 Vue.use(Router);
 
@@ -114,6 +115,11 @@ export default new Router({
       name: "UserSearchResultsPage",
       component: UserSearchResult,
       props: true
+    },
+    {
+      path: "/loading",
+      name: "LogoutLoading",
+      component: logoutLoading
     }
   ]
 });

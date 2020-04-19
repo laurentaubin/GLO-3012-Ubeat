@@ -13,10 +13,10 @@
       class="mt-5"
     >
       <v-card-title>
-        {{user.name}}
+        {{ user.name }}
       </v-card-title>
       <v-card-subtitle>
-        {{user.email}}
+        {{ user.email }}
       </v-card-subtitle>
     </v-card>
   </v-container>

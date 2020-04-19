@@ -63,11 +63,19 @@ export default {
       this.searchData.searchedName = searchedName;
       this.searchData.users = [];
       this.users.forEach(user => {
-        if (user.name !== undefined && user.name.toLowerCase().includes(searchedName.toString().toLowerCase())) {
+        if (
+          user.name !== undefined &&
+          user.name
+            .toLowerCase()
+            .includes(searchedName.toString().toLowerCase())
+        ) {
           this.searchData.users.push(user);
         }
       });
-      this.$router.push({name: "UserSearchResultsPage", params: {items: this.searchData}});
+      this.$router.push({
+        name: "UserSearchResultsPage",
+        params: { items: this.searchData }
+      });
     }
   },
   computed: {
