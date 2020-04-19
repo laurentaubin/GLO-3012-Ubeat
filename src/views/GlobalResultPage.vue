@@ -6,6 +6,7 @@
 
 <script>
 import GlobalResults from "../components/search/GlobalResults";
+import { emitTrackUp, emitTrackIdUp } from "../utils/emitUtils";
 
 export default {
   name: "GlobalResultPage",
@@ -17,6 +18,14 @@ export default {
   }),
   created() {
     this.query = this.$route.params.query;
+  },
+  methods: {
+    emitTrackUp(track) {
+      emitTrackUp(this, track);
+    },
+    emitTrackIdUp(trackId) {
+      emitTrackIdUp(this, trackId);
+    }
   }
 };
 </script>

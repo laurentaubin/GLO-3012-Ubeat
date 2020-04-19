@@ -47,6 +47,7 @@
         <v-skeleton-loader type="text" style="width: 100%"></v-skeleton-loader>
       </v-container>
       <Track
+        :id="track.trackId"
         v-else
         v-bind:key="track.trackId"
         v-bind:track="track"

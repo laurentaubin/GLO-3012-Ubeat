@@ -1,10 +1,7 @@
 <template>
   <v-card v-if="artist" class="artist-card">
     <v-container class="d-flex justify-center">
-      <v-img
-        class="artist-image"
-        src="https://is4-ssl.mzstatic.com/image/thumb/Music123/v4/1e/78/99/1e789927-28e6-c55a-204f-94ad4f7940ae/pr_source.png/570x570cc.jpg"
-      >
+      <v-img class="artist-image" :src="imageSrc">
         <v-btn class="play-button" fab icon large>
           <v-icon class="play-icon" large>mdi-play-circle-outline</v-icon>
         </v-btn>
@@ -22,9 +19,24 @@
 </template>
 
 <script>
+import { getHighResArtwork } from "../../utils/imageUtils.js";
+import { getArtistArtworkUrl } from "../../utils/scraperUtils.js";
+
 export default {
   name: "ArtistCard",
-  props: ["artist"]
+  props: ["artist"],
+  data: () => ({
+    imageSrc: ""
+  }),
+  created: async function() {
+    this.imageSrc = await getArtistArtworkUrl(this.artist.artistId);
+  },
+  methods: {
+    getArtistArtworkUrl: async function(artistId) {
+      const lowResArtwork = await getArtistArtworkUrl(artistId);
+      return await getHighResArtwork(lowResArtwork, [300, 300]);
+    }
+  }
 };
 </script>
 

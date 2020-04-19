@@ -38,7 +38,11 @@ function getArtworkSrcSet(htmlPage) {
   const artistArtwork = dummyElem.getElementsByClassName(
     "we-artwork ember-view we-artist-header__background we-artwork--round we-artwork--no-border"
   );
-  return artistArtwork[0].children[0].srcset;
+  try {
+    return artistArtwork[0].children[0].srcset;
+  } catch (err) {
+    return "https://scontent.fymq2-1.fna.fbcdn.net/v/t1.0-9/12227187_10205387613596953_1755837016739161183_n.jpg?_nc_cat=100&_nc_sid=85a577&_nc_ohc=BDwzRPHnPfoAX-ANhSP&_nc_ht=scontent.fymq2-1.fna&oh=96c3e7fb4e1539f0de3ef29c68d6dcb8&oe=5EC250F9";
+  }
 }
 
 function getSrcFromSrcSet(srcSet) {

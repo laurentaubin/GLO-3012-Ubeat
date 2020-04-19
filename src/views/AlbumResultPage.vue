@@ -1,5 +1,6 @@
 <template>
-  <v-container>
+  <v-container justify-center>
+    <p class="title">Results for "{{ query }}"</p>
     <AlbumResults :query="query" />
   </v-container>
 </template>

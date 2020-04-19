@@ -21,7 +21,9 @@
   >
     <template v-slot:item="{ item }">
       <v-list-item-content>
-        <v-list-item-title v-text="getItemName(item)"></v-list-item-title>
+        <a :href="item.url" style="text-decoration: none; color: white;">
+          <v-list-item-title v-text="getItemName(item)"></v-list-item-title>
+        </a>
       </v-list-item-content>
     </template>
   </v-autocomplete>
@@ -127,7 +129,7 @@ export default {
     getItemUrl: function(item) {
       switch (item.wrapperType) {
         case "track":
-          return `/album/${item.collectionId}`;
+          return `/album/${item.collectionId}#${item.trackId}`;
         case "artist":
           return `/artist/${item.artistId}`;
         case "collection":
@@ -137,8 +139,7 @@ export default {
       }
     },
     goToResultPage: function(search) {
-      let url;
-      console.log(this.items);
+      let url = `/search/global/${search}`;
       // eslint-disable-next-line no-unused-vars
       for (const item of this.items) {
         if (search === item.name) {
@@ -150,5 +151,3 @@ export default {
   }
 };
 </script>
-
-<style></style>

@@ -1,33 +1,67 @@
 <template>
   <v-container>
     <v-row>
-      <v-col v-for="(album, i) in results" :key="i">
-        <AlbumCard :album="album" />
+      <v-col v-for="(album, i) in shownAlbums" :key="i">
+        <AlbumCard style="display: inline;" :album="album" />
+
+        <v-menu bottom left style="display: inline;">
+          <template v-slot:activator="{ on }">
+            <v-btn dark icon v-on="on">
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+          </template>
+          <AlbumMenu :tracks="tracksArray[i]" />
+        </v-menu>
       </v-col>
     </v-row>
+    <v-btn @click="seeMore()" v-if="albumsToShow < results.length">
+      See more
+    </v-btn>
   </v-container>
 </template>
 
 <script>
 import AlbumCard from "../album/AlbumCard";
-import { searchAlbums } from "../../api/api.js";
+import AlbumMenu from "../album/AlbumMenu";
+import { searchAlbums, getTracks } from "../../api/api.js";
 
 export default {
   name: "AlbumResults",
   props: ["query"],
   components: {
-    AlbumCard
+    AlbumCard,
+    AlbumMenu
   },
   data: () => ({
-    results: []
+    results: [],
+    shownAlbums: [],
+    tracksArray: [],
+    albumsToShow: 7
   }),
   created: async function() {
     await this.updateResults();
+    this.shownAlbums = this.results.slice(0, this.albumsToShow);
+    await this.updateTracks();
   },
   methods: {
     updateResults: async function() {
       const results = await searchAlbums(this.query);
       this.results = results.results;
+    },
+    getAlbumTracks: async function(albumId) {
+      const results = await getTracks(albumId);
+      return results.results;
+    },
+    updateTracks: async function() {
+      // eslint-disable-next-line no-unused-vars
+      for (const album of this.results) {
+        const tracks = await this.getAlbumTracks(album.collectionId);
+        this.tracksArray.push(tracks);
+      }
+    },
+    seeMore: function() {
+      this.albumsToShow += 7;
+      this.shownAlbums = this.results.slice(0, this.albumsToShow);
     }
   }
 };

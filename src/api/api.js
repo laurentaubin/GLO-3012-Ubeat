@@ -215,7 +215,7 @@ export const signUp = async (name, email, password) => {
 };
 
 export const searchArtists = async query => {
-  const path = `search/artists?q=${query}`;
+  const path = `search/artists?q=${query}&limit=20`;
   const options = {
     method: "GET",
     headers: {
@@ -226,7 +226,18 @@ export const searchArtists = async query => {
 };
 
 export const searchAlbums = async query => {
-  const path = `search/albums?q=${query}`;
+  const path = `search/albums?q=${query}&limit=20`;
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json"
+    }
+  };
+  return await makeApiRequest(path, options);
+};
+
+export const searchTracks = async query => {
+  const path = `search/tracks?q=${query}&limit=40`;
   const options = {
     method: "GET",
     headers: {

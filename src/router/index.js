@@ -84,12 +84,6 @@ export default new Router({
       component: UserHomePage
     },
     {
-      path: "/userSearchResults",
-      name: "UserSearchResultsPage",
-      component: UserSearchResult,
-      props: true
-    },
-    {
       path: "/search/albums/:query",
       name: "AlbumResultPage",
       component: AlbumResultPage
