@@ -5,7 +5,7 @@
     </v-container>
     <v-divider />
     <v-container>
-      <autocomplete type="album" />
+      <autocomplete type="albums" />
     </v-container>
     <v-divider />
     <v-container>

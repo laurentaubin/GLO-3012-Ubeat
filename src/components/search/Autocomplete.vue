@@ -58,10 +58,10 @@ export default {
     updateAutocomplete: async function(query) {
       if (isConnected()) {
         switch (this.type) {
-          case "artist":
+          case "artists":
             await this.updateArtistNames(query);
             break;
-          case "album":
+          case "albums":
             await this.updateAlbumNames(query);
             break;
           case "global":
@@ -139,7 +139,7 @@ export default {
       }
     },
     goToResultPage: function(search) {
-      let url = `/search/global/${search}`;
+      let url = `/search/${this.type}/${search}`;
       // eslint-disable-next-line no-unused-vars
       for (const item of this.items) {
         if (search === item.name) {

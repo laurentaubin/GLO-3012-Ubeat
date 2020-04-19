@@ -5,7 +5,7 @@
     </v-container>
     <v-divider />
     <v-container>
-      <autocomplete type="artist" />
+      <autocomplete type="artists" />
     </v-container>
     <v-divider />
     <v-container>
