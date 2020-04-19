@@ -1,18 +1,20 @@
 <template>
   <v-container>
     <v-container>
-      <p class="title">Artists</p>
-      <ArtistResults :query="query" />
-    </v-container>
+      <v-container>
+        <p class="title">Artists</p>
+        <ArtistResults :query="query" />
+      </v-container>
 
-    <v-container>
-      <p class="title">Albums</p>
-      <AlbumResults :query="query" />
-    </v-container>
+      <v-container>
+        <p class="title">Albums</p>
+        <AlbumResults :query="query" />
+      </v-container>
 
-    <v-container>
-      <p class="title">Tracks</p>
-      <TrackResults :query="query" />
+      <v-container>
+        <p class="title">Tracks</p>
+        <TrackResults :query="query" />
+      </v-container>
     </v-container>
   </v-container>
 </template>

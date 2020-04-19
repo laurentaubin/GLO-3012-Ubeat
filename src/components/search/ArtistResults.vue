@@ -1,5 +1,14 @@
 <template>
   <v-container>
+    <v-container v-if="loading">
+      <v-progress-circular
+        class="mt-6"
+        style="left: 38%;"
+        size="50"
+        :indeterminate="true"
+        color="rgb(88,86,214)"
+      ></v-progress-circular>
+    </v-container>
     <v-row>
       <v-col v-for="(artist, i) in shownArtists" :key="i">
         <ArtistCard :artist="artist" />
@@ -24,11 +33,13 @@ export default {
   data: () => ({
     results: [],
     artistsToShow: 8,
-    shownArtists: []
+    shownArtists: [],
+    loading: true
   }),
   created: async function() {
     await this.updateResults();
     this.shownArtists = this.results.slice(0, this.artistsToShow);
+    this.loading = false;
   },
   methods: {
     updateResults: async function() {

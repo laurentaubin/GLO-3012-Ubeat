@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "logoutLoading"
+  name: "Loading"
 };
 </script>
 

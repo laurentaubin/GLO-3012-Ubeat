@@ -1,5 +1,14 @@
 <template>
   <v-container>
+    <v-container v-if="loading">
+      <v-progress-circular
+        class="mt-6"
+        style="left: 38%;"
+        size="50"
+        :indeterminate="true"
+        color="rgb(88,86,214)"
+      ></v-progress-circular>
+    </v-container>
     <Track
       :id="track.trackId"
       :key="track.trackId"
@@ -30,11 +39,13 @@ export default {
   data: () => ({
     results: [],
     shownTracks: [],
-    tracksToShow: 10
+    tracksToShow: 10,
+    loading: true
   }),
   created: async function() {
     await this.updateResults();
     this.shownTracks = this.results.slice(0, this.tracksToShow);
+    this.loading = false;
   },
   methods: {
     updateResults: async function() {
