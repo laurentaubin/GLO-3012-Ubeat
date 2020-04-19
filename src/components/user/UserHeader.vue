@@ -1,9 +1,13 @@
 <template>
   <v-container>
     <v-container class="d-block align-self-center ml-0 ml-md-8">
-      <p
+      <div
         class="body-2 font-weight-thin mb-0 mt-sm-2 text-center text-md-start"
       >
+        <gravy class="body-2 " :email="user.email" />
+      </div>
+
+      <p class="body-2 font-weight-thin mb-0 mt-sm-2 text-center text-md-start">
         USER
       </p>
       <p
@@ -17,7 +21,10 @@
       </p>
     </v-container>
     <v-container v-if="!isCurrentUser" class="d-flex ">
-      <v-container v-if="followingUser" class="d-flex justify-center justify-md-end">
+      <v-container
+        v-if="followingUser"
+        class="d-flex justify-center justify-md-end"
+      >
         <v-btn v-on:click="unfollow(user.id)">
           UNFOLLOW
         </v-btn>
@@ -32,7 +39,12 @@
 </template>
 
 <script>
-import { getCurrentUserTokenInfo, followUserWithID, unfollowUserWithID } from "../../api/api";
+import {
+  getCurrentUserTokenInfo,
+  followUserWithID,
+  unfollowUserWithID
+} from "../../api/api";
+import Gravatar from "vue-gravatar";
 
 export default {
   name: "UserHeader",
@@ -43,6 +55,9 @@ export default {
       followingUser: false,
       currentUserTokenInfo: null
     };
+  },
+  components: {
+    gravy: Gravatar
   },
   async created() {
     await this.setIsCurrentUser();
@@ -66,7 +81,9 @@ export default {
       this.followingUser = false;
     },
     isFollowingUser: function() {
-      return this.currentUserTokenInfo.following.map(user => user.id).includes(this.user.id.toString());
+      return this.currentUserTokenInfo.following
+        .map(user => user.id)
+        .includes(this.user.id.toString());
     }
   }
 };

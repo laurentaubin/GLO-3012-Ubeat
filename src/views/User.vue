@@ -25,8 +25,11 @@
       </v-tab-item>
       <v-tab-item>
         <v-card>
-          <v-card-text v-bind:key="follower.id" v-for="follower in user.following">
-            <v-btn :to="`/user/${follower.id}`" > {{ follower.name }} </v-btn>
+          <v-card-text
+            v-bind:key="follower.id"
+            v-for="follower in user.following"
+          >
+            <v-btn :to="`/user/${follower.id}`"> {{ follower.name }} </v-btn>
           </v-card-text>
         </v-card>
       </v-tab-item>

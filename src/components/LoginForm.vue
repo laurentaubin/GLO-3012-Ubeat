@@ -26,7 +26,7 @@
     <v-container class="py-0">
       <v-row align="center">
         <v-col class="py-0">
-          <v-checkbox v-model="rememberMe" label="Remember me"> </v-checkbox>
+          <v-checkbox v-model="rememberMe" label="Remember me"></v-checkbox>
         </v-col>
         <v-col class="text-right py-0">
           <v-btn @click="login">Log in</v-btn>
