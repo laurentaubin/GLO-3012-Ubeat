@@ -6,14 +6,14 @@
     <v-container class="d-block justify-center pt-0">
       <p class="d-flex justify-center font-weight-bold mb-0">
         <a
-          v-bind:href="'/#/album/' + album.collectionId"
+          v-bind:href="'/album/' + album.collectionId"
           class="link white--text"
         >
           {{ album.collectionName }}
         </a>
       </p>
       <p class="d-flex justify-center overline mb-0">
-        <a v-bind:href="'/#/artist/' + album.artistId" class="link white--text">
+        <a v-bind:href="'/artist/' + album.artistId" class="link white--text">
           {{ album.artistName }}
         </a>
       </p>

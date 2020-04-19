@@ -24,14 +24,9 @@
           User Page
         </v-btn>
         <v-list-item v-for="(field, i) in fields" :key="i">
-          <v-list-item-content>
+          <v-list-item-content v-if="field !== 'id'">
             <v-list-item-title v-text="field.value"></v-list-item-title>
             <v-list-item-subtitle v-text="field.key"></v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title>See all result</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>

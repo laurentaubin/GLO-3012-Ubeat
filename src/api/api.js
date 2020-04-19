@@ -2,7 +2,6 @@ import Cookies from "js-cookie";
 import Router from "../router/index";
 
 const API_URL = "http://ubeat.herokuapp.com";
-// const API_URL = "http://localhost:3000";
 
 const makeApiRequest = async (url, options) => {
   const token = getToken();

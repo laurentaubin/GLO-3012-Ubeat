@@ -6,7 +6,6 @@ import Artist from "@/views/Artist";
 import Playlist from "@/views/Playlist";
 import User from "@/views/User";
 import Settings from "@/views/Settings";
-import AccountSettings from "@/views/AccountSettings";
 import ArtistHomePage from "../views/ArtistHomePage";
 import AlbumHomePage from "../views/AlbumHomePage";
 import PlaylistHomePage from "../views/PlaylistHomePage";
@@ -53,11 +52,6 @@ export default new Router({
       path: "/settings",
       name: "Settings",
       component: Settings
-    },
-    {
-      path: "/accountsettings",
-      name: "AccountSettings",
-      component: AccountSettings
     },
     {
       path: "/artist",

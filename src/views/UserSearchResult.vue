@@ -30,10 +30,11 @@ export default {
   props: ["items"],
   data: function() {
     return {
-      result: {}
+      result: {},
+      currentUser: {}
     };
   },
-  created() {
+  async created() {
     if (this.items === undefined) {
       router.push({ name: "UserHomePage" });
       return;

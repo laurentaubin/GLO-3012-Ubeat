@@ -23,23 +23,12 @@
       ></v-text-field>
     </v-container>
 
-    <v-container class="py-0">
+    <v-container class="py-0 mb-5">
       <v-row align="center">
-        <v-col class="py-0">
-          <v-checkbox v-model="rememberMe" label="Remember me"></v-checkbox>
-        </v-col>
         <v-col class="text-right py-0">
           <v-btn @click="login">Log in</v-btn>
         </v-col>
       </v-row>
-    </v-container>
-
-    <v-container class="text-center">
-      <a
-        class="link white--text text-center text-md-start"
-        href="/#/password-reset"
-        >Forgot your password ?</a
-      >
     </v-container>
 
     <hr />

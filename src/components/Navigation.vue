@@ -32,8 +32,7 @@ export default {
       { text: "Album", path: "/album", icon: "mdi-music-box" },
       { text: "Artist", path: "/artist", icon: "mdi-music-note" },
       { text: "Playlist", path: "/playlist", icon: "mdi-playlist-music" },
-      { text: "User", path: "/user", icon: "mdi-account" },
-      { text: "Settings", path: "/settings", icon: "mdi-settings" }
+      { text: "User", path: "/user", icon: "mdi-account" }
     ]
   }),
   created() {

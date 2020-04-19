@@ -37,11 +37,6 @@ export default {
   },
   data: () => ({
     pages: [
-      {
-        text: "Settings",
-        path: "/accountsettings",
-        icon: "mdi-account-settings"
-      }
     ],
     isConnected: false,
     loginPath: "/login",
