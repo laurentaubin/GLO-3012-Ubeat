@@ -57,17 +57,23 @@ export default {
   methods: {
     updateResults: async function() {
       const results = await searchAlbums(this.query);
-      this.results = results.results;
+      if (results !== null) {
+        this.results = results.results;
+      }
     },
     getAlbumTracks: async function(albumId) {
       const results = await getTracks(albumId);
-      return results.results;
+      if (results !== null) {
+        return results.results;
+      }
     },
     updateTracks: async function() {
       // eslint-disable-next-line no-unused-vars
       for (const album of this.results) {
         const tracks = await this.getAlbumTracks(album.collectionId);
-        this.tracksArray.push(tracks);
+        if (tracks !== null) {
+          this.tracksArray.push(tracks);
+        }
       }
     },
     seeMore: function() {

@@ -50,7 +50,9 @@ export default {
   methods: {
     updateResults: async function() {
       const results = await searchTracks(this.query);
-      this.results = results.results;
+      if (results !== null) {
+        this.results = results.results;
+      }
     },
     seeMore: function() {
       this.tracksToShow += 10;

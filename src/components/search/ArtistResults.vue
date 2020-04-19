@@ -44,7 +44,9 @@ export default {
   methods: {
     updateResults: async function() {
       const results = await searchArtists(this.query);
-      this.results = results.results;
+      if ( results !== null) {
+        this.results = results.results;
+      }
     },
     seeMore: function() {
       this.artistsToShow += 4;
