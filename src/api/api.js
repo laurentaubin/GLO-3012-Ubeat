@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import Router from "../router/index";
 
 const API_URL = "http://ubeat.herokuapp.com";
+// const API_URL = "http://localhost:3000";
 
 const makeApiRequest = async (url, options) => {
   const token = getToken();
@@ -238,6 +239,17 @@ export const searchAlbums = async query => {
 
 export const getAllUsers = async () => {
   const path = `users`;
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json"
+    }
+  };
+  return await makeApiRequest(path, options);
+};
+
+export const searchAll = async query => {
+  const path = `search/?q=${query}`;
   const options = {
     method: "GET",
     headers: {

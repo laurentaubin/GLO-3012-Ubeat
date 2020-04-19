@@ -13,6 +13,9 @@ import PlaylistHomePage from "../views/PlaylistHomePage";
 import SignUp from "../views/SignUp.vue";
 import Login from "../views/Login.vue";
 import UserHomePage from "../views/UserHomePage";
+import AlbumResultPage from "../views/AlbumResultPage.vue";
+import ArtistResultPage from "../views/ArtistResultPage.vue";
+import GlobalResultPage from "../views/GlobalResultPage.vue";
 import UserSearchResult from "../views/UserSearchResult";
 
 Vue.use(Router);
@@ -84,7 +87,29 @@ export default new Router({
       path: "/user",
       name: "UserHomePage",
       component: UserHomePage
-    }, {
+    },
+    {
+      path: "/userSearchResults",
+      name: "UserSearchResultsPage",
+      component: UserSearchResult,
+      props: true
+    },
+    {
+      path: "/search/albums/:query",
+      name: "AlbumResultPage",
+      component: AlbumResultPage
+    },
+    {
+      path: "/search/artists/:query",
+      name: "ArtistResultPage",
+      component: ArtistResultPage
+    },
+    {
+      path: "/search/global/:query",
+      name: "GlobalResultPage",
+      component: GlobalResultPage
+    },
+    {
       path: "/userSearchResults",
       name: "UserSearchResultsPage",
       component: UserSearchResult,

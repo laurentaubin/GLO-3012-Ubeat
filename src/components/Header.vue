@@ -4,22 +4,9 @@
       <v-app-bar-nav-icon @click.stop="closeNavigationDrawer" />
       <v-toolbar-title class="align-self-center">Ubeat</v-toolbar-title>
     </v-container>
-    <v-container class="d-flex justify-end pr-0">
-      <v-text-field
-        solo-inverted
-        flat
-        hide-details
-        dense
-        rounded
-        label="Search"
-        class="align-self-center"
-        style="max-width: 300px; min-width: 100px"
-      >
-        <v-icon slot="prepend-inner" color="#fff" class="hidden-xs-only">
-          mdi-magnify
-        </v-icon>
-      </v-text-field>
-    </v-container>
+
+    <autocomplete type="global" />
+
     <v-menu offset-y>
       <template v-slot:activator="{ on }">
         <v-btn depressed class="mx-2" fab v-on="on">
@@ -33,11 +20,13 @@
 
 <script>
 import AvatarMenu from "./AvatarMenu";
+import Autocomplete from "./search/Autocomplete";
 
 export default {
   name: "Header",
   components: {
-    "avatar-menu": AvatarMenu
+    "avatar-menu": AvatarMenu,
+    autocomplete: Autocomplete
   },
   methods: {
     closeNavigationDrawer: function() {
