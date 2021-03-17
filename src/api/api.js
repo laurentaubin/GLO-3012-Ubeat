@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 
-const API_URL = "http://ubeat.herokuapp.com/unsecure";
+const API_URL = "https://ubeat.herokuapp.com/unsecure";
 
 const makeApiRequest = async (url, options) => {
     const requestUrl = `${API_URL}/${url}`;
