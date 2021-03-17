@@ -1,27 +1,18 @@
 import Cookies from "js-cookie";
-import Router from "../router/index";
 
-const API_URL = "http://ubeat.herokuapp.com";
+const API_URL = "http://ubeat.herokuapp.com/unsecure";
 
 const makeApiRequest = async (url, options) => {
-  const token = getToken();
-  if (token !== null) {
     const requestUrl = `${API_URL}/${url}`;
     if (options === null) {
       options = {};
     }
-    options.headers.Authorization = token;
     try {
       const data = await fetch(requestUrl, options);
       return data.json();
     } catch (err) {
       return err;
     }
-  } else {
-    // eslint-disable-next-line no-unused-vars
-    await Router.push("/login").catch(err => {});
-    return null;
-  }
 };
 
 export const getToken = () => {
@@ -82,14 +73,7 @@ export const getAlbum = async albumId => {
 };
 
 export const getPlaylists = async () => {
-  const path = `playlists`;
-  const options = {
-    method: "GET",
-    headers: {
-      "Content-type": "application/json"
-    }
-  };
-  return await makeApiRequest(path, options);
+  return [];
 };
 
 export const createPlaylist = async (name, owner) => {
@@ -313,14 +297,12 @@ export const logout = async () => {
 };
 
 export const getCurrentUserTokenInfo = async () => {
-  const path = `tokenInfo`;
-  const options = {
-    method: "GET",
-    headers: {
-      "Content-type": "application/json"
-    }
-  };
-  return await makeApiRequest(path, options);
+  return {
+    "email": "john.smith@mail.com",
+    "name": "John Smith",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI1M2VjMWVhMmQ3N2FhZmU3N2Q4YzM3YjgiLCJleHAiOjE0MDg2NzI4ODI4ODV9.5wLLC8kqaQyPGWKAidYZpsMz5XJtwk2Np1KmYEusizY",
+    "id": "53ec1ea2d7121fe77d8c37b8"
+  }.json()
 };
 
 export const getUserById = async userId => {
